@@ -25,20 +25,27 @@ pkgconfig = import('pkgconfig')
 gnome = import('gnome')
 
 deps_pkgs = [
-  'libapi-base-0.1',
   'gee-0.8',
   'gio-2.0',
+  'libapi-base-0.1',
 ]
 
-libalt_repo_dependencies = []
+gee_dep = dependency('gee-0.8')
+gio_dep = dependency('gio-2.0')
+libapi_base_dep = dependency('libapi-base-0.1', fallback : ['libapi-base', 'libapi_base_dep'])
 
-foreach deps_pkg : deps_pkgs 
-  libalt_repo_dependencies += dependency(deps_pkg)
-endforeach
+libalt_repo_pgconfig_req = [
+  gee_dep,
+  gio_dep,
+]
+libalt_repo_dependencies = libalt_repo_pgconfig_req + [libapi_base_dep]
 
-gee = dependency('gee-0.8')
-gee_girdir = gee.get_variable('datadir') / 'gir-1.0'
-gee_vapidir = gee.get_variable('datadir') / 'vala' / 'vapi'
+if libapi_base_dep.type_name() == 'pkgconfig'
+  libalt_repo_pgconfig_req += libapi_base_dep
+endif
+
+gee_girdir = gee_dep.get_variable('datadir') / 'gir-1.0'
+gee_vapidir = gee_dep.get_variable('datadir') / 'vala' / 'vapi'
 
 add_project_arguments(
   # GCC14 COMPILE ERROR

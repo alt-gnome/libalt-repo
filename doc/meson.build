@@ -1,7 +1,7 @@
 valadoc = find_program('valadoc')
 
 pkgs = []
-foreach deps_pkg : deps_pkgs 
+foreach deps_pkg : deps_pkgs
   pkgs += '--pkg=' + deps_pkg
 endforeach
 

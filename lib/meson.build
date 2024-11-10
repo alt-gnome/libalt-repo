@@ -58,7 +58,7 @@ endif
 pkgconfig.generate(
   libalt_repo,
   name: versioned_name,
-  requires: libalt_repo_dependencies,
+  requires: libalt_repo_pgconfig_req,
   subdirs: [ versioned_name ],
   description: 'Base objects for API libraries',
   version: meson.project_version(),
