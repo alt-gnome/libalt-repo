@@ -59,6 +59,8 @@ public sealed class AltRepo.Client : Object {
         return (ApiVersion) jsoner.deserialize_object (typeof (ApiVersion));
     }
 
+    // ASYNC
+
     public async string get_license_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
