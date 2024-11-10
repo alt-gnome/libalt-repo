@@ -27,12 +27,12 @@ gnome = import('gnome')
 deps_pkgs = [
   'gee-0.8',
   'gio-2.0',
-  'libapi-base-0.1',
+  'libapi-base-1',
 ]
 
 gee_dep = dependency('gee-0.8')
 gio_dep = dependency('gio-2.0')
-libapi_base_dep = dependency('libapi-base-0.1', fallback : ['libapi-base', 'libapi_base_dep'])
+libapi_base_dep = dependency('libapi-base-1', fallback : ['libapi-base', 'libapi_base_dep'])
 
 libalt_repo_pgconfig_req = [
   gee_dep,
