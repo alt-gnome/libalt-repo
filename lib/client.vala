@@ -49,17 +49,16 @@ public sealed class AltRepo.Client : Object {
             null,
             {
                 { "branch", branch.to_string () },
-                { "packages_names", string.joinv(",", packages_names) },
+                { "packages_names", string.joinv (",", packages_names) },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<AclByPackages> ();
         jsoner.deserialize_array (array);
-        
+
         return array;
     }
 
@@ -86,12 +85,11 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<AclGroups> ();
         jsoner.deserialize_array (array);
-        
+
         return array;
     }
 
@@ -112,18 +110,17 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/acl/maintainer_groups",
             null,
             {
-                { "branch", string.joinv(",", branch) },
+                { "branch", string.joinv (",", branch) },
                 { "nickname", nickname.to_string () },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<AclMaintainerGroups> ();
         jsoner.deserialize_array (array);
-        
+
         return array;
     }
 
@@ -150,12 +147,11 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<BugzillaInfo> ();
         jsoner.deserialize_array (array);
-        
+
         return array;
     }
 
@@ -182,12 +178,11 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<BugzillaInfo> ();
         jsoner.deserialize_array (array);
-        
+
         return array;
     }
 
@@ -214,12 +209,11 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<BugzillaInfo> ();
         jsoner.deserialize_array (array);
-        
+
         return array;
     }
 
@@ -248,19 +242,18 @@ public sealed class AltRepo.Client : Object {
             {
                 { "from_branch", from_branch.to_string () },
                 { "into_branch", into_branch.to_string () },
-                { "packages_names", string.joinv(",", packages_names) },
+                { "packages_names", string.joinv (",", packages_names) },
                 { "dp_type", dp_type.to_string () },
-                { "archs", string.joinv(",", archs) },
+                { "archs", string.joinv (",", archs) },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<BackportHelper> ();
         jsoner.deserialize_array (array);
-        
+
         return array;
     }
 
@@ -282,9 +275,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (DependenciesPackageDependencies) jsoner.deserialize_object (typeof (DependenciesPackageDependencies));
     }
 
@@ -315,9 +307,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (FastDependencySearch) jsoner.deserialize_object (typeof (FastDependencySearch));
     }
 
@@ -347,9 +338,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (DependenciesPackages) jsoner.deserialize_object (typeof (DependenciesPackages));
     }
 
@@ -378,9 +368,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (DependenciesPackageBuildDependencies) jsoner.deserialize_object (typeof (DependenciesPackageBuildDependencies));
     }
 
@@ -410,9 +399,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackageBuildDependency) jsoner.deserialize_object (typeof (PackageBuildDependency));
     }
 
@@ -431,7 +419,7 @@ public sealed class AltRepo.Client : Object {
             PostContentType.JSON,
             Jsoner.serialize (payload, Case.SNAKE)
         };
-        
+
         var bytes = soup_wrapper.post (
             @"$API_BASE/errata/branches_updates",
             null,
@@ -440,9 +428,9 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
+
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (ErrataBranchesUpdates) jsoner.deserialize_object (typeof (ErrataBranchesUpdates));
     }
 
@@ -462,9 +450,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (ErrataBranches) jsoner.deserialize_object (typeof (ErrataBranches));
     }
 
@@ -484,9 +471,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (OvalBranches) jsoner.deserialize_object (typeof (OvalBranches));
     }
 
@@ -516,10 +502,6 @@ public sealed class AltRepo.Client : Object {
             cancellable
         );
         return (string) bytes.get_data ();
-        
-        var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (string) jsoner.deserialize_object (typeof (string));
     }
 
     /**
@@ -547,7 +529,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/errata/find_erratas",
             null,
             {
-                { "input", string.joinv(",", input) },
+                { "input", string.joinv (",", input) },
                 { "branch", branch.to_string () },
                 { "type", type.to_string () },
                 { "page", page.to_string () },
@@ -557,9 +539,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (ErrataLastChanged) jsoner.deserialize_object (typeof (ErrataLastChanged));
     }
 
@@ -597,19 +578,18 @@ public sealed class AltRepo.Client : Object {
                 { "uuid", uuid.to_string () },
                 { "branch", branch.to_string () },
                 { "component", component.to_string () },
-                { "input", string.joinv(",", input) },
+                { "input", string.joinv (",", input) },
                 { "type", type.to_string () },
                 { "page", page.to_string () },
                 { "limit", limit.to_string () },
                 { "is_discarded", is_discarded.to_string () },
-                { "sort", string.joinv(",", sort) },
+                { "sort", string.joinv (",", sort) },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (ImageErrata) jsoner.deserialize_object (typeof (ImageErrata));
     }
 
@@ -629,9 +609,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (ErrataIdsList) jsoner.deserialize_object (typeof (ErrataIdsList));
     }
 
@@ -650,7 +629,7 @@ public sealed class AltRepo.Client : Object {
             PostContentType.JSON,
             Jsoner.serialize (payload, Case.SNAKE)
         };
-        
+
         var bytes = soup_wrapper.post (
             @"$API_BASE/errata/packages_updates",
             null,
@@ -659,9 +638,9 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
+
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (ErrataPackagesUpdates) jsoner.deserialize_object (typeof (ErrataPackagesUpdates));
     }
 
@@ -694,9 +673,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (Erratas) jsoner.deserialize_object (typeof (Erratas));
     }
 
@@ -722,9 +700,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackagesetPackagesExport) jsoner.deserialize_object (typeof (PackagesetPackagesExport));
     }
 
@@ -744,9 +721,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (BranchTree) jsoner.deserialize_object (typeof (BranchTree));
     }
 
@@ -768,9 +744,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (RepologyExport) jsoner.deserialize_object (typeof (RepologyExport));
     }
 
@@ -792,9 +767,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SitemapPackagesExport) jsoner.deserialize_object (typeof (SitemapPackagesExport));
     }
 
@@ -815,17 +789,13 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/export/translation/packages_po_files",
             null,
             {
-                { "branches", string.joinv(",", branches) },
+                { "branches", string.joinv (",", branches) },
                 { "from_date", from_date.to_string () },
             },
             null,
             cancellable
         );
         return (string) bytes.get_data ();
-        
-        var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (string) jsoner.deserialize_object (typeof (string));
     }
 
     /**
@@ -854,9 +824,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (FastFileSearch) jsoner.deserialize_object (typeof (FastFileSearch));
     }
 
@@ -883,9 +852,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (FilePackagesByFile) jsoner.deserialize_object (typeof (FilePackagesByFile));
     }
 
@@ -915,9 +883,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (Files) jsoner.deserialize_object (typeof (Files));
     }
 
@@ -956,9 +923,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (ActiveImages) jsoner.deserialize_object (typeof (ActiveImages));
     }
 
@@ -994,9 +960,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (FindImagesByPackage) jsoner.deserialize_object (typeof (FindImagesByPackage));
     }
 
@@ -1023,9 +988,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteImageCategories) jsoner.deserialize_object (typeof (SiteImageCategories));
     }
 
@@ -1076,9 +1040,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (ImageInfo) jsoner.deserialize_object (typeof (ImageInfo));
     }
 
@@ -1108,9 +1071,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (ImagePackages) jsoner.deserialize_object (typeof (ImagePackages));
     }
 
@@ -1130,9 +1092,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (ImagePackageSet) jsoner.deserialize_object (typeof (ImagePackageSet));
     }
 
@@ -1152,9 +1113,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (ImageStatusGet) jsoner.deserialize_object (typeof (ImageStatusGet));
     }
 
@@ -1181,9 +1141,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (ImageTagStatusGet) jsoner.deserialize_object (typeof (ImageTagStatusGet));
     }
 
@@ -1207,9 +1166,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (ImageTagUUID) jsoner.deserialize_object (typeof (ImageTagUUID));
     }
 
@@ -1228,7 +1186,7 @@ public sealed class AltRepo.Client : Object {
             PostContentType.JSON,
             Jsoner.serialize (payload, Case.SNAKE)
         };
-        
+
         var bytes = soup_wrapper.post (
             @"$API_BASE/image/inspect/regular",
             null,
@@ -1237,9 +1195,9 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
+
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (ImagePackagesInspectRegular) jsoner.deserialize_object (typeof (ImagePackagesInspectRegular));
     }
 
@@ -1258,7 +1216,7 @@ public sealed class AltRepo.Client : Object {
             PostContentType.JSON,
             Jsoner.serialize (payload, Case.SNAKE)
         };
-        
+
         var bytes = soup_wrapper.post (
             @"$API_BASE/image/inspect/sp",
             null,
@@ -1267,9 +1225,9 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
+
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (ImagePackagesInspectSP) jsoner.deserialize_object (typeof (ImagePackagesInspectSP));
     }
 
@@ -1289,9 +1247,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (ImageAllISO) jsoner.deserialize_object (typeof (ImageAllISO));
     }
 
@@ -1324,9 +1281,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (LastImagePackages) jsoner.deserialize_object (typeof (LastImagePackages));
     }
 
@@ -1359,9 +1315,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (LastImagePackages) jsoner.deserialize_object (typeof (LastImagePackages));
     }
 
@@ -1382,10 +1337,6 @@ public sealed class AltRepo.Client : Object {
             cancellable
         );
         return (string) bytes.get_data ();
-        
-        var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (string) jsoner.deserialize_object (typeof (string));
     }
 
     /**
@@ -1408,9 +1359,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (LicenseInfo) jsoner.deserialize_object (typeof (LicenseInfo));
     }
 
@@ -1434,9 +1384,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (LicenseTokens) jsoner.deserialize_object (typeof (LicenseTokens));
     }
 
@@ -1460,15 +1409,14 @@ public sealed class AltRepo.Client : Object {
             null,
             {
                 { "branch", branch.to_string () },
-                { "packages", string.joinv(",", packages) },
+                { "packages", string.joinv (",", packages) },
                 { "arch", arch.to_string () },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (BuildDependencySet) jsoner.deserialize_object (typeof (BuildDependencySet));
     }
 
@@ -1489,15 +1437,14 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/find_packageset",
             null,
             {
-                { "packages", string.joinv(",", packages) },
-                { "branches", string.joinv(",", branches) },
+                { "packages", string.joinv (",", packages) },
+                { "branches", string.joinv (",", branches) },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackageFindPackageset) jsoner.deserialize_object (typeof (PackageFindPackageset));
     }
 
@@ -1520,16 +1467,15 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/misconflict",
             null,
             {
-                { "packages", string.joinv(",", packages) },
+                { "packages", string.joinv (",", packages) },
                 { "branch", branch.to_string () },
-                { "archs", string.joinv(",", archs) },
+                { "archs", string.joinv (",", archs) },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackageMisconflictPackages) jsoner.deserialize_object (typeof (PackageMisconflictPackages));
     }
 
@@ -1559,9 +1505,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackageByFileName) jsoner.deserialize_object (typeof (PackageByFileName));
     }
 
@@ -1592,9 +1537,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackageByFileName) jsoner.deserialize_object (typeof (PackageByFileName));
     }
 
@@ -1616,9 +1560,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackageFiles) jsoner.deserialize_object (typeof (PackageFiles));
     }
 
@@ -1672,9 +1615,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackageInfo) jsoner.deserialize_object (typeof (PackageInfo));
     }
 
@@ -1694,7 +1636,7 @@ public sealed class AltRepo.Client : Object {
             PostContentType.JSON,
             Jsoner.serialize (payload, Case.SNAKE)
         };
-        
+
         var bytes = soup_wrapper.post (
             @"$API_BASE/package/packages_by_file_names",
             null,
@@ -1703,9 +1645,9 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
+
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackageByFileName) jsoner.deserialize_object (typeof (PackageByFileName));
     }
 
@@ -1744,9 +1686,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (RepocopJsonGetList) jsoner.deserialize_object (typeof (RepocopJsonGetList));
     }
 
@@ -1768,9 +1709,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackageSpecfile) jsoner.deserialize_object (typeof (PackageSpecfile));
     }
 
@@ -1797,9 +1737,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackageSpecfile) jsoner.deserialize_object (typeof (PackageSpecfile));
     }
 
@@ -1824,14 +1763,13 @@ public sealed class AltRepo.Client : Object {
             {
                 { "branch", branch.to_string () },
                 { "packager", packager.to_string () },
-                { "archs", string.joinv(",", archs) },
+                { "archs", string.joinv (",", archs) },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (UnpackagedDirs) jsoner.deserialize_object (typeof (UnpackagedDirs));
     }
 
@@ -1870,14 +1808,14 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/what_depends_src",
             null,
             {
-                { "packages", string.joinv(",", packages) },
+                { "packages", string.joinv (",", packages) },
                 { "branch", branch.to_string () },
                 { "depth", depth.to_string () },
                 { "dptype", dptype.to_string () },
-                { "archs", string.joinv(",", archs) },
+                { "archs", string.joinv (",", archs) },
                 { "leaf", leaf.to_string () },
                 { "finite_package", finite_package.to_string () },
-                { "filter_by_package", string.joinv(",", filter_by_package) },
+                { "filter_by_package", string.joinv (",", filter_by_package) },
                 { "filter_by_source", filter_by_source.to_string () },
                 { "oneandhalf", oneandhalf.to_string () },
                 { "use_last_tasks", use_last_tasks.to_string () },
@@ -1885,9 +1823,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackageBuildDependency) jsoner.deserialize_object (typeof (PackageBuildDependency));
     }
 
@@ -1907,9 +1844,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackageSetActivePackageSets) jsoner.deserialize_object (typeof (PackageSetActivePackageSets));
     }
 
@@ -1936,9 +1872,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackagesetCompare) jsoner.deserialize_object (typeof (PackagesetCompare));
     }
 
@@ -1968,9 +1903,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackagesByUuid) jsoner.deserialize_object (typeof (PackagesByUuid));
     }
 
@@ -1994,9 +1928,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackagesByUuid) jsoner.deserialize_object (typeof (PackagesByUuid));
     }
 
@@ -2016,9 +1949,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackageSetStatusGet) jsoner.deserialize_object (typeof (PackageSetStatusGet));
     }
 
@@ -2043,14 +1975,13 @@ public sealed class AltRepo.Client : Object {
             {
                 { "branch", branch.to_string () },
                 { "package_type", package_type.to_string () },
-                { "archs", string.joinv(",", archs) },
+                { "archs", string.joinv (",", archs) },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackagesetPackages) jsoner.deserialize_object (typeof (PackagesetPackages));
     }
 
@@ -2074,9 +2005,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (RepositoryStatistics) jsoner.deserialize_object (typeof (RepositoryStatistics));
     }
 
@@ -2100,12 +2030,11 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<AllMaintainers> ();
         jsoner.deserialize_array (array);
-        
+
         return array;
     }
 
@@ -2129,12 +2058,11 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<AllMaintainers> ();
         jsoner.deserialize_array (array);
-        
+
         return array;
     }
 
@@ -2158,9 +2086,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteAllArchs) jsoner.deserialize_object (typeof (SiteAllArchs));
     }
 
@@ -2184,9 +2111,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteAllArchs) jsoner.deserialize_object (typeof (SiteAllArchs));
     }
 
@@ -2206,9 +2132,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteAllPackagasets) jsoner.deserialize_object (typeof (SiteAllPackagasets));
     }
 
@@ -2228,9 +2153,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteAllPackagesetsSummary) jsoner.deserialize_object (typeof (SiteAllPackagesetsSummary));
     }
 
@@ -2250,9 +2174,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteAllPackagasets) jsoner.deserialize_object (typeof (SiteAllPackagasets));
     }
 
@@ -2282,12 +2205,11 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<SiteBeehiveByMaintainer> ();
         jsoner.deserialize_array (array);
-        
+
         return array;
     }
 
@@ -2314,9 +2236,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SitePackagesBinaryList) jsoner.deserialize_object (typeof (SitePackagesBinaryList));
     }
 
@@ -2338,9 +2259,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteBinPackageScripts) jsoner.deserialize_object (typeof (SiteBinPackageScripts));
     }
 
@@ -2373,9 +2293,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteDeletedPackage) jsoner.deserialize_object (typeof (SiteDeletedPackage));
     }
 
@@ -2396,15 +2315,14 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/fast_packages_search_lookup",
             null,
             {
-                { "name", string.joinv(",", name) },
+                { "name", string.joinv (",", name) },
                 { "branch", branch.to_string () },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteFastPackagesSearch) jsoner.deserialize_object (typeof (SiteFastPackagesSearch));
     }
 
@@ -2427,16 +2345,15 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/find_packages",
             null,
             {
-                { "name", string.joinv(",", name) },
+                { "name", string.joinv (",", name) },
                 { "branch", branch.to_string () },
                 { "arch", arch.to_string () },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteFingPackages) jsoner.deserialize_object (typeof (SiteFingPackages));
     }
 
@@ -2463,9 +2380,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (FindSourcePackageInBranch) jsoner.deserialize_object (typeof (FindSourcePackageInBranch));
     }
 
@@ -2495,9 +2411,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteLastPackages) jsoner.deserialize_object (typeof (SiteLastPackages));
     }
 
@@ -2527,9 +2442,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteLastBranchPackages) jsoner.deserialize_object (typeof (SiteLastBranchPackages));
     }
 
@@ -2559,9 +2473,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteLastPackages) jsoner.deserialize_object (typeof (SiteLastPackages));
     }
 
@@ -2585,9 +2498,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteLastPackagesWithCVEFixes) jsoner.deserialize_object (typeof (SiteLastPackagesWithCVEFixes));
     }
 
@@ -2611,12 +2523,11 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<MaintainerBranches> ();
         jsoner.deserialize_array (array);
-        
+
         return array;
     }
 
@@ -2643,12 +2554,11 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<MaintainerInfo> ();
         jsoner.deserialize_array (array);
-        
+
         return array;
     }
 
@@ -2678,12 +2588,11 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<MaintainerPackages> ();
         jsoner.deserialize_array (array);
-        
+
         return array;
     }
 
@@ -2709,9 +2618,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteChangelog) jsoner.deserialize_object (typeof (SiteChangelog));
     }
 
@@ -2737,9 +2645,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SitePackagesDownloads) jsoner.deserialize_object (typeof (SitePackagesDownloads));
     }
 
@@ -2768,9 +2675,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SitePackagesDownloads) jsoner.deserialize_object (typeof (SitePackagesDownloads));
     }
 
@@ -2796,9 +2702,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SitePackagesDownloads) jsoner.deserialize_object (typeof (SitePackagesDownloads));
     }
 
@@ -2830,9 +2735,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SitePackageInfo) jsoner.deserialize_object (typeof (SitePackageInfo));
     }
 
@@ -2854,9 +2758,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteBriefPackageInfo) jsoner.deserialize_object (typeof (SiteBriefPackageInfo));
     }
 
@@ -2878,9 +2781,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (BinPackageLogElement) jsoner.deserialize_object (typeof (BinPackageLogElement));
     }
 
@@ -2906,9 +2808,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackageMisconflictBySrc) jsoner.deserialize_object (typeof (PackageMisconflictBySrc));
     }
 
@@ -2935,9 +2836,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackageNameFromRepology) jsoner.deserialize_object (typeof (PackageNameFromRepology));
     }
 
@@ -2963,9 +2863,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (PackageNVRByHash) jsoner.deserialize_object (typeof (PackageNVRByHash));
     }
 
@@ -2995,9 +2894,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteSourcePackagesVersions) jsoner.deserialize_object (typeof (SiteSourcePackagesVersions));
     }
 
@@ -3030,9 +2928,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteImagePackageVersions) jsoner.deserialize_object (typeof (SiteImagePackageVersions));
     }
 
@@ -3059,9 +2956,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SItePackagesVersionsFromTasks) jsoner.deserialize_object (typeof (SItePackagesVersionsFromTasks));
     }
 
@@ -3083,9 +2979,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SitePackagesetsByHash) jsoner.deserialize_object (typeof (SitePackagesetsByHash));
     }
 
@@ -3115,9 +3010,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SitePackagesetPackageHash) jsoner.deserialize_object (typeof (SitePackagesetPackageHash));
     }
 
@@ -3144,9 +3038,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SitePackagesetPackageHash) jsoner.deserialize_object (typeof (SitePackagesetPackageHash));
     }
 
@@ -3179,9 +3072,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SitePackagesetPackageHashByNameVersionRelease) jsoner.deserialize_object (typeof (SitePackagesetPackageHashByNameVersionRelease));
     }
 
@@ -3208,9 +3100,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SitePackagesetCategories) jsoner.deserialize_object (typeof (SitePackagesetCategories));
     }
 
@@ -3230,9 +3121,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SitePackagesetsSummaryStatus) jsoner.deserialize_object (typeof (SitePackagesetsSummaryStatus));
     }
 
@@ -3262,12 +3152,11 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<RepocopByMaintainer> ();
         jsoner.deserialize_array (array);
-        
+
         return array;
     }
 
@@ -3300,9 +3189,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SitePackages) jsoner.deserialize_object (typeof (SitePackages));
     }
 
@@ -3326,9 +3214,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteSourcePackagesVersions) jsoner.deserialize_object (typeof (SiteSourcePackagesVersions));
     }
 
@@ -3356,12 +3243,11 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<SiteTaskByName> ();
         jsoner.deserialize_array (array);
-        
+
         return array;
     }
 
@@ -3386,9 +3272,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteTaskByName) jsoner.deserialize_object (typeof (SiteTaskByName));
     }
 
@@ -3412,9 +3297,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (SiteTasksHistory) jsoner.deserialize_object (typeof (SiteTasksHistory));
     }
 
@@ -3441,12 +3325,11 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<SiteWatchByMaintainer> ();
         jsoner.deserialize_array (array);
-        
+
         return array;
     }
 
@@ -3472,9 +3355,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (BuildDependencySet) jsoner.deserialize_object (typeof (BuildDependencySet));
     }
 
@@ -3541,7 +3423,7 @@ public sealed class AltRepo.Client : Object {
             PostContentType.JSON,
             Jsoner.serialize (payload, Case.SNAKE)
         };
-        
+
         var bytes = soup_wrapper.post (
             @"$API_BASE/task/check_images",
             null,
@@ -3550,9 +3432,9 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
+
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (CheckImagesOutput) jsoner.deserialize_object (typeof (CheckImagesOutput));
     }
 
@@ -3574,9 +3456,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (FindImagesByTask) jsoner.deserialize_object (typeof (FindImagesByTask));
     }
 
@@ -3597,14 +3478,13 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/task/find_packageset/$id",
             null,
             {
-                { "branches", string.joinv(",", branches) },
+                { "branches", string.joinv (",", branches) },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (TaskFindPackageset) jsoner.deserialize_object (typeof (TaskFindPackageset));
     }
 
@@ -3627,15 +3507,14 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/task/misconflict/$id",
             null,
             {
-                { "archs", string.joinv(",", archs) },
+                { "archs", string.joinv (",", archs) },
                 { "no_cache", no_cache.to_string () },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (TaskMisconflictPackages) jsoner.deserialize_object (typeof (TaskMisconflictPackages));
     }
 
@@ -3659,15 +3538,14 @@ public sealed class AltRepo.Client : Object {
             null,
             {
                 { "acl_group", acl_group.to_string () },
-                { "branches", string.joinv(",", branches) },
+                { "branches", string.joinv (",", branches) },
                 { "before", before.to_string () },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (NeedsApproval) jsoner.deserialize_object (typeof (NeedsApproval));
     }
 
@@ -3689,9 +3567,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (TaskPackages) jsoner.deserialize_object (typeof (TaskPackages));
     }
 
@@ -3712,9 +3589,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (AllTasksBranches) jsoner.deserialize_object (typeof (AllTasksBranches));
     }
 
@@ -3734,9 +3610,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (AllTasksBranches) jsoner.deserialize_object (typeof (AllTasksBranches));
     }
 
@@ -3765,19 +3640,18 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/task/progress/find_tasks",
             null,
             {
-                { "input", string.joinv(",", input) },
+                { "input", string.joinv (",", input) },
                 { "owner", owner.to_string () },
                 { "branch", branch.to_string () },
-                { "state", string.joinv(",", state) },
+                { "state", string.joinv (",", state) },
                 { "tasks_limit", tasks_limit.to_string () },
                 { "by_package", by_package.to_string () },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (TasksList) jsoner.deserialize_object (typeof (TasksList));
     }
 
@@ -3800,16 +3674,15 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/task/progress/find_tasks_lookup",
             null,
             {
-                { "input", string.joinv(",", input) },
+                { "input", string.joinv (",", input) },
                 { "branch", branch.to_string () },
                 { "tasks_limit", tasks_limit.to_string () },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (FindTasks) jsoner.deserialize_object (typeof (FindTasks));
     }
 
@@ -3836,9 +3709,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (TasksList) jsoner.deserialize_object (typeof (TasksList));
     }
 
@@ -3860,9 +3732,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (TaskProgressTaskInfo) jsoner.deserialize_object (typeof (TaskProgressTaskInfo));
     }
 
@@ -3884,9 +3755,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (TaskDiff) jsoner.deserialize_object (typeof (TaskDiff));
     }
 
@@ -3922,9 +3792,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (TaskHistory) jsoner.deserialize_object (typeof (TaskHistory));
     }
 
@@ -3954,14 +3823,13 @@ public sealed class AltRepo.Client : Object {
                 { "try", try.to_string () },
                 { "iteration", iteration.to_string () },
                 { "no_cache", no_cache.to_string () },
-                { "states", string.joinv(",", states) },
+                { "states", string.joinv (",", states) },
             },
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (TaskInfo) jsoner.deserialize_object (typeof (TaskInfo));
     }
 
@@ -3987,9 +3855,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (TaskRepo) jsoner.deserialize_object (typeof (TaskRepo));
     }
 
@@ -4028,10 +3895,10 @@ public sealed class AltRepo.Client : Object {
             {
                 { "depth", depth.to_string () },
                 { "dptype", dptype.to_string () },
-                { "archs", string.joinv(",", archs) },
+                { "archs", string.joinv (",", archs) },
                 { "leaf", leaf.to_string () },
                 { "finite_package", finite_package.to_string () },
-                { "filter_by_package", string.joinv(",", filter_by_package) },
+                { "filter_by_package", string.joinv (",", filter_by_package) },
                 { "filter_by_source", filter_by_source.to_string () },
                 { "oneandhalf", oneandhalf.to_string () },
                 { "no_cache", no_cache.to_string () },
@@ -4039,9 +3906,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (TaskBuildDependency) jsoner.deserialize_object (typeof (TaskBuildDependency));
     }
 
@@ -4061,9 +3927,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (APIVersion) jsoner.deserialize_object (typeof (APIVersion));
     }
 
@@ -4087,9 +3952,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (VulnerabilityInfo) jsoner.deserialize_object (typeof (VulnerabilityInfo));
     }
 
@@ -4113,9 +3977,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (VulnFixesPackages) jsoner.deserialize_object (typeof (VulnFixesPackages));
     }
 
@@ -4139,9 +4002,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (VulnerabilityInfo) jsoner.deserialize_object (typeof (VulnerabilityInfo));
     }
 
@@ -4165,9 +4027,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (VulnFixesPackages) jsoner.deserialize_object (typeof (VulnFixesPackages));
     }
 
@@ -4189,9 +4050,8 @@ public sealed class AltRepo.Client : Object {
             null,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         return (CveVulnerableTask) jsoner.deserialize_object (typeof (CveVulnerableTask));
     }
 
@@ -4216,18 +4076,17 @@ public sealed class AltRepo.Client : Object {
             null,
             {
                 { "branch", branch.to_string () },
-                { "packages_names", string.joinv(",", packages_names) },
+                { "packages_names", string.joinv (",", packages_names) },
             },
             null,
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<AclByPackages> ();
-        yield jsoner.deserialize_array_async  (array);
-        
+        yield jsoner.deserialize_array_async (array);
+
         return array;
     }
 
@@ -4256,12 +4115,11 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<AclGroups> ();
-        yield jsoner.deserialize_array_async  (array);
-        
+        yield jsoner.deserialize_array_async (array);
+
         return array;
     }
 
@@ -4283,19 +4141,18 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/acl/maintainer_groups",
             null,
             {
-                { "branch", string.joinv(",", branch) },
+                { "branch", string.joinv (",", branch) },
                 { "nickname", nickname.to_string () },
             },
             null,
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<AclMaintainerGroups> ();
-        yield jsoner.deserialize_array_async  (array);
-        
+        yield jsoner.deserialize_array_async (array);
+
         return array;
     }
 
@@ -4324,12 +4181,11 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<BugzillaInfo> ();
-        yield jsoner.deserialize_array_async  (array);
-        
+        yield jsoner.deserialize_array_async (array);
+
         return array;
     }
 
@@ -4358,12 +4214,11 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<BugzillaInfo> ();
-        yield jsoner.deserialize_array_async  (array);
-        
+        yield jsoner.deserialize_array_async (array);
+
         return array;
     }
 
@@ -4392,12 +4247,11 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<BugzillaInfo> ();
-        yield jsoner.deserialize_array_async  (array);
-        
+        yield jsoner.deserialize_array_async (array);
+
         return array;
     }
 
@@ -4427,20 +4281,19 @@ public sealed class AltRepo.Client : Object {
             {
                 { "from_branch", from_branch.to_string () },
                 { "into_branch", into_branch.to_string () },
-                { "packages_names", string.joinv(",", packages_names) },
+                { "packages_names", string.joinv (",", packages_names) },
                 { "dp_type", dp_type.to_string () },
-                { "archs", string.joinv(",", archs) },
+                { "archs", string.joinv (",", archs) },
             },
             null,
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<BackportHelper> ();
-        yield jsoner.deserialize_array_async  (array);
-        
+        yield jsoner.deserialize_array_async (array);
+
         return array;
     }
 
@@ -4464,10 +4317,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (DependenciesPackageDependencies) yield jsoner.deserialize_object_async  (typeof (DependenciesPackageDependencies));
+
+        return (DependenciesPackageDependencies) yield jsoner.deserialize_object_async (typeof (DependenciesPackageDependencies));
     }
 
     /**
@@ -4499,10 +4351,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (FastDependencySearch) yield jsoner.deserialize_object_async  (typeof (FastDependencySearch));
+
+        return (FastDependencySearch) yield jsoner.deserialize_object_async (typeof (FastDependencySearch));
     }
 
     /**
@@ -4533,10 +4384,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (DependenciesPackages) yield jsoner.deserialize_object_async  (typeof (DependenciesPackages));
+
+        return (DependenciesPackages) yield jsoner.deserialize_object_async (typeof (DependenciesPackages));
     }
 
     /**
@@ -4566,10 +4416,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (DependenciesPackageBuildDependencies) yield jsoner.deserialize_object_async  (typeof (DependenciesPackageBuildDependencies));
+
+        return (DependenciesPackageBuildDependencies) yield jsoner.deserialize_object_async (typeof (DependenciesPackageBuildDependencies));
     }
 
     /**
@@ -4600,10 +4449,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackageBuildDependency) yield jsoner.deserialize_object_async  (typeof (PackageBuildDependency));
+
+        return (PackageBuildDependency) yield jsoner.deserialize_object_async (typeof (PackageBuildDependency));
     }
 
     /**
@@ -4620,9 +4468,9 @@ public sealed class AltRepo.Client : Object {
     ) throws CommonError, BadStatusCodeError {
         PostContent post_content = {
             PostContentType.JSON,
-            yield Jsoner.serialize_async  (payload, Case.SNAKE)
+            yield Jsoner.serialize_async (payload, Case.SNAKE)
         };
-        
+
         var bytes = yield soup_wrapper.post_async (
             @"$API_BASE/errata/branches_updates",
             null,
@@ -4632,10 +4480,10 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
+
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (ErrataBranchesUpdates) yield jsoner.deserialize_object_async  (typeof (ErrataBranchesUpdates));
+
+        return (ErrataBranchesUpdates) yield jsoner.deserialize_object_async (typeof (ErrataBranchesUpdates));
     }
 
     /**
@@ -4656,10 +4504,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (ErrataBranches) yield jsoner.deserialize_object_async  (typeof (ErrataBranches));
+
+        return (ErrataBranches) yield jsoner.deserialize_object_async (typeof (ErrataBranches));
     }
 
     /**
@@ -4680,10 +4527,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (OvalBranches) yield jsoner.deserialize_object_async  (typeof (OvalBranches));
+
+        return (OvalBranches) yield jsoner.deserialize_object_async (typeof (OvalBranches));
     }
 
     /**
@@ -4714,10 +4560,6 @@ public sealed class AltRepo.Client : Object {
             cancellable
         );
         return (string) bytes.get_data ();
-        
-        var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (string) yield jsoner.deserialize_object_async  (typeof (string));
     }
 
     /**
@@ -4746,7 +4588,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/errata/find_erratas",
             null,
             {
-                { "input", string.joinv(",", input) },
+                { "input", string.joinv (",", input) },
                 { "branch", branch.to_string () },
                 { "type", type.to_string () },
                 { "page", page.to_string () },
@@ -4757,10 +4599,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (ErrataLastChanged) yield jsoner.deserialize_object_async  (typeof (ErrataLastChanged));
+
+        return (ErrataLastChanged) yield jsoner.deserialize_object_async (typeof (ErrataLastChanged));
     }
 
     /**
@@ -4798,21 +4639,20 @@ public sealed class AltRepo.Client : Object {
                 { "uuid", uuid.to_string () },
                 { "branch", branch.to_string () },
                 { "component", component.to_string () },
-                { "input", string.joinv(",", input) },
+                { "input", string.joinv (",", input) },
                 { "type", type.to_string () },
                 { "page", page.to_string () },
                 { "limit", limit.to_string () },
                 { "is_discarded", is_discarded.to_string () },
-                { "sort", string.joinv(",", sort) },
+                { "sort", string.joinv (",", sort) },
             },
             null,
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (ImageErrata) yield jsoner.deserialize_object_async  (typeof (ImageErrata));
+
+        return (ImageErrata) yield jsoner.deserialize_object_async (typeof (ImageErrata));
     }
 
     /**
@@ -4833,10 +4673,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (ErrataIdsList) yield jsoner.deserialize_object_async  (typeof (ErrataIdsList));
+
+        return (ErrataIdsList) yield jsoner.deserialize_object_async (typeof (ErrataIdsList));
     }
 
     /**
@@ -4853,9 +4692,9 @@ public sealed class AltRepo.Client : Object {
     ) throws CommonError, BadStatusCodeError {
         PostContent post_content = {
             PostContentType.JSON,
-            yield Jsoner.serialize_async  (payload, Case.SNAKE)
+            yield Jsoner.serialize_async (payload, Case.SNAKE)
         };
-        
+
         var bytes = yield soup_wrapper.post_async (
             @"$API_BASE/errata/packages_updates",
             null,
@@ -4865,10 +4704,10 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
+
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (ErrataPackagesUpdates) yield jsoner.deserialize_object_async  (typeof (ErrataPackagesUpdates));
+
+        return (ErrataPackagesUpdates) yield jsoner.deserialize_object_async (typeof (ErrataPackagesUpdates));
     }
 
     /**
@@ -4902,10 +4741,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (Erratas) yield jsoner.deserialize_object_async  (typeof (Erratas));
+
+        return (Erratas) yield jsoner.deserialize_object_async (typeof (Erratas));
     }
 
     /**
@@ -4932,10 +4770,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackagesetPackagesExport) yield jsoner.deserialize_object_async  (typeof (PackagesetPackagesExport));
+
+        return (PackagesetPackagesExport) yield jsoner.deserialize_object_async (typeof (PackagesetPackagesExport));
     }
 
     /**
@@ -4956,10 +4793,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (BranchTree) yield jsoner.deserialize_object_async  (typeof (BranchTree));
+
+        return (BranchTree) yield jsoner.deserialize_object_async (typeof (BranchTree));
     }
 
     /**
@@ -4982,10 +4818,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (RepologyExport) yield jsoner.deserialize_object_async  (typeof (RepologyExport));
+
+        return (RepologyExport) yield jsoner.deserialize_object_async (typeof (RepologyExport));
     }
 
     /**
@@ -5008,10 +4843,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SitemapPackagesExport) yield jsoner.deserialize_object_async  (typeof (SitemapPackagesExport));
+
+        return (SitemapPackagesExport) yield jsoner.deserialize_object_async (typeof (SitemapPackagesExport));
     }
 
     /**
@@ -5032,7 +4866,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/export/translation/packages_po_files",
             null,
             {
-                { "branches", string.joinv(",", branches) },
+                { "branches", string.joinv (",", branches) },
                 { "from_date", from_date.to_string () },
             },
             null,
@@ -5040,10 +4874,6 @@ public sealed class AltRepo.Client : Object {
             cancellable
         );
         return (string) bytes.get_data ();
-        
-        var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (string) yield jsoner.deserialize_object_async  (typeof (string));
     }
 
     /**
@@ -5074,10 +4904,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (FastFileSearch) yield jsoner.deserialize_object_async  (typeof (FastFileSearch));
+
+        return (FastFileSearch) yield jsoner.deserialize_object_async (typeof (FastFileSearch));
     }
 
     /**
@@ -5105,10 +4934,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (FilePackagesByFile) yield jsoner.deserialize_object_async  (typeof (FilePackagesByFile));
+
+        return (FilePackagesByFile) yield jsoner.deserialize_object_async (typeof (FilePackagesByFile));
     }
 
     /**
@@ -5139,10 +4967,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (Files) yield jsoner.deserialize_object_async  (typeof (Files));
+
+        return (Files) yield jsoner.deserialize_object_async (typeof (Files));
     }
 
     /**
@@ -5182,10 +5009,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (ActiveImages) yield jsoner.deserialize_object_async  (typeof (ActiveImages));
+
+        return (ActiveImages) yield jsoner.deserialize_object_async (typeof (ActiveImages));
     }
 
     /**
@@ -5222,10 +5048,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (FindImagesByPackage) yield jsoner.deserialize_object_async  (typeof (FindImagesByPackage));
+
+        return (FindImagesByPackage) yield jsoner.deserialize_object_async (typeof (FindImagesByPackage));
     }
 
     /**
@@ -5253,10 +5078,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteImageCategories) yield jsoner.deserialize_object_async  (typeof (SiteImageCategories));
+
+        return (SiteImageCategories) yield jsoner.deserialize_object_async (typeof (SiteImageCategories));
     }
 
     /**
@@ -5308,10 +5132,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (ImageInfo) yield jsoner.deserialize_object_async  (typeof (ImageInfo));
+
+        return (ImageInfo) yield jsoner.deserialize_object_async (typeof (ImageInfo));
     }
 
     /**
@@ -5342,10 +5165,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (ImagePackages) yield jsoner.deserialize_object_async  (typeof (ImagePackages));
+
+        return (ImagePackages) yield jsoner.deserialize_object_async (typeof (ImagePackages));
     }
 
     /**
@@ -5366,10 +5188,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (ImagePackageSet) yield jsoner.deserialize_object_async  (typeof (ImagePackageSet));
+
+        return (ImagePackageSet) yield jsoner.deserialize_object_async (typeof (ImagePackageSet));
     }
 
     /**
@@ -5390,10 +5211,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (ImageStatusGet) yield jsoner.deserialize_object_async  (typeof (ImageStatusGet));
+
+        return (ImageStatusGet) yield jsoner.deserialize_object_async (typeof (ImageStatusGet));
     }
 
     /**
@@ -5421,10 +5241,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (ImageTagStatusGet) yield jsoner.deserialize_object_async  (typeof (ImageTagStatusGet));
+
+        return (ImageTagStatusGet) yield jsoner.deserialize_object_async (typeof (ImageTagStatusGet));
     }
 
     /**
@@ -5449,10 +5268,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (ImageTagUUID) yield jsoner.deserialize_object_async  (typeof (ImageTagUUID));
+
+        return (ImageTagUUID) yield jsoner.deserialize_object_async (typeof (ImageTagUUID));
     }
 
     /**
@@ -5469,9 +5287,9 @@ public sealed class AltRepo.Client : Object {
     ) throws CommonError, BadStatusCodeError {
         PostContent post_content = {
             PostContentType.JSON,
-            yield Jsoner.serialize_async  (payload, Case.SNAKE)
+            yield Jsoner.serialize_async (payload, Case.SNAKE)
         };
-        
+
         var bytes = yield soup_wrapper.post_async (
             @"$API_BASE/image/inspect/regular",
             null,
@@ -5481,10 +5299,10 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
+
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (ImagePackagesInspectRegular) yield jsoner.deserialize_object_async  (typeof (ImagePackagesInspectRegular));
+
+        return (ImagePackagesInspectRegular) yield jsoner.deserialize_object_async (typeof (ImagePackagesInspectRegular));
     }
 
     /**
@@ -5501,9 +5319,9 @@ public sealed class AltRepo.Client : Object {
     ) throws CommonError, BadStatusCodeError {
         PostContent post_content = {
             PostContentType.JSON,
-            yield Jsoner.serialize_async  (payload, Case.SNAKE)
+            yield Jsoner.serialize_async (payload, Case.SNAKE)
         };
-        
+
         var bytes = yield soup_wrapper.post_async (
             @"$API_BASE/image/inspect/sp",
             null,
@@ -5513,10 +5331,10 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
+
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (ImagePackagesInspectSP) yield jsoner.deserialize_object_async  (typeof (ImagePackagesInspectSP));
+
+        return (ImagePackagesInspectSP) yield jsoner.deserialize_object_async (typeof (ImagePackagesInspectSP));
     }
 
     /**
@@ -5537,10 +5355,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (ImageAllISO) yield jsoner.deserialize_object_async  (typeof (ImageAllISO));
+
+        return (ImageAllISO) yield jsoner.deserialize_object_async (typeof (ImageAllISO));
     }
 
     /**
@@ -5574,10 +5391,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (LastImagePackages) yield jsoner.deserialize_object_async  (typeof (LastImagePackages));
+
+        return (LastImagePackages) yield jsoner.deserialize_object_async (typeof (LastImagePackages));
     }
 
     /**
@@ -5611,10 +5427,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (LastImagePackages) yield jsoner.deserialize_object_async  (typeof (LastImagePackages));
+
+        return (LastImagePackages) yield jsoner.deserialize_object_async (typeof (LastImagePackages));
     }
 
     /**
@@ -5636,10 +5451,6 @@ public sealed class AltRepo.Client : Object {
             cancellable
         );
         return (string) bytes.get_data ();
-        
-        var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (string) yield jsoner.deserialize_object_async  (typeof (string));
     }
 
     /**
@@ -5664,10 +5475,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (LicenseInfo) yield jsoner.deserialize_object_async  (typeof (LicenseInfo));
+
+        return (LicenseInfo) yield jsoner.deserialize_object_async (typeof (LicenseInfo));
     }
 
     /**
@@ -5692,10 +5502,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (LicenseTokens) yield jsoner.deserialize_object_async  (typeof (LicenseTokens));
+
+        return (LicenseTokens) yield jsoner.deserialize_object_async (typeof (LicenseTokens));
     }
 
     /**
@@ -5719,17 +5528,16 @@ public sealed class AltRepo.Client : Object {
             null,
             {
                 { "branch", branch.to_string () },
-                { "packages", string.joinv(",", packages) },
+                { "packages", string.joinv (",", packages) },
                 { "arch", arch.to_string () },
             },
             null,
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (BuildDependencySet) yield jsoner.deserialize_object_async  (typeof (BuildDependencySet));
+
+        return (BuildDependencySet) yield jsoner.deserialize_object_async (typeof (BuildDependencySet));
     }
 
     /**
@@ -5750,17 +5558,16 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/find_packageset",
             null,
             {
-                { "packages", string.joinv(",", packages) },
-                { "branches", string.joinv(",", branches) },
+                { "packages", string.joinv (",", packages) },
+                { "branches", string.joinv (",", branches) },
             },
             null,
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackageFindPackageset) yield jsoner.deserialize_object_async  (typeof (PackageFindPackageset));
+
+        return (PackageFindPackageset) yield jsoner.deserialize_object_async (typeof (PackageFindPackageset));
     }
 
     /**
@@ -5783,18 +5590,17 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/misconflict",
             null,
             {
-                { "packages", string.joinv(",", packages) },
+                { "packages", string.joinv (",", packages) },
                 { "branch", branch.to_string () },
-                { "archs", string.joinv(",", archs) },
+                { "archs", string.joinv (",", archs) },
             },
             null,
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackageMisconflictPackages) yield jsoner.deserialize_object_async  (typeof (PackageMisconflictPackages));
+
+        return (PackageMisconflictPackages) yield jsoner.deserialize_object_async (typeof (PackageMisconflictPackages));
     }
 
     /**
@@ -5825,10 +5631,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackageByFileName) yield jsoner.deserialize_object_async  (typeof (PackageByFileName));
+
+        return (PackageByFileName) yield jsoner.deserialize_object_async (typeof (PackageByFileName));
     }
 
     /**
@@ -5860,10 +5665,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackageByFileName) yield jsoner.deserialize_object_async  (typeof (PackageByFileName));
+
+        return (PackageByFileName) yield jsoner.deserialize_object_async (typeof (PackageByFileName));
     }
 
     /**
@@ -5886,10 +5690,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackageFiles) yield jsoner.deserialize_object_async  (typeof (PackageFiles));
+
+        return (PackageFiles) yield jsoner.deserialize_object_async (typeof (PackageFiles));
     }
 
     /**
@@ -5944,10 +5747,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackageInfo) yield jsoner.deserialize_object_async  (typeof (PackageInfo));
+
+        return (PackageInfo) yield jsoner.deserialize_object_async (typeof (PackageInfo));
     }
 
     /**
@@ -5965,9 +5767,9 @@ public sealed class AltRepo.Client : Object {
     ) throws CommonError, BadStatusCodeError {
         PostContent post_content = {
             PostContentType.JSON,
-            yield Jsoner.serialize_async  (payload, Case.SNAKE)
+            yield Jsoner.serialize_async (payload, Case.SNAKE)
         };
-        
+
         var bytes = yield soup_wrapper.post_async (
             @"$API_BASE/package/packages_by_file_names",
             null,
@@ -5977,10 +5779,10 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
+
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackageByFileName) yield jsoner.deserialize_object_async  (typeof (PackageByFileName));
+
+        return (PackageByFileName) yield jsoner.deserialize_object_async (typeof (PackageByFileName));
     }
 
     /**
@@ -6020,10 +5822,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (RepocopJsonGetList) yield jsoner.deserialize_object_async  (typeof (RepocopJsonGetList));
+
+        return (RepocopJsonGetList) yield jsoner.deserialize_object_async (typeof (RepocopJsonGetList));
     }
 
     /**
@@ -6046,10 +5847,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackageSpecfile) yield jsoner.deserialize_object_async  (typeof (PackageSpecfile));
+
+        return (PackageSpecfile) yield jsoner.deserialize_object_async (typeof (PackageSpecfile));
     }
 
     /**
@@ -6077,10 +5877,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackageSpecfile) yield jsoner.deserialize_object_async  (typeof (PackageSpecfile));
+
+        return (PackageSpecfile) yield jsoner.deserialize_object_async (typeof (PackageSpecfile));
     }
 
     /**
@@ -6105,16 +5904,15 @@ public sealed class AltRepo.Client : Object {
             {
                 { "branch", branch.to_string () },
                 { "packager", packager.to_string () },
-                { "archs", string.joinv(",", archs) },
+                { "archs", string.joinv (",", archs) },
             },
             null,
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (UnpackagedDirs) yield jsoner.deserialize_object_async  (typeof (UnpackagedDirs));
+
+        return (UnpackagedDirs) yield jsoner.deserialize_object_async (typeof (UnpackagedDirs));
     }
 
     /**
@@ -6153,14 +5951,14 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/what_depends_src",
             null,
             {
-                { "packages", string.joinv(",", packages) },
+                { "packages", string.joinv (",", packages) },
                 { "branch", branch.to_string () },
                 { "depth", depth.to_string () },
                 { "dptype", dptype.to_string () },
-                { "archs", string.joinv(",", archs) },
+                { "archs", string.joinv (",", archs) },
                 { "leaf", leaf.to_string () },
                 { "finite_package", finite_package.to_string () },
-                { "filter_by_package", string.joinv(",", filter_by_package) },
+                { "filter_by_package", string.joinv (",", filter_by_package) },
                 { "filter_by_source", filter_by_source.to_string () },
                 { "oneandhalf", oneandhalf.to_string () },
                 { "use_last_tasks", use_last_tasks.to_string () },
@@ -6169,10 +5967,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackageBuildDependency) yield jsoner.deserialize_object_async  (typeof (PackageBuildDependency));
+
+        return (PackageBuildDependency) yield jsoner.deserialize_object_async (typeof (PackageBuildDependency));
     }
 
     /**
@@ -6193,10 +5990,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackageSetActivePackageSets) yield jsoner.deserialize_object_async  (typeof (PackageSetActivePackageSets));
+
+        return (PackageSetActivePackageSets) yield jsoner.deserialize_object_async (typeof (PackageSetActivePackageSets));
     }
 
     /**
@@ -6224,10 +6020,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackagesetCompare) yield jsoner.deserialize_object_async  (typeof (PackagesetCompare));
+
+        return (PackagesetCompare) yield jsoner.deserialize_object_async (typeof (PackagesetCompare));
     }
 
     /**
@@ -6258,10 +6053,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackagesByUuid) yield jsoner.deserialize_object_async  (typeof (PackagesByUuid));
+
+        return (PackagesByUuid) yield jsoner.deserialize_object_async (typeof (PackagesByUuid));
     }
 
     /**
@@ -6286,10 +6080,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackagesByUuid) yield jsoner.deserialize_object_async  (typeof (PackagesByUuid));
+
+        return (PackagesByUuid) yield jsoner.deserialize_object_async (typeof (PackagesByUuid));
     }
 
     /**
@@ -6310,10 +6103,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackageSetStatusGet) yield jsoner.deserialize_object_async  (typeof (PackageSetStatusGet));
+
+        return (PackageSetStatusGet) yield jsoner.deserialize_object_async (typeof (PackageSetStatusGet));
     }
 
     /**
@@ -6338,16 +6130,15 @@ public sealed class AltRepo.Client : Object {
             {
                 { "branch", branch.to_string () },
                 { "package_type", package_type.to_string () },
-                { "archs", string.joinv(",", archs) },
+                { "archs", string.joinv (",", archs) },
             },
             null,
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackagesetPackages) yield jsoner.deserialize_object_async  (typeof (PackagesetPackages));
+
+        return (PackagesetPackages) yield jsoner.deserialize_object_async (typeof (PackagesetPackages));
     }
 
     /**
@@ -6372,10 +6163,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (RepositoryStatistics) yield jsoner.deserialize_object_async  (typeof (RepositoryStatistics));
+
+        return (RepositoryStatistics) yield jsoner.deserialize_object_async (typeof (RepositoryStatistics));
     }
 
     /**
@@ -6400,12 +6190,11 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<AllMaintainers> ();
-        yield jsoner.deserialize_array_async  (array);
-        
+        yield jsoner.deserialize_array_async (array);
+
         return array;
     }
 
@@ -6431,12 +6220,11 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<AllMaintainers> ();
-        yield jsoner.deserialize_array_async  (array);
-        
+        yield jsoner.deserialize_array_async (array);
+
         return array;
     }
 
@@ -6462,10 +6250,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteAllArchs) yield jsoner.deserialize_object_async  (typeof (SiteAllArchs));
+
+        return (SiteAllArchs) yield jsoner.deserialize_object_async (typeof (SiteAllArchs));
     }
 
     /**
@@ -6490,10 +6277,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteAllArchs) yield jsoner.deserialize_object_async  (typeof (SiteAllArchs));
+
+        return (SiteAllArchs) yield jsoner.deserialize_object_async (typeof (SiteAllArchs));
     }
 
     /**
@@ -6514,10 +6300,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteAllPackagasets) yield jsoner.deserialize_object_async  (typeof (SiteAllPackagasets));
+
+        return (SiteAllPackagasets) yield jsoner.deserialize_object_async (typeof (SiteAllPackagasets));
     }
 
     /**
@@ -6538,10 +6323,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteAllPackagesetsSummary) yield jsoner.deserialize_object_async  (typeof (SiteAllPackagesetsSummary));
+
+        return (SiteAllPackagesetsSummary) yield jsoner.deserialize_object_async (typeof (SiteAllPackagesetsSummary));
     }
 
     /**
@@ -6562,10 +6346,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteAllPackagasets) yield jsoner.deserialize_object_async  (typeof (SiteAllPackagasets));
+
+        return (SiteAllPackagasets) yield jsoner.deserialize_object_async (typeof (SiteAllPackagasets));
     }
 
     /**
@@ -6596,12 +6379,11 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<SiteBeehiveByMaintainer> ();
-        yield jsoner.deserialize_array_async  (array);
-        
+        yield jsoner.deserialize_array_async (array);
+
         return array;
     }
 
@@ -6630,10 +6412,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SitePackagesBinaryList) yield jsoner.deserialize_object_async  (typeof (SitePackagesBinaryList));
+
+        return (SitePackagesBinaryList) yield jsoner.deserialize_object_async (typeof (SitePackagesBinaryList));
     }
 
     /**
@@ -6656,10 +6437,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteBinPackageScripts) yield jsoner.deserialize_object_async  (typeof (SiteBinPackageScripts));
+
+        return (SiteBinPackageScripts) yield jsoner.deserialize_object_async (typeof (SiteBinPackageScripts));
     }
 
     /**
@@ -6693,10 +6473,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteDeletedPackage) yield jsoner.deserialize_object_async  (typeof (SiteDeletedPackage));
+
+        return (SiteDeletedPackage) yield jsoner.deserialize_object_async (typeof (SiteDeletedPackage));
     }
 
     /**
@@ -6717,17 +6496,16 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/fast_packages_search_lookup",
             null,
             {
-                { "name", string.joinv(",", name) },
+                { "name", string.joinv (",", name) },
                 { "branch", branch.to_string () },
             },
             null,
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteFastPackagesSearch) yield jsoner.deserialize_object_async  (typeof (SiteFastPackagesSearch));
+
+        return (SiteFastPackagesSearch) yield jsoner.deserialize_object_async (typeof (SiteFastPackagesSearch));
     }
 
     /**
@@ -6750,7 +6528,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/find_packages",
             null,
             {
-                { "name", string.joinv(",", name) },
+                { "name", string.joinv (",", name) },
                 { "branch", branch.to_string () },
                 { "arch", arch.to_string () },
             },
@@ -6758,10 +6536,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteFingPackages) yield jsoner.deserialize_object_async  (typeof (SiteFingPackages));
+
+        return (SiteFingPackages) yield jsoner.deserialize_object_async (typeof (SiteFingPackages));
     }
 
     /**
@@ -6789,10 +6566,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (FindSourcePackageInBranch) yield jsoner.deserialize_object_async  (typeof (FindSourcePackageInBranch));
+
+        return (FindSourcePackageInBranch) yield jsoner.deserialize_object_async (typeof (FindSourcePackageInBranch));
     }
 
     /**
@@ -6823,10 +6599,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteLastPackages) yield jsoner.deserialize_object_async  (typeof (SiteLastPackages));
+
+        return (SiteLastPackages) yield jsoner.deserialize_object_async (typeof (SiteLastPackages));
     }
 
     /**
@@ -6857,10 +6632,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteLastBranchPackages) yield jsoner.deserialize_object_async  (typeof (SiteLastBranchPackages));
+
+        return (SiteLastBranchPackages) yield jsoner.deserialize_object_async (typeof (SiteLastBranchPackages));
     }
 
     /**
@@ -6891,10 +6665,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteLastPackages) yield jsoner.deserialize_object_async  (typeof (SiteLastPackages));
+
+        return (SiteLastPackages) yield jsoner.deserialize_object_async (typeof (SiteLastPackages));
     }
 
     /**
@@ -6919,10 +6692,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteLastPackagesWithCVEFixes) yield jsoner.deserialize_object_async  (typeof (SiteLastPackagesWithCVEFixes));
+
+        return (SiteLastPackagesWithCVEFixes) yield jsoner.deserialize_object_async (typeof (SiteLastPackagesWithCVEFixes));
     }
 
     /**
@@ -6947,12 +6719,11 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<MaintainerBranches> ();
-        yield jsoner.deserialize_array_async  (array);
-        
+        yield jsoner.deserialize_array_async (array);
+
         return array;
     }
 
@@ -6981,12 +6752,11 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<MaintainerInfo> ();
-        yield jsoner.deserialize_array_async  (array);
-        
+        yield jsoner.deserialize_array_async (array);
+
         return array;
     }
 
@@ -7018,12 +6788,11 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<MaintainerPackages> ();
-        yield jsoner.deserialize_array_async  (array);
-        
+        yield jsoner.deserialize_array_async (array);
+
         return array;
     }
 
@@ -7051,10 +6820,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteChangelog) yield jsoner.deserialize_object_async  (typeof (SiteChangelog));
+
+        return (SiteChangelog) yield jsoner.deserialize_object_async (typeof (SiteChangelog));
     }
 
     /**
@@ -7081,10 +6849,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SitePackagesDownloads) yield jsoner.deserialize_object_async  (typeof (SitePackagesDownloads));
+
+        return (SitePackagesDownloads) yield jsoner.deserialize_object_async (typeof (SitePackagesDownloads));
     }
 
     /**
@@ -7114,10 +6881,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SitePackagesDownloads) yield jsoner.deserialize_object_async  (typeof (SitePackagesDownloads));
+
+        return (SitePackagesDownloads) yield jsoner.deserialize_object_async (typeof (SitePackagesDownloads));
     }
 
     /**
@@ -7144,10 +6910,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SitePackagesDownloads) yield jsoner.deserialize_object_async  (typeof (SitePackagesDownloads));
+
+        return (SitePackagesDownloads) yield jsoner.deserialize_object_async (typeof (SitePackagesDownloads));
     }
 
     /**
@@ -7180,10 +6945,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SitePackageInfo) yield jsoner.deserialize_object_async  (typeof (SitePackageInfo));
+
+        return (SitePackageInfo) yield jsoner.deserialize_object_async (typeof (SitePackageInfo));
     }
 
     /**
@@ -7206,10 +6970,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteBriefPackageInfo) yield jsoner.deserialize_object_async  (typeof (SiteBriefPackageInfo));
+
+        return (SiteBriefPackageInfo) yield jsoner.deserialize_object_async (typeof (SiteBriefPackageInfo));
     }
 
     /**
@@ -7232,10 +6995,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (BinPackageLogElement) yield jsoner.deserialize_object_async  (typeof (BinPackageLogElement));
+
+        return (BinPackageLogElement) yield jsoner.deserialize_object_async (typeof (BinPackageLogElement));
     }
 
     /**
@@ -7262,10 +7024,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackageMisconflictBySrc) yield jsoner.deserialize_object_async  (typeof (PackageMisconflictBySrc));
+
+        return (PackageMisconflictBySrc) yield jsoner.deserialize_object_async (typeof (PackageMisconflictBySrc));
     }
 
     /**
@@ -7293,10 +7054,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackageNameFromRepology) yield jsoner.deserialize_object_async  (typeof (PackageNameFromRepology));
+
+        return (PackageNameFromRepology) yield jsoner.deserialize_object_async (typeof (PackageNameFromRepology));
     }
 
     /**
@@ -7323,10 +7083,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (PackageNVRByHash) yield jsoner.deserialize_object_async  (typeof (PackageNVRByHash));
+
+        return (PackageNVRByHash) yield jsoner.deserialize_object_async (typeof (PackageNVRByHash));
     }
 
     /**
@@ -7357,10 +7116,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteSourcePackagesVersions) yield jsoner.deserialize_object_async  (typeof (SiteSourcePackagesVersions));
+
+        return (SiteSourcePackagesVersions) yield jsoner.deserialize_object_async (typeof (SiteSourcePackagesVersions));
     }
 
     /**
@@ -7394,10 +7152,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteImagePackageVersions) yield jsoner.deserialize_object_async  (typeof (SiteImagePackageVersions));
+
+        return (SiteImagePackageVersions) yield jsoner.deserialize_object_async (typeof (SiteImagePackageVersions));
     }
 
     /**
@@ -7425,10 +7182,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SItePackagesVersionsFromTasks) yield jsoner.deserialize_object_async  (typeof (SItePackagesVersionsFromTasks));
+
+        return (SItePackagesVersionsFromTasks) yield jsoner.deserialize_object_async (typeof (SItePackagesVersionsFromTasks));
     }
 
     /**
@@ -7451,10 +7207,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SitePackagesetsByHash) yield jsoner.deserialize_object_async  (typeof (SitePackagesetsByHash));
+
+        return (SitePackagesetsByHash) yield jsoner.deserialize_object_async (typeof (SitePackagesetsByHash));
     }
 
     /**
@@ -7485,10 +7240,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SitePackagesetPackageHash) yield jsoner.deserialize_object_async  (typeof (SitePackagesetPackageHash));
+
+        return (SitePackagesetPackageHash) yield jsoner.deserialize_object_async (typeof (SitePackagesetPackageHash));
     }
 
     /**
@@ -7516,10 +7270,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SitePackagesetPackageHash) yield jsoner.deserialize_object_async  (typeof (SitePackagesetPackageHash));
+
+        return (SitePackagesetPackageHash) yield jsoner.deserialize_object_async (typeof (SitePackagesetPackageHash));
     }
 
     /**
@@ -7553,10 +7306,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SitePackagesetPackageHashByNameVersionRelease) yield jsoner.deserialize_object_async  (typeof (SitePackagesetPackageHashByNameVersionRelease));
+
+        return (SitePackagesetPackageHashByNameVersionRelease) yield jsoner.deserialize_object_async (typeof (SitePackagesetPackageHashByNameVersionRelease));
     }
 
     /**
@@ -7584,10 +7336,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SitePackagesetCategories) yield jsoner.deserialize_object_async  (typeof (SitePackagesetCategories));
+
+        return (SitePackagesetCategories) yield jsoner.deserialize_object_async (typeof (SitePackagesetCategories));
     }
 
     /**
@@ -7608,10 +7359,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SitePackagesetsSummaryStatus) yield jsoner.deserialize_object_async  (typeof (SitePackagesetsSummaryStatus));
+
+        return (SitePackagesetsSummaryStatus) yield jsoner.deserialize_object_async (typeof (SitePackagesetsSummaryStatus));
     }
 
     /**
@@ -7642,12 +7392,11 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<RepocopByMaintainer> ();
-        yield jsoner.deserialize_array_async  (array);
-        
+        yield jsoner.deserialize_array_async (array);
+
         return array;
     }
 
@@ -7682,10 +7431,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SitePackages) yield jsoner.deserialize_object_async  (typeof (SitePackages));
+
+        return (SitePackages) yield jsoner.deserialize_object_async (typeof (SitePackages));
     }
 
     /**
@@ -7710,10 +7458,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteSourcePackagesVersions) yield jsoner.deserialize_object_async  (typeof (SiteSourcePackagesVersions));
+
+        return (SiteSourcePackagesVersions) yield jsoner.deserialize_object_async (typeof (SiteSourcePackagesVersions));
     }
 
     /**
@@ -7742,12 +7489,11 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<SiteTaskByName> ();
-        yield jsoner.deserialize_array_async  (array);
-        
+        yield jsoner.deserialize_array_async (array);
+
         return array;
     }
 
@@ -7774,10 +7520,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteTaskByName) yield jsoner.deserialize_object_async  (typeof (SiteTaskByName));
+
+        return (SiteTaskByName) yield jsoner.deserialize_object_async (typeof (SiteTaskByName));
     }
 
     /**
@@ -7802,10 +7547,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (SiteTasksHistory) yield jsoner.deserialize_object_async  (typeof (SiteTasksHistory));
+
+        return (SiteTasksHistory) yield jsoner.deserialize_object_async (typeof (SiteTasksHistory));
     }
 
     /**
@@ -7833,12 +7577,11 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
+
         var array = new Gee.ArrayList<SiteWatchByMaintainer> ();
-        yield jsoner.deserialize_array_async  (array);
-        
+        yield jsoner.deserialize_array_async (array);
+
         return array;
     }
 
@@ -7866,10 +7609,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (BuildDependencySet) yield jsoner.deserialize_object_async  (typeof (BuildDependencySet));
+
+        return (BuildDependencySet) yield jsoner.deserialize_object_async (typeof (BuildDependencySet));
     }
 
     /**
@@ -7934,9 +7676,9 @@ public sealed class AltRepo.Client : Object {
     ) throws CommonError, BadStatusCodeError {
         PostContent post_content = {
             PostContentType.JSON,
-            yield Jsoner.serialize_async  (payload, Case.SNAKE)
+            yield Jsoner.serialize_async (payload, Case.SNAKE)
         };
-        
+
         var bytes = yield soup_wrapper.post_async (
             @"$API_BASE/task/check_images",
             null,
@@ -7946,10 +7688,10 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
+
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (CheckImagesOutput) yield jsoner.deserialize_object_async  (typeof (CheckImagesOutput));
+
+        return (CheckImagesOutput) yield jsoner.deserialize_object_async (typeof (CheckImagesOutput));
     }
 
     /**
@@ -7972,10 +7714,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (FindImagesByTask) yield jsoner.deserialize_object_async  (typeof (FindImagesByTask));
+
+        return (FindImagesByTask) yield jsoner.deserialize_object_async (typeof (FindImagesByTask));
     }
 
     /**
@@ -7996,16 +7737,15 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/task/find_packageset/$id",
             null,
             {
-                { "branches", string.joinv(",", branches) },
+                { "branches", string.joinv (",", branches) },
             },
             null,
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (TaskFindPackageset) yield jsoner.deserialize_object_async  (typeof (TaskFindPackageset));
+
+        return (TaskFindPackageset) yield jsoner.deserialize_object_async (typeof (TaskFindPackageset));
     }
 
     /**
@@ -8028,17 +7768,16 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/task/misconflict/$id",
             null,
             {
-                { "archs", string.joinv(",", archs) },
+                { "archs", string.joinv (",", archs) },
                 { "no_cache", no_cache.to_string () },
             },
             null,
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (TaskMisconflictPackages) yield jsoner.deserialize_object_async  (typeof (TaskMisconflictPackages));
+
+        return (TaskMisconflictPackages) yield jsoner.deserialize_object_async (typeof (TaskMisconflictPackages));
     }
 
     /**
@@ -8062,17 +7801,16 @@ public sealed class AltRepo.Client : Object {
             null,
             {
                 { "acl_group", acl_group.to_string () },
-                { "branches", string.joinv(",", branches) },
+                { "branches", string.joinv (",", branches) },
                 { "before", before.to_string () },
             },
             null,
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (NeedsApproval) yield jsoner.deserialize_object_async  (typeof (NeedsApproval));
+
+        return (NeedsApproval) yield jsoner.deserialize_object_async (typeof (NeedsApproval));
     }
 
     /**
@@ -8095,10 +7833,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (TaskPackages) yield jsoner.deserialize_object_async  (typeof (TaskPackages));
+
+        return (TaskPackages) yield jsoner.deserialize_object_async (typeof (TaskPackages));
     }
 
     /**
@@ -8120,10 +7857,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (AllTasksBranches) yield jsoner.deserialize_object_async  (typeof (AllTasksBranches));
+
+        return (AllTasksBranches) yield jsoner.deserialize_object_async (typeof (AllTasksBranches));
     }
 
     /**
@@ -8144,10 +7880,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (AllTasksBranches) yield jsoner.deserialize_object_async  (typeof (AllTasksBranches));
+
+        return (AllTasksBranches) yield jsoner.deserialize_object_async (typeof (AllTasksBranches));
     }
 
     /**
@@ -8176,10 +7911,10 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/task/progress/find_tasks",
             null,
             {
-                { "input", string.joinv(",", input) },
+                { "input", string.joinv (",", input) },
                 { "owner", owner.to_string () },
                 { "branch", branch.to_string () },
-                { "state", string.joinv(",", state) },
+                { "state", string.joinv (",", state) },
                 { "tasks_limit", tasks_limit.to_string () },
                 { "by_package", by_package.to_string () },
             },
@@ -8187,10 +7922,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (TasksList) yield jsoner.deserialize_object_async  (typeof (TasksList));
+
+        return (TasksList) yield jsoner.deserialize_object_async (typeof (TasksList));
     }
 
     /**
@@ -8213,7 +7947,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/task/progress/find_tasks_lookup",
             null,
             {
-                { "input", string.joinv(",", input) },
+                { "input", string.joinv (",", input) },
                 { "branch", branch.to_string () },
                 { "tasks_limit", tasks_limit.to_string () },
             },
@@ -8221,10 +7955,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (FindTasks) yield jsoner.deserialize_object_async  (typeof (FindTasks));
+
+        return (FindTasks) yield jsoner.deserialize_object_async (typeof (FindTasks));
     }
 
     /**
@@ -8252,10 +7985,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (TasksList) yield jsoner.deserialize_object_async  (typeof (TasksList));
+
+        return (TasksList) yield jsoner.deserialize_object_async (typeof (TasksList));
     }
 
     /**
@@ -8278,10 +8010,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (TaskProgressTaskInfo) yield jsoner.deserialize_object_async  (typeof (TaskProgressTaskInfo));
+
+        return (TaskProgressTaskInfo) yield jsoner.deserialize_object_async (typeof (TaskProgressTaskInfo));
     }
 
     /**
@@ -8304,10 +8035,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (TaskDiff) yield jsoner.deserialize_object_async  (typeof (TaskDiff));
+
+        return (TaskDiff) yield jsoner.deserialize_object_async (typeof (TaskDiff));
     }
 
     /**
@@ -8344,10 +8074,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (TaskHistory) yield jsoner.deserialize_object_async  (typeof (TaskHistory));
+
+        return (TaskHistory) yield jsoner.deserialize_object_async (typeof (TaskHistory));
     }
 
     /**
@@ -8377,16 +8106,15 @@ public sealed class AltRepo.Client : Object {
                 { "try", try.to_string () },
                 { "iteration", iteration.to_string () },
                 { "no_cache", no_cache.to_string () },
-                { "states", string.joinv(",", states) },
+                { "states", string.joinv (",", states) },
             },
             null,
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (TaskInfo) yield jsoner.deserialize_object_async  (typeof (TaskInfo));
+
+        return (TaskInfo) yield jsoner.deserialize_object_async (typeof (TaskInfo));
     }
 
     /**
@@ -8413,10 +8141,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (TaskRepo) yield jsoner.deserialize_object_async  (typeof (TaskRepo));
+
+        return (TaskRepo) yield jsoner.deserialize_object_async (typeof (TaskRepo));
     }
 
     /**
@@ -8455,10 +8182,10 @@ public sealed class AltRepo.Client : Object {
             {
                 { "depth", depth.to_string () },
                 { "dptype", dptype.to_string () },
-                { "archs", string.joinv(",", archs) },
+                { "archs", string.joinv (",", archs) },
                 { "leaf", leaf.to_string () },
                 { "finite_package", finite_package.to_string () },
-                { "filter_by_package", string.joinv(",", filter_by_package) },
+                { "filter_by_package", string.joinv (",", filter_by_package) },
                 { "filter_by_source", filter_by_source.to_string () },
                 { "oneandhalf", oneandhalf.to_string () },
                 { "no_cache", no_cache.to_string () },
@@ -8467,10 +8194,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (TaskBuildDependency) yield jsoner.deserialize_object_async  (typeof (TaskBuildDependency));
+
+        return (TaskBuildDependency) yield jsoner.deserialize_object_async (typeof (TaskBuildDependency));
     }
 
     /**
@@ -8491,10 +8217,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (APIVersion) yield jsoner.deserialize_object_async  (typeof (APIVersion));
+
+        return (APIVersion) yield jsoner.deserialize_object_async (typeof (APIVersion));
     }
 
     /**
@@ -8519,10 +8244,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (VulnerabilityInfo) yield jsoner.deserialize_object_async  (typeof (VulnerabilityInfo));
+
+        return (VulnerabilityInfo) yield jsoner.deserialize_object_async (typeof (VulnerabilityInfo));
     }
 
     /**
@@ -8547,10 +8271,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (VulnFixesPackages) yield jsoner.deserialize_object_async  (typeof (VulnFixesPackages));
+
+        return (VulnFixesPackages) yield jsoner.deserialize_object_async (typeof (VulnFixesPackages));
     }
 
     /**
@@ -8575,10 +8298,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (VulnerabilityInfo) yield jsoner.deserialize_object_async  (typeof (VulnerabilityInfo));
+
+        return (VulnerabilityInfo) yield jsoner.deserialize_object_async (typeof (VulnerabilityInfo));
     }
 
     /**
@@ -8603,10 +8325,9 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (VulnFixesPackages) yield jsoner.deserialize_object_async  (typeof (VulnFixesPackages));
+
+        return (VulnFixesPackages) yield jsoner.deserialize_object_async (typeof (VulnFixesPackages));
     }
 
     /**
@@ -8629,9 +8350,8 @@ public sealed class AltRepo.Client : Object {
             priority,
             cancellable
         );
-        
         var jsoner = Jsoner.from_bytes (bytes, null, Case.SNAKE);
-        
-        return (CveVulnerableTask) yield jsoner.deserialize_object_async  (typeof (CveVulnerableTask));
+
+        return (CveVulnerableTask) yield jsoner.deserialize_object_async (typeof (CveVulnerableTask));
     }
 }
