@@ -84,10 +84,8 @@ jobs:
           apt-get update
           apt-get install -y git python3.12
 
-      - name: Clone
-        run: |
-          git clone https://github.com/alt-gnome/libalt-repo-vala.git current_git_repo
-          cd current_git_repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup
         run: sh auto-update/update.sh
@@ -99,6 +97,7 @@ jobs:
 
       - name: Push
         run: |
+          chmod -R 744 .
           git add ./lib/*
           git commit -m "Update
           git push
