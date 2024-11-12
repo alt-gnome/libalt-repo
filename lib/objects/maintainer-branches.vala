@@ -17,20 +17,22 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-public sealed class AltRepo.ApiVersion : Object {
+// THIS CODE WAS GENERATED, DON'T MODIFY IT
+
+public class AltRepo.MaintainerBranches : Object {
 
     /**
-     * API name
+     * request arguments
      */
-    public string name { get; set; }
+    public Object request_args { get; set; }
 
     /**
-     * API version
+     * number of maintainers found
      */
-    public string version { get; set; }
+    public int64 length { get; set; }
 
     /**
-     * API description
+     * all branches of the maintainer
      */
-    public string description { get; set; }
+    public Gee.ArrayList<SiteAllPackagasetsElement> branches { get; set; default = new Gee.ArrayList<SiteAllPackagasetsElement> (); }
 }

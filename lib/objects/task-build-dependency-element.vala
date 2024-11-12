@@ -1,0 +1,88 @@
+/*
+ * Copyright (C) 2024 Vladimir Vaskov
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+// THIS CODE WAS GENERATED, DON'T MODIFY IT
+
+public class AltRepo.TaskBuildDependencyElement : Object {
+
+    /**
+     * package dependenyc depth
+     */
+    public int64 depth { get; set; }
+
+    /**
+     * package name
+     */
+    public string name { get; set; }
+
+    /**
+     * package version
+     */
+    public string version { get; set; }
+
+    /**
+     * package release
+     */
+    public string release { get; set; }
+
+    /**
+     * package epoch
+     */
+    public int64 epoch { get; set; }
+
+    /**
+     * package serial
+     */
+    public int64 serial { get; set; }
+
+    /**
+     * source package file
+     */
+    public string sourcerpm { get; set; }
+
+    /**
+     * package set name
+     */
+    public string branch { get; set; }
+
+    /**
+     * package build time
+     */
+    public string buildtime { get; set; }
+
+    /**
+     * package archs
+     */
+    public Gee.ArrayList<string> archs { get; set; default = new Gee.ArrayList<string> (); }
+
+    /**
+     * package cycle dependencies
+     */
+    public Gee.ArrayList<string> cycle { get; set; default = new Gee.ArrayList<string> (); }
+
+    /**
+     * package requirements
+     */
+    public Gee.ArrayList<string> requires { get; set; default = new Gee.ArrayList<string> (); }
+
+    /**
+     * package ACL list
+     */
+    public Gee.ArrayList<string> acl { get; set; default = new Gee.ArrayList<string> (); }
+}
