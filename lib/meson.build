@@ -292,6 +292,12 @@ libalt_repo = shared_library(
   install_dir: [ true, true, true, true ],
 )
 
+libalt_repo_dep = declare_dependency(
+  link_with: libalt_repo,
+  include_directories: include_directories('.'),
+  dependencies: libalt_repo_dependencies
+)
+
 deps_conf = configuration_data()
 deps_conf.set ('DEPS',  '\n'.join (deps_pkgs))
 
