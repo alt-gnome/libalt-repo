@@ -59,7 +59,7 @@ jobs:
       - name: Install libs on container
         run: |
           apt-get update
-          apt-get install -y git python3.12 valac meson ninja libgee-0.8-dev libglib2.0-dev
+          apt-get install -y git python3.12 valac meson ninja-build libgee-0.8-dev libglib2.0-dev
           
       - name: Checkout repository
         uses: actions/checkout@v4
