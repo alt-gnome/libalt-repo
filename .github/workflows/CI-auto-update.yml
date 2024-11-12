@@ -84,17 +84,18 @@ jobs:
           apt-get update
           apt-get install -y git python3.12
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Clone
+        run: |
+          git clone https://github.com/alt-gnome/libalt-repo-vala.git current_git_repo
+          cd current_git_repo
 
       - name: Setup
         run: sh auto-update/update.sh
 
       - name: Setup
-        run: git config --global user.email "auto-updater@users.noreply.github.com"
-
-      - name: Setup
-        run: git config --global user.name "auto-updater"
+        run: |
+          git config --global user.email "auto-updater@users.noreply.github.com"
+          git config --global user.name "auto-updater" 
 
       - name: Push
         run: |
