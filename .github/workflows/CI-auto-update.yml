@@ -91,7 +91,7 @@ jobs:
         run: sh auto-update/update.sh
 
       - name: Setup
-        run: git config --global user.email "auto-updater@users.noreply.github.com
+        run: git config --global user.email "auto-updater@users.noreply.github.com"
 
       - name: Setup
         run: git config --global user.name "auto-updater"
