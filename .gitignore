@@ -5,3 +5,5 @@ _build
 .vscode/settings.json
 
 subprojects/*/
+
+auto-update/altrepo2vala
