@@ -17,9 +17,9 @@ python3.12 auto-update/update_main_meson.py meson.build $current_date
 
 git add .
 if git commit -m "update: regular lib update" ; then
-    # git push
-    # git tag $current_date -a -m "Automatic update"
-    # git push origin $current_date
+    git push
+    git tag $current_date -a -m "Automatic update"
+    git push origin $current_date
 else
     echo "Nothing to do"
 fi
