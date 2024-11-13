@@ -20,4 +20,6 @@ if git commit -m "update: regular lib update" ; then
 
     git tag $current_date -a -m "Automatic update"
     git push origin $current_date
+else
+    echo "Nothing to do"
 fi
