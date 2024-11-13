@@ -2,11 +2,8 @@ name: CI Auto Update
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - 'main'
   schedule:
-    - cron:  '59 23 * * *'
+    - cron:  '0 0 * * *'
 
 jobs:
   lint-vala:
@@ -88,6 +85,12 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Setup git
+        run: |
+          git config --global user.name "Automatic Updater Bot"
+          git config --global user.email "automatic@updater.bot"
+          git config --global --add safe.directory '*'
 
       - name: Setup
         run: sh auto-update/update.sh
