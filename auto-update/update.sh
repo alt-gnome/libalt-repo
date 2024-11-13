@@ -14,10 +14,12 @@ echo "*" >> auto-update/altrepo2vala/.gitignore
 python3.12 auto-update/altrepo2vala/generator.py 'Vladimir Vaskov' lib
 python3.12 auto-update/update_meson.py lib/meson.build
 
-if git commit -a -m "update: regular lib update" ; then
+git add .
+if git commit -m "update: regular lib update" ; then
     python3.12 auto-update/update_main_meson.py meson.build $current_api_version
 
-    git commit -a -m "chore: bump version to $current_api_version"
+    git add .
+    git commit -m "chore: bump version to $current_api_version"
 
     git push
     git tag v$current_api_version -a -m "Automatic update"
