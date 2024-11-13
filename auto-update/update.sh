@@ -13,10 +13,11 @@ python3.12 auto-update/altrepo2vala/generator.py 'Vladimir Vaskov' lib
 python3.12 auto-update/update_meson.py lib/meson.build
 
 git add .
-git commit -m "update: regular lib update"
-git pull
+if git commit -m "update: regular lib update" ; then
+    git push
 
-current_date=$(date +%Y.%m.%d)
+    current_date=$(date +%Y.%m.%d)
 
-git tag $current_date -a -m "Automatic update"
-git push origin $current_date
+    git tag $current_date -a -m "Automatic update"
+    git push origin $current_date
+fi
