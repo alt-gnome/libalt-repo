@@ -18,5 +18,5 @@ git pull
 
 current_date=$(date +%Y.%m.%d)
 
-git tag $(current_date) -a -m "Automatic update"
-git push origin $(current_date)
+git tag $current_date -a -m "Automatic update"
+git push origin $current_date
