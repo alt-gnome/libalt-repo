@@ -1,12 +1,12 @@
 project(
   'libalt-repo',
   ['c', 'vala'],
-  version: '1.2024.11.13',
+  version: '1.19.13',
   meson_version: '>= 1.0.0',
   license: 'GPL-3.0-or-later',
 )
 
-api_version = '1'
+api_version = '1.19.13'
 glib_min_version = '2.76'
 
 project_name = meson.project_name()
