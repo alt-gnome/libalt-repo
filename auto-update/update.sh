@@ -16,7 +16,7 @@ git add .
 git commit -m "update: regular lib update"
 git pull
 
-date = $(date +%Y.%m.%d)
+current_date=$(date +%Y.%m.%d)
 
-git tag $(date) -a -m "Automatic update"
-git push origin $(date)
+git tag $(current_date) -a -m "Automatic update"
+git push origin $(current_date)
