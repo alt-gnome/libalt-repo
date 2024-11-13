@@ -20,10 +20,12 @@ if git commit -m "update: regular lib update" ; then
 
     git add .
     git commit -m "chore: bump version to $current_api_version"
-
-    git tag "v$current_api_version"
     git push
-    git push origin $current_api_version
+
+    tag_name="v$current_api_version"
+
+    git tag $tag_name
+    git push origin $tag_name
 else
     echo "Nothing to do"
 fi
