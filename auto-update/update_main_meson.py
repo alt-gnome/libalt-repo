@@ -15,7 +15,8 @@ ignore = False
 with (open(meson_build_path, 'w')) as f:
     for line in meson_lines:
         if line.strip().startswith("version:"):
-            f.write(f"  version: '1.{new_version}',\n")
+            f.write(f'  version: \'{new_version}\',\n')
+        elif line.startswith('api_version = '):
+            f.write(f'api_version = \'{new_version.split()[0]}\'\n')
         else:
             f.write(line)
-    
