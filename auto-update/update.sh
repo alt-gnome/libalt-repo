@@ -3,10 +3,14 @@
 
 set -e
 
-rm -rf auto-update/altrepo2vala/
-
 current_api_version=$(python3 auto-update/print_api_version.py)
 
+if [ "v$current_api_version" = $(git describe --tags --abbrev=0) ]; then
+    echo "Nothing to do"
+    exit 0
+fi
+
+rm -rf auto-update/altrepo2vala/
 rm -rf lib/client.vala lib/objects/*
 git clone https://github.com/Rirusha/altrepo2vala.git auto-update/altrepo2vala
 echo "*" >> auto-update/altrepo2vala/.gitignore
