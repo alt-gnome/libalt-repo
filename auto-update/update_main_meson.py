@@ -17,6 +17,6 @@ with (open(meson_build_path, 'w')) as f:
         if line.strip().startswith("version:"):
             f.write(f'  version: \'{new_version}\',\n')
         elif line.startswith('api_version = '):
-            f.write(f'api_version = \'{new_version.split()[0]}\'\n')
+            f.write(f'api_version = \'{new_version.split('.')[0]}\'\n')
         else:
             f.write(line)
