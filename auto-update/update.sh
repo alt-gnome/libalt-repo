@@ -24,8 +24,8 @@ if git commit -m "update: regular lib update" ; then
     python3.12 auto-update/update_main_meson.py meson.build $current_api_version
 
     git add .
-    git commit -m "chore: bump version to $current_api_version"
-    git push
+    if git commit -m "chore: bump version to $current_api_version" ; then
+        git push
 
     git tag $tag_name
     git push origin $tag_name
