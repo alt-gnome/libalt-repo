@@ -301,7 +301,7 @@ deps_conf = configuration_data()
 deps_conf.set ('DEPS',  '\n'.join (deps_pkgs))
 
 configure_file(
-  input: libalt_repo_deps + '.in',
+  input: project_name + '.deps.in',
   output: libalt_repo_deps,
   configuration: deps_conf,
   install: true,
