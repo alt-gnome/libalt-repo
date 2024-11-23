@@ -280,7 +280,7 @@ libalt_repo_sources = [
 ]
 
 libalt_repo = shared_library(
-  project_name,
+  lib_name,
   libalt_repo_sources,
   dependencies: libalt_repo_dependencies,
   vala_header: libalt_repo_header,

@@ -9,6 +9,7 @@ project(
 api_version = '1'
 glib_min_version = '2.76'
 
+lib_name = 'alt-repo'
 project_name = meson.project_name()
 gir_name = 'AltRepo'
 
