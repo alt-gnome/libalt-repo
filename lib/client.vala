@@ -48,8 +48,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/acl/by_packages",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "packages_names", packages_names != null ? string.joinv (",", packages_names) : null },
+                { "branch", branch.to_string () },
+                { "packages_names", string.joinv (",", packages_names) },
             },
             null,
             cancellable
@@ -79,7 +79,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/acl/groups",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
                 { "name", name != null ? name.to_string () : null },
             },
             null,
@@ -111,7 +111,7 @@ public sealed class AltRepo.Client : Object {
             null,
             {
                 { "branch", branch != null ? string.joinv (",", branch) : null },
-                { "nickname", nickname != null ? nickname.to_string () : null },
+                { "nickname", nickname.to_string () },
             },
             null,
             cancellable
@@ -141,8 +141,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/bug/bugzilla_by_image_edition",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "edition", edition != null ? edition.to_string () : null },
+                { "branch", branch.to_string () },
+                { "edition", edition.to_string () },
             },
             null,
             cancellable
@@ -172,7 +172,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/bug/bugzilla_by_maintainer",
             null,
             {
-                { "maintainer_nickname", maintainer_nickname != null ? maintainer_nickname.to_string () : null },
+                { "maintainer_nickname", maintainer_nickname.to_string () },
                 { "by_acl", by_acl != null ? by_acl.to_string () : null },
             },
             null,
@@ -203,7 +203,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/bug/bugzilla_by_package",
             null,
             {
-                { "package_name", package_name != null ? package_name.to_string () : null },
+                { "package_name", package_name.to_string () },
                 { "package_type", package_type != null ? package_type.to_string () : null },
             },
             null,
@@ -240,9 +240,9 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/dependencies/backport_helper",
             null,
             {
-                { "from_branch", from_branch != null ? from_branch.to_string () : null },
-                { "into_branch", into_branch != null ? into_branch.to_string () : null },
-                { "packages_names", packages_names != null ? string.joinv (",", packages_names) : null },
+                { "from_branch", from_branch.to_string () },
+                { "into_branch", into_branch.to_string () },
+                { "packages_names", string.joinv (",", packages_names) },
                 { "dp_type", dp_type != null ? dp_type.to_string () : null },
                 { "archs", archs != null ? string.joinv (",", archs) : null },
             },
@@ -300,8 +300,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/dependencies/fast_lookup",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "dp_name", dp_name != null ? dp_name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "dp_name", dp_name.to_string () },
                 { "limit", limit != null ? limit.to_string () : null },
             },
             null,
@@ -331,8 +331,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/dependencies/packages_by_dependency",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "dp_name", dp_name != null ? dp_name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "dp_name", dp_name.to_string () },
                 { "dp_type", dp_type != null ? dp_type.to_string () : null },
             },
             null,
@@ -362,7 +362,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/dependencies/source_package_dependencies/$pkghash",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
                 { "depth", depth != null ? depth.to_string () : null },
             },
             null,
@@ -392,8 +392,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/dependencies/what_depends_src",
             null,
             {
-                { "name", name != null ? name.to_string () : null },
-                { "branch", branch != null ? branch.to_string () : null },
+                { "name", name.to_string () },
+                { "branch", branch.to_string () },
                 { "dp_type", dp_type != null ? dp_type.to_string () : null },
             },
             null,
@@ -575,8 +575,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/errata/find_image_erratas",
             null,
             {
-                { "uuid", uuid != null ? uuid.to_string () : null },
-                { "branch", branch != null ? branch.to_string () : null },
+                { "uuid", uuid.to_string () },
+                { "branch", branch.to_string () },
                 { "component", component != null ? component.to_string () : null },
                 { "input", input != null ? string.joinv (",", input) : null },
                 { "type", type != null ? type.to_string () : null },
@@ -789,7 +789,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/export/translation/packages_po_files",
             null,
             {
-                { "branches", branches != null ? string.joinv (",", branches) : null },
+                { "branches", string.joinv (",", branches) },
                 { "from_date", from_date != null ? from_date.to_string () : null },
             },
             null,
@@ -817,8 +817,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/file/fast_lookup",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "file_name", file_name != null ? file_name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "file_name", file_name.to_string () },
                 { "limit", limit != null ? limit.to_string () : null },
             },
             null,
@@ -846,8 +846,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/file/packages_by_file",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "file_name", file_name != null ? file_name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "file_name", file_name.to_string () },
             },
             null,
             cancellable
@@ -876,8 +876,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/file/search",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "file_name", file_name != null ? file_name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "file_name", file_name.to_string () },
                 { "limit", limit != null ? limit.to_string () : null },
             },
             null,
@@ -952,7 +952,7 @@ public sealed class AltRepo.Client : Object {
             null,
             {
                 { "branch", branch != null ? branch.to_string () : null },
-                { "pkg_name", pkg_name != null ? pkg_name.to_string () : null },
+                { "pkg_name", pkg_name.to_string () },
                 { "edition", edition != null ? edition.to_string () : null },
                 { "pkg_type", pkg_type != null ? pkg_type.to_string () : null },
                 { "img_show", img_show != null ? img_show.to_string () : null },
@@ -982,7 +982,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/image/image_categories_count",
             null,
             {
-                { "uuid", uuid != null ? uuid.to_string () : null },
+                { "uuid", uuid.to_string () },
                 { "component", component != null ? component.to_string () : null },
             },
             null,
@@ -1064,7 +1064,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/image/image_packages",
             null,
             {
-                { "uuid", uuid != null ? uuid.to_string () : null },
+                { "uuid", uuid.to_string () },
                 { "group", group != null ? group.to_string () : null },
                 { "component", component != null ? component.to_string () : null },
             },
@@ -1161,7 +1161,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/image/image_uuid_by_tag",
             null,
             {
-                { "tag", tag != null ? tag.to_string () : null },
+                { "tag", tag.to_string () },
             },
             null,
             cancellable
@@ -1273,8 +1273,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/image/last_packages_by_image",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "uuid", uuid != null ? uuid.to_string () : null },
+                { "branch", branch.to_string () },
+                { "uuid", uuid.to_string () },
                 { "packages_limit", packages_limit != null ? packages_limit.to_string () : null },
                 { "component", component != null ? component.to_string () : null },
             },
@@ -1307,8 +1307,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/image/last_packages_image_with_cve_fixed",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "uuid", uuid != null ? uuid.to_string () : null },
+                { "branch", branch.to_string () },
+                { "uuid", uuid.to_string () },
                 { "packages_limit", packages_limit != null ? packages_limit.to_string () : null },
                 { "component", component != null ? component.to_string () : null },
             },
@@ -1354,7 +1354,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/license/info",
             null,
             {
-                { "license", license != null ? license.to_string () : null },
+                { "license", license.to_string () },
             },
             null,
             cancellable
@@ -1379,7 +1379,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/license/tokens",
             null,
             {
-                { "license", license != null ? license.to_string () : null },
+                { "license", license.to_string () },
             },
             null,
             cancellable
@@ -1408,8 +1408,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/build_dependency_set",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "packages", packages != null ? string.joinv (",", packages) : null },
+                { "branch", branch.to_string () },
+                { "packages", string.joinv (",", packages) },
                 { "arch", arch != null ? arch.to_string () : null },
             },
             null,
@@ -1437,7 +1437,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/find_packageset",
             null,
             {
-                { "packages", packages != null ? string.joinv (",", packages) : null },
+                { "packages", string.joinv (",", packages) },
                 { "branches", branches != null ? string.joinv (",", branches) : null },
             },
             null,
@@ -1467,8 +1467,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/misconflict",
             null,
             {
-                { "packages", packages != null ? string.joinv (",", packages) : null },
-                { "branch", branch != null ? branch.to_string () : null },
+                { "packages", string.joinv (",", packages) },
+                { "branch", branch.to_string () },
                 { "archs", archs != null ? string.joinv (",", archs) : null },
             },
             null,
@@ -1498,8 +1498,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/package_by_file_md5",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "md5", md5 != null ? md5.to_string () : null },
+                { "branch", branch.to_string () },
+                { "md5", md5.to_string () },
                 { "arch", arch != null ? arch.to_string () : null },
             },
             null,
@@ -1530,8 +1530,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/package_by_file_name",
             null,
             {
-                { "file", file != null ? file.to_string () : null },
-                { "branch", branch != null ? branch.to_string () : null },
+                { "file", file.to_string () },
+                { "branch", branch.to_string () },
                 { "arch", arch != null ? arch.to_string () : null },
             },
             null,
@@ -1676,8 +1676,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/repocop",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "package_name", package_name != null ? package_name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "package_name", package_name.to_string () },
                 { "package_version", package_version != null ? package_version.to_string () : null },
                 { "package_release", package_release != null ? package_release.to_string () : null },
                 { "bin_package_arch", bin_package_arch != null ? bin_package_arch.to_string () : null },
@@ -1731,8 +1731,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/specfile_by_name",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "name", name != null ? name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "name", name.to_string () },
             },
             null,
             cancellable
@@ -1761,8 +1761,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/unpackaged_dirs",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "packager", packager != null ? packager.to_string () : null },
+                { "branch", branch.to_string () },
+                { "packager", packager.to_string () },
                 { "archs", archs != null ? string.joinv (",", archs) : null },
             },
             null,
@@ -1808,8 +1808,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/what_depends_src",
             null,
             {
-                { "packages", packages != null ? string.joinv (",", packages) : null },
-                { "branch", branch != null ? branch.to_string () : null },
+                { "packages", string.joinv (",", packages) },
+                { "branch", branch.to_string () },
                 { "depth", depth != null ? depth.to_string () : null },
                 { "dptype", dptype != null ? dptype.to_string () : null },
                 { "archs", archs != null ? string.joinv (",", archs) : null },
@@ -1866,8 +1866,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/packageset/compare_packagesets",
             null,
             {
-                { "pkgset1", pkgset1 != null ? pkgset1.to_string () : null },
-                { "pkgset2", pkgset2 != null ? pkgset2.to_string () : null },
+                { "pkgset1", pkgset1.to_string () },
+                { "pkgset2", pkgset2.to_string () },
             },
             null,
             cancellable
@@ -1896,9 +1896,9 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/packageset/packages_by_component",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "arch", arch != null ? arch.to_string () : null },
-                { "component", component != null ? component.to_string () : null },
+                { "branch", branch.to_string () },
+                { "arch", arch.to_string () },
+                { "component", component.to_string () },
             },
             null,
             cancellable
@@ -1923,7 +1923,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/packageset/packages_by_uuid",
             null,
             {
-                { "uuid", uuid != null ? uuid.to_string () : null },
+                { "uuid", uuid.to_string () },
             },
             null,
             cancellable
@@ -1973,7 +1973,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/packageset/repository_packages",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
                 { "package_type", package_type != null ? package_type.to_string () : null },
                 { "archs", archs != null ? string.joinv (",", archs) : null },
             },
@@ -2025,7 +2025,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/all_maintainers",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
             },
             null,
             cancellable
@@ -2053,7 +2053,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/all_maintainers_with_nicknames",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
             },
             null,
             cancellable
@@ -2081,7 +2081,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/all_pkgset_archs",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
             },
             null,
             cancellable
@@ -2106,7 +2106,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/all_pkgset_archs_with_src_count",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
             },
             null,
             cancellable
@@ -2198,8 +2198,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/beehive_errors_by_maintainer",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "maintainer_nickname", maintainer_nickname != null ? maintainer_nickname.to_string () : null },
+                { "branch", branch.to_string () },
+                { "maintainer_nickname", maintainer_nickname.to_string () },
                 { "by_acl", by_acl != null ? by_acl.to_string () : null },
             },
             null,
@@ -2230,8 +2230,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/binary_package_archs_and_versions",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "name", name != null ? name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "name", name.to_string () },
             },
             null,
             cancellable
@@ -2285,8 +2285,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/deleted_package_info",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "name", name != null ? name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "name", name.to_string () },
                 { "package_type", package_type != null ? package_type.to_string () : null },
                 { "arch", arch != null ? arch.to_string () : null },
             },
@@ -2315,7 +2315,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/fast_packages_search_lookup",
             null,
             {
-                { "name", name != null ? string.joinv (",", name) : null },
+                { "name", string.joinv (",", name) },
                 { "branch", branch != null ? branch.to_string () : null },
             },
             null,
@@ -2345,7 +2345,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/find_packages",
             null,
             {
-                { "name", name != null ? string.joinv (",", name) : null },
+                { "name", string.joinv (",", name) },
                 { "branch", branch != null ? branch.to_string () : null },
                 { "arch", arch != null ? arch.to_string () : null },
             },
@@ -2374,8 +2374,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/find_source_package",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "name", name != null ? name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "name", name.to_string () },
             },
             null,
             cancellable
@@ -2404,8 +2404,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/last_packages",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "tasks_limit", tasks_limit != null ? tasks_limit.to_string () : null },
+                { "branch", branch.to_string () },
+                { "tasks_limit", tasks_limit.to_string () },
                 { "task_owner", task_owner != null ? task_owner.to_string () : null },
             },
             null,
@@ -2435,8 +2435,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/last_packages_by_branch",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "packages_limit", packages_limit != null ? packages_limit.to_string () : null },
+                { "branch", branch.to_string () },
+                { "packages_limit", packages_limit.to_string () },
                 { "packager", packager != null ? packager.to_string () : null },
             },
             null,
@@ -2466,8 +2466,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/last_packages_by_tasks",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "tasks_limit", tasks_limit != null ? tasks_limit.to_string () : null },
+                { "branch", branch.to_string () },
+                { "tasks_limit", tasks_limit.to_string () },
                 { "task_owner", task_owner != null ? task_owner.to_string () : null },
             },
             null,
@@ -2493,7 +2493,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/last_packages_with_cve_fixed",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
             },
             null,
             cancellable
@@ -2518,7 +2518,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/maintainer_branches",
             null,
             {
-                { "maintainer_nickname", maintainer_nickname != null ? maintainer_nickname.to_string () : null },
+                { "maintainer_nickname", maintainer_nickname.to_string () },
             },
             null,
             cancellable
@@ -2548,8 +2548,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/maintainer_info",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "maintainer_nickname", maintainer_nickname != null ? maintainer_nickname.to_string () : null },
+                { "branch", branch.to_string () },
+                { "maintainer_nickname", maintainer_nickname.to_string () },
             },
             null,
             cancellable
@@ -2581,8 +2581,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/maintainer_packages",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "maintainer_nickname", maintainer_nickname != null ? maintainer_nickname.to_string () : null },
+                { "branch", branch.to_string () },
+                { "maintainer_nickname", maintainer_nickname.to_string () },
                 { "by_acl", by_acl != null ? by_acl.to_string () : null },
             },
             null,
@@ -2640,7 +2640,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_downloads/$pkghash",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
             },
             null,
             cancellable
@@ -2669,8 +2669,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_downloads_bin/$pkghash",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "arch", arch != null ? arch.to_string () : null },
+                { "branch", branch.to_string () },
+                { "arch", arch.to_string () },
             },
             null,
             cancellable
@@ -2697,7 +2697,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_downloads_src/$pkghash",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
             },
             null,
             cancellable
@@ -2728,7 +2728,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_info/$pkghash",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
                 { "changelog_last", changelog_last != null ? changelog_last.to_string () : null },
                 { "package_type", package_type != null ? package_type.to_string () : null },
             },
@@ -2803,7 +2803,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_misconflict/$pkghash",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
             },
             null,
             cancellable
@@ -2830,8 +2830,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_name_from_repology",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "name", name != null ? name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "name", name.to_string () },
             },
             null,
             cancellable
@@ -2887,7 +2887,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_versions",
             null,
             {
-                { "name", name != null ? name.to_string () : null },
+                { "name", name.to_string () },
                 { "package_type", package_type != null ? package_type.to_string () : null },
                 { "arch", arch != null ? arch.to_string () : null },
             },
@@ -2920,10 +2920,10 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_versions_from_images",
             null,
             {
-                { "name", name != null ? name.to_string () : null },
-                { "branch", branch != null ? branch.to_string () : null },
-                { "edition", edition != null ? edition.to_string () : null },
-                { "type", type != null ? type.to_string () : null },
+                { "name", name.to_string () },
+                { "branch", branch.to_string () },
+                { "edition", edition.to_string () },
+                { "type", type.to_string () },
             },
             null,
             cancellable
@@ -2950,7 +2950,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_versions_from_tasks",
             null,
             {
-                { "name", name != null ? name.to_string () : null },
+                { "name", name.to_string () },
                 { "branch", branch != null ? branch.to_string () : null },
             },
             null,
@@ -3003,9 +3003,9 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/pkghash_by_binary_name",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "name", name != null ? name.to_string () : null },
-                { "arch", arch != null ? arch.to_string () : null },
+                { "branch", branch.to_string () },
+                { "name", name.to_string () },
+                { "arch", arch.to_string () },
             },
             null,
             cancellable
@@ -3032,8 +3032,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/pkghash_by_name",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "name", name != null ? name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "name", name.to_string () },
             },
             null,
             cancellable
@@ -3064,10 +3064,10 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/pkghash_by_nvr",
             null,
             {
-                { "name", name != null ? name.to_string () : null },
-                { "branch", branch != null ? branch.to_string () : null },
-                { "version", version != null ? version.to_string () : null },
-                { "release", release != null ? release.to_string () : null },
+                { "name", name.to_string () },
+                { "branch", branch.to_string () },
+                { "version", version.to_string () },
+                { "release", release.to_string () },
             },
             null,
             cancellable
@@ -3094,7 +3094,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/pkgset_categories_count",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
                 { "package_type", package_type != null ? package_type.to_string () : null },
             },
             null,
@@ -3145,8 +3145,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/repocop_by_maintainer",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "maintainer_nickname", maintainer_nickname != null ? maintainer_nickname.to_string () : null },
+                { "branch", branch.to_string () },
+                { "maintainer_nickname", maintainer_nickname.to_string () },
                 { "by_acl", by_acl != null ? by_acl.to_string () : null },
             },
             null,
@@ -3181,7 +3181,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/repository_packages",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
                 { "package_type", package_type != null ? package_type.to_string () : null },
                 { "group", group != null ? group.to_string () : null },
                 { "buildtime", buildtime != null ? buildtime.to_string () : null },
@@ -3209,7 +3209,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/source_package_versions",
             null,
             {
-                { "name", name != null ? name.to_string () : null },
+                { "name", name.to_string () },
             },
             null,
             cancellable
@@ -3237,8 +3237,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/tasks_by_maintainer",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "maintainer_nickname", maintainer_nickname != null ? maintainer_nickname.to_string () : null },
+                { "branch", branch.to_string () },
+                { "maintainer_nickname", maintainer_nickname.to_string () },
             },
             null,
             cancellable
@@ -3267,7 +3267,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/tasks_by_package",
             null,
             {
-                { "name", name != null ? name.to_string () : null },
+                { "name", name.to_string () },
             },
             null,
             cancellable
@@ -3319,7 +3319,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/watch_by_maintainer",
             null,
             {
-                { "maintainer_nickname", maintainer_nickname != null ? maintainer_nickname.to_string () : null },
+                { "maintainer_nickname", maintainer_nickname.to_string () },
                 { "by_acl", by_acl != null ? by_acl.to_string () : null },
             },
             null,
@@ -3537,7 +3537,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/task/needs_approval",
             null,
             {
-                { "acl_group", acl_group != null ? acl_group.to_string () : null },
+                { "acl_group", acl_group.to_string () },
                 { "branches", branches != null ? string.joinv (",", branches) : null },
                 { "before", before != null ? before.to_string () : null },
             },
@@ -3640,7 +3640,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/task/progress/find_tasks",
             null,
             {
-                { "input", input != null ? string.joinv (",", input) : null },
+                { "input", string.joinv (",", input) },
                 { "owner", owner != null ? owner.to_string () : null },
                 { "branch", branch != null ? branch.to_string () : null },
                 { "state", state != null ? string.joinv (",", state) : null },
@@ -3674,7 +3674,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/task/progress/find_tasks_lookup",
             null,
             {
-                { "input", input != null ? string.joinv (",", input) : null },
+                { "input", string.joinv (",", input) },
                 { "branch", branch != null ? branch.to_string () : null },
                 { "tasks_limit", tasks_limit != null ? tasks_limit.to_string () : null },
             },
@@ -3783,7 +3783,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/task/task_history",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
                 { "start_task", start_task != null ? start_task.to_string () : null },
                 { "end_task", end_task != null ? end_task.to_string () : null },
                 { "start_date", start_date != null ? start_date.to_string () : null },
@@ -3947,7 +3947,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/vuln/bdu",
             null,
             {
-                { "vuln_id", vuln_id != null ? vuln_id.to_string () : null },
+                { "vuln_id", vuln_id.to_string () },
             },
             null,
             cancellable
@@ -3972,7 +3972,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/vuln/bdu/fixes",
             null,
             {
-                { "vuln_id", vuln_id != null ? vuln_id.to_string () : null },
+                { "vuln_id", vuln_id.to_string () },
             },
             null,
             cancellable
@@ -3997,7 +3997,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/vuln/cve",
             null,
             {
-                { "vuln_id", vuln_id != null ? vuln_id.to_string () : null },
+                { "vuln_id", vuln_id.to_string () },
             },
             null,
             cancellable
@@ -4022,7 +4022,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/vuln/cve/fixes",
             null,
             {
-                { "vuln_id", vuln_id != null ? vuln_id.to_string () : null },
+                { "vuln_id", vuln_id.to_string () },
             },
             null,
             cancellable
@@ -4075,8 +4075,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/acl/by_packages",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "packages_names", packages_names != null ? string.joinv (",", packages_names) : null },
+                { "branch", branch.to_string () },
+                { "packages_names", string.joinv (",", packages_names) },
             },
             null,
             priority,
@@ -4108,7 +4108,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/acl/groups",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
                 { "name", name != null ? name.to_string () : null },
             },
             null,
@@ -4142,7 +4142,7 @@ public sealed class AltRepo.Client : Object {
             null,
             {
                 { "branch", branch != null ? string.joinv (",", branch) : null },
-                { "nickname", nickname != null ? nickname.to_string () : null },
+                { "nickname", nickname.to_string () },
             },
             null,
             priority,
@@ -4174,8 +4174,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/bug/bugzilla_by_image_edition",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "edition", edition != null ? edition.to_string () : null },
+                { "branch", branch.to_string () },
+                { "edition", edition.to_string () },
             },
             null,
             priority,
@@ -4207,7 +4207,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/bug/bugzilla_by_maintainer",
             null,
             {
-                { "maintainer_nickname", maintainer_nickname != null ? maintainer_nickname.to_string () : null },
+                { "maintainer_nickname", maintainer_nickname.to_string () },
                 { "by_acl", by_acl != null ? by_acl.to_string () : null },
             },
             null,
@@ -4240,7 +4240,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/bug/bugzilla_by_package",
             null,
             {
-                { "package_name", package_name != null ? package_name.to_string () : null },
+                { "package_name", package_name.to_string () },
                 { "package_type", package_type != null ? package_type.to_string () : null },
             },
             null,
@@ -4279,9 +4279,9 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/dependencies/backport_helper",
             null,
             {
-                { "from_branch", from_branch != null ? from_branch.to_string () : null },
-                { "into_branch", into_branch != null ? into_branch.to_string () : null },
-                { "packages_names", packages_names != null ? string.joinv (",", packages_names) : null },
+                { "from_branch", from_branch.to_string () },
+                { "into_branch", into_branch.to_string () },
+                { "packages_names", string.joinv (",", packages_names) },
                 { "dp_type", dp_type != null ? dp_type.to_string () : null },
                 { "archs", archs != null ? string.joinv (",", archs) : null },
             },
@@ -4343,8 +4343,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/dependencies/fast_lookup",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "dp_name", dp_name != null ? dp_name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "dp_name", dp_name.to_string () },
                 { "limit", limit != null ? limit.to_string () : null },
             },
             null,
@@ -4376,8 +4376,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/dependencies/packages_by_dependency",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "dp_name", dp_name != null ? dp_name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "dp_name", dp_name.to_string () },
                 { "dp_type", dp_type != null ? dp_type.to_string () : null },
             },
             null,
@@ -4409,7 +4409,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/dependencies/source_package_dependencies/$pkghash",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
                 { "depth", depth != null ? depth.to_string () : null },
             },
             null,
@@ -4441,8 +4441,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/dependencies/what_depends_src",
             null,
             {
-                { "name", name != null ? name.to_string () : null },
-                { "branch", branch != null ? branch.to_string () : null },
+                { "name", name.to_string () },
+                { "branch", branch.to_string () },
                 { "dp_type", dp_type != null ? dp_type.to_string () : null },
             },
             null,
@@ -4636,8 +4636,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/errata/find_image_erratas",
             null,
             {
-                { "uuid", uuid != null ? uuid.to_string () : null },
-                { "branch", branch != null ? branch.to_string () : null },
+                { "uuid", uuid.to_string () },
+                { "branch", branch.to_string () },
                 { "component", component != null ? component.to_string () : null },
                 { "input", input != null ? string.joinv (",", input) : null },
                 { "type", type != null ? type.to_string () : null },
@@ -4866,7 +4866,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/export/translation/packages_po_files",
             null,
             {
-                { "branches", branches != null ? string.joinv (",", branches) : null },
+                { "branches", string.joinv (",", branches) },
                 { "from_date", from_date != null ? from_date.to_string () : null },
             },
             null,
@@ -4896,8 +4896,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/file/fast_lookup",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "file_name", file_name != null ? file_name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "file_name", file_name.to_string () },
                 { "limit", limit != null ? limit.to_string () : null },
             },
             null,
@@ -4927,8 +4927,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/file/packages_by_file",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "file_name", file_name != null ? file_name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "file_name", file_name.to_string () },
             },
             null,
             priority,
@@ -4959,8 +4959,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/file/search",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "file_name", file_name != null ? file_name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "file_name", file_name.to_string () },
                 { "limit", limit != null ? limit.to_string () : null },
             },
             null,
@@ -5039,7 +5039,7 @@ public sealed class AltRepo.Client : Object {
             null,
             {
                 { "branch", branch != null ? branch.to_string () : null },
-                { "pkg_name", pkg_name != null ? pkg_name.to_string () : null },
+                { "pkg_name", pkg_name.to_string () },
                 { "edition", edition != null ? edition.to_string () : null },
                 { "pkg_type", pkg_type != null ? pkg_type.to_string () : null },
                 { "img_show", img_show != null ? img_show.to_string () : null },
@@ -5071,7 +5071,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/image/image_categories_count",
             null,
             {
-                { "uuid", uuid != null ? uuid.to_string () : null },
+                { "uuid", uuid.to_string () },
                 { "component", component != null ? component.to_string () : null },
             },
             null,
@@ -5157,7 +5157,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/image/image_packages",
             null,
             {
-                { "uuid", uuid != null ? uuid.to_string () : null },
+                { "uuid", uuid.to_string () },
                 { "group", group != null ? group.to_string () : null },
                 { "component", component != null ? component.to_string () : null },
             },
@@ -5262,7 +5262,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/image/image_uuid_by_tag",
             null,
             {
-                { "tag", tag != null ? tag.to_string () : null },
+                { "tag", tag.to_string () },
             },
             null,
             priority,
@@ -5382,8 +5382,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/image/last_packages_by_image",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "uuid", uuid != null ? uuid.to_string () : null },
+                { "branch", branch.to_string () },
+                { "uuid", uuid.to_string () },
                 { "packages_limit", packages_limit != null ? packages_limit.to_string () : null },
                 { "component", component != null ? component.to_string () : null },
             },
@@ -5418,8 +5418,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/image/last_packages_image_with_cve_fixed",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "uuid", uuid != null ? uuid.to_string () : null },
+                { "branch", branch.to_string () },
+                { "uuid", uuid.to_string () },
                 { "packages_limit", packages_limit != null ? packages_limit.to_string () : null },
                 { "component", component != null ? component.to_string () : null },
             },
@@ -5469,7 +5469,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/license/info",
             null,
             {
-                { "license", license != null ? license.to_string () : null },
+                { "license", license.to_string () },
             },
             null,
             priority,
@@ -5496,7 +5496,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/license/tokens",
             null,
             {
-                { "license", license != null ? license.to_string () : null },
+                { "license", license.to_string () },
             },
             null,
             priority,
@@ -5527,8 +5527,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/build_dependency_set",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "packages", packages != null ? string.joinv (",", packages) : null },
+                { "branch", branch.to_string () },
+                { "packages", string.joinv (",", packages) },
                 { "arch", arch != null ? arch.to_string () : null },
             },
             null,
@@ -5558,7 +5558,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/find_packageset",
             null,
             {
-                { "packages", packages != null ? string.joinv (",", packages) : null },
+                { "packages", string.joinv (",", packages) },
                 { "branches", branches != null ? string.joinv (",", branches) : null },
             },
             null,
@@ -5590,8 +5590,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/misconflict",
             null,
             {
-                { "packages", packages != null ? string.joinv (",", packages) : null },
-                { "branch", branch != null ? branch.to_string () : null },
+                { "packages", string.joinv (",", packages) },
+                { "branch", branch.to_string () },
                 { "archs", archs != null ? string.joinv (",", archs) : null },
             },
             null,
@@ -5623,8 +5623,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/package_by_file_md5",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "md5", md5 != null ? md5.to_string () : null },
+                { "branch", branch.to_string () },
+                { "md5", md5.to_string () },
                 { "arch", arch != null ? arch.to_string () : null },
             },
             null,
@@ -5657,8 +5657,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/package_by_file_name",
             null,
             {
-                { "file", file != null ? file.to_string () : null },
-                { "branch", branch != null ? branch.to_string () : null },
+                { "file", file.to_string () },
+                { "branch", branch.to_string () },
                 { "arch", arch != null ? arch.to_string () : null },
             },
             null,
@@ -5811,8 +5811,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/repocop",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "package_name", package_name != null ? package_name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "package_name", package_name.to_string () },
                 { "package_version", package_version != null ? package_version.to_string () : null },
                 { "package_release", package_release != null ? package_release.to_string () : null },
                 { "bin_package_arch", bin_package_arch != null ? bin_package_arch.to_string () : null },
@@ -5870,8 +5870,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/specfile_by_name",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "name", name != null ? name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "name", name.to_string () },
             },
             null,
             priority,
@@ -5902,8 +5902,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/unpackaged_dirs",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "packager", packager != null ? packager.to_string () : null },
+                { "branch", branch.to_string () },
+                { "packager", packager.to_string () },
                 { "archs", archs != null ? string.joinv (",", archs) : null },
             },
             null,
@@ -5951,8 +5951,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/package/what_depends_src",
             null,
             {
-                { "packages", packages != null ? string.joinv (",", packages) : null },
-                { "branch", branch != null ? branch.to_string () : null },
+                { "packages", string.joinv (",", packages) },
+                { "branch", branch.to_string () },
                 { "depth", depth != null ? depth.to_string () : null },
                 { "dptype", dptype != null ? dptype.to_string () : null },
                 { "archs", archs != null ? string.joinv (",", archs) : null },
@@ -6013,8 +6013,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/packageset/compare_packagesets",
             null,
             {
-                { "pkgset1", pkgset1 != null ? pkgset1.to_string () : null },
-                { "pkgset2", pkgset2 != null ? pkgset2.to_string () : null },
+                { "pkgset1", pkgset1.to_string () },
+                { "pkgset2", pkgset2.to_string () },
             },
             null,
             priority,
@@ -6045,9 +6045,9 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/packageset/packages_by_component",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "arch", arch != null ? arch.to_string () : null },
-                { "component", component != null ? component.to_string () : null },
+                { "branch", branch.to_string () },
+                { "arch", arch.to_string () },
+                { "component", component.to_string () },
             },
             null,
             priority,
@@ -6074,7 +6074,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/packageset/packages_by_uuid",
             null,
             {
-                { "uuid", uuid != null ? uuid.to_string () : null },
+                { "uuid", uuid.to_string () },
             },
             null,
             priority,
@@ -6128,7 +6128,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/packageset/repository_packages",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
                 { "package_type", package_type != null ? package_type.to_string () : null },
                 { "archs", archs != null ? string.joinv (",", archs) : null },
             },
@@ -6184,7 +6184,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/all_maintainers",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
             },
             null,
             priority,
@@ -6214,7 +6214,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/all_maintainers_with_nicknames",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
             },
             null,
             priority,
@@ -6244,7 +6244,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/all_pkgset_archs",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
             },
             null,
             priority,
@@ -6271,7 +6271,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/all_pkgset_archs_with_src_count",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
             },
             null,
             priority,
@@ -6371,8 +6371,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/beehive_errors_by_maintainer",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "maintainer_nickname", maintainer_nickname != null ? maintainer_nickname.to_string () : null },
+                { "branch", branch.to_string () },
+                { "maintainer_nickname", maintainer_nickname.to_string () },
                 { "by_acl", by_acl != null ? by_acl.to_string () : null },
             },
             null,
@@ -6405,8 +6405,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/binary_package_archs_and_versions",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "name", name != null ? name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "name", name.to_string () },
             },
             null,
             priority,
@@ -6464,8 +6464,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/deleted_package_info",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "name", name != null ? name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "name", name.to_string () },
                 { "package_type", package_type != null ? package_type.to_string () : null },
                 { "arch", arch != null ? arch.to_string () : null },
             },
@@ -6496,7 +6496,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/fast_packages_search_lookup",
             null,
             {
-                { "name", name != null ? string.joinv (",", name) : null },
+                { "name", string.joinv (",", name) },
                 { "branch", branch != null ? branch.to_string () : null },
             },
             null,
@@ -6528,7 +6528,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/find_packages",
             null,
             {
-                { "name", name != null ? string.joinv (",", name) : null },
+                { "name", string.joinv (",", name) },
                 { "branch", branch != null ? branch.to_string () : null },
                 { "arch", arch != null ? arch.to_string () : null },
             },
@@ -6559,8 +6559,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/find_source_package",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "name", name != null ? name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "name", name.to_string () },
             },
             null,
             priority,
@@ -6591,8 +6591,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/last_packages",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "tasks_limit", tasks_limit != null ? tasks_limit.to_string () : null },
+                { "branch", branch.to_string () },
+                { "tasks_limit", tasks_limit.to_string () },
                 { "task_owner", task_owner != null ? task_owner.to_string () : null },
             },
             null,
@@ -6624,8 +6624,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/last_packages_by_branch",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "packages_limit", packages_limit != null ? packages_limit.to_string () : null },
+                { "branch", branch.to_string () },
+                { "packages_limit", packages_limit.to_string () },
                 { "packager", packager != null ? packager.to_string () : null },
             },
             null,
@@ -6657,8 +6657,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/last_packages_by_tasks",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "tasks_limit", tasks_limit != null ? tasks_limit.to_string () : null },
+                { "branch", branch.to_string () },
+                { "tasks_limit", tasks_limit.to_string () },
                 { "task_owner", task_owner != null ? task_owner.to_string () : null },
             },
             null,
@@ -6686,7 +6686,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/last_packages_with_cve_fixed",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
             },
             null,
             priority,
@@ -6713,7 +6713,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/maintainer_branches",
             null,
             {
-                { "maintainer_nickname", maintainer_nickname != null ? maintainer_nickname.to_string () : null },
+                { "maintainer_nickname", maintainer_nickname.to_string () },
             },
             null,
             priority,
@@ -6745,8 +6745,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/maintainer_info",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "maintainer_nickname", maintainer_nickname != null ? maintainer_nickname.to_string () : null },
+                { "branch", branch.to_string () },
+                { "maintainer_nickname", maintainer_nickname.to_string () },
             },
             null,
             priority,
@@ -6780,8 +6780,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/maintainer_packages",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "maintainer_nickname", maintainer_nickname != null ? maintainer_nickname.to_string () : null },
+                { "branch", branch.to_string () },
+                { "maintainer_nickname", maintainer_nickname.to_string () },
                 { "by_acl", by_acl != null ? by_acl.to_string () : null },
             },
             null,
@@ -6843,7 +6843,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_downloads/$pkghash",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
             },
             null,
             priority,
@@ -6874,8 +6874,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_downloads_bin/$pkghash",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "arch", arch != null ? arch.to_string () : null },
+                { "branch", branch.to_string () },
+                { "arch", arch.to_string () },
             },
             null,
             priority,
@@ -6904,7 +6904,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_downloads_src/$pkghash",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
             },
             null,
             priority,
@@ -6937,7 +6937,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_info/$pkghash",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
                 { "changelog_last", changelog_last != null ? changelog_last.to_string () : null },
                 { "package_type", package_type != null ? package_type.to_string () : null },
             },
@@ -7018,7 +7018,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_misconflict/$pkghash",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
             },
             null,
             priority,
@@ -7047,8 +7047,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_name_from_repology",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "name", name != null ? name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "name", name.to_string () },
             },
             null,
             priority,
@@ -7108,7 +7108,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_versions",
             null,
             {
-                { "name", name != null ? name.to_string () : null },
+                { "name", name.to_string () },
                 { "package_type", package_type != null ? package_type.to_string () : null },
                 { "arch", arch != null ? arch.to_string () : null },
             },
@@ -7143,10 +7143,10 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_versions_from_images",
             null,
             {
-                { "name", name != null ? name.to_string () : null },
-                { "branch", branch != null ? branch.to_string () : null },
-                { "edition", edition != null ? edition.to_string () : null },
-                { "type", type != null ? type.to_string () : null },
+                { "name", name.to_string () },
+                { "branch", branch.to_string () },
+                { "edition", edition.to_string () },
+                { "type", type.to_string () },
             },
             null,
             priority,
@@ -7175,7 +7175,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/package_versions_from_tasks",
             null,
             {
-                { "name", name != null ? name.to_string () : null },
+                { "name", name.to_string () },
                 { "branch", branch != null ? branch.to_string () : null },
             },
             null,
@@ -7232,9 +7232,9 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/pkghash_by_binary_name",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "name", name != null ? name.to_string () : null },
-                { "arch", arch != null ? arch.to_string () : null },
+                { "branch", branch.to_string () },
+                { "name", name.to_string () },
+                { "arch", arch.to_string () },
             },
             null,
             priority,
@@ -7263,8 +7263,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/pkghash_by_name",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "name", name != null ? name.to_string () : null },
+                { "branch", branch.to_string () },
+                { "name", name.to_string () },
             },
             null,
             priority,
@@ -7297,10 +7297,10 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/pkghash_by_nvr",
             null,
             {
-                { "name", name != null ? name.to_string () : null },
-                { "branch", branch != null ? branch.to_string () : null },
-                { "version", version != null ? version.to_string () : null },
-                { "release", release != null ? release.to_string () : null },
+                { "name", name.to_string () },
+                { "branch", branch.to_string () },
+                { "version", version.to_string () },
+                { "release", release.to_string () },
             },
             null,
             priority,
@@ -7329,7 +7329,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/pkgset_categories_count",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
                 { "package_type", package_type != null ? package_type.to_string () : null },
             },
             null,
@@ -7384,8 +7384,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/repocop_by_maintainer",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "maintainer_nickname", maintainer_nickname != null ? maintainer_nickname.to_string () : null },
+                { "branch", branch.to_string () },
+                { "maintainer_nickname", maintainer_nickname.to_string () },
                 { "by_acl", by_acl != null ? by_acl.to_string () : null },
             },
             null,
@@ -7422,7 +7422,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/repository_packages",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
                 { "package_type", package_type != null ? package_type.to_string () : null },
                 { "group", group != null ? group.to_string () : null },
                 { "buildtime", buildtime != null ? buildtime.to_string () : null },
@@ -7452,7 +7452,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/source_package_versions",
             null,
             {
-                { "name", name != null ? name.to_string () : null },
+                { "name", name.to_string () },
             },
             null,
             priority,
@@ -7482,8 +7482,8 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/tasks_by_maintainer",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "maintainer_nickname", maintainer_nickname != null ? maintainer_nickname.to_string () : null },
+                { "branch", branch.to_string () },
+                { "maintainer_nickname", maintainer_nickname.to_string () },
             },
             null,
             priority,
@@ -7514,7 +7514,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/tasks_by_package",
             null,
             {
-                { "name", name != null ? name.to_string () : null },
+                { "name", name.to_string () },
             },
             null,
             priority,
@@ -7570,7 +7570,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/site/watch_by_maintainer",
             null,
             {
-                { "maintainer_nickname", maintainer_nickname != null ? maintainer_nickname.to_string () : null },
+                { "maintainer_nickname", maintainer_nickname.to_string () },
                 { "by_acl", by_acl != null ? by_acl.to_string () : null },
             },
             null,
@@ -7800,7 +7800,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/task/needs_approval",
             null,
             {
-                { "acl_group", acl_group != null ? acl_group.to_string () : null },
+                { "acl_group", acl_group.to_string () },
                 { "branches", branches != null ? string.joinv (",", branches) : null },
                 { "before", before != null ? before.to_string () : null },
             },
@@ -7911,7 +7911,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/task/progress/find_tasks",
             null,
             {
-                { "input", input != null ? string.joinv (",", input) : null },
+                { "input", string.joinv (",", input) },
                 { "owner", owner != null ? owner.to_string () : null },
                 { "branch", branch != null ? branch.to_string () : null },
                 { "state", state != null ? string.joinv (",", state) : null },
@@ -7947,7 +7947,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/task/progress/find_tasks_lookup",
             null,
             {
-                { "input", input != null ? string.joinv (",", input) : null },
+                { "input", string.joinv (",", input) },
                 { "branch", branch != null ? branch.to_string () : null },
                 { "tasks_limit", tasks_limit != null ? tasks_limit.to_string () : null },
             },
@@ -8064,7 +8064,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/task/task_history",
             null,
             {
-                { "branch", branch != null ? branch.to_string () : null },
+                { "branch", branch.to_string () },
                 { "start_task", start_task != null ? start_task.to_string () : null },
                 { "end_task", end_task != null ? end_task.to_string () : null },
                 { "start_date", start_date != null ? start_date.to_string () : null },
@@ -8238,7 +8238,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/vuln/bdu",
             null,
             {
-                { "vuln_id", vuln_id != null ? vuln_id.to_string () : null },
+                { "vuln_id", vuln_id.to_string () },
             },
             null,
             priority,
@@ -8265,7 +8265,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/vuln/bdu/fixes",
             null,
             {
-                { "vuln_id", vuln_id != null ? vuln_id.to_string () : null },
+                { "vuln_id", vuln_id.to_string () },
             },
             null,
             priority,
@@ -8292,7 +8292,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/vuln/cve",
             null,
             {
-                { "vuln_id", vuln_id != null ? vuln_id.to_string () : null },
+                { "vuln_id", vuln_id.to_string () },
             },
             null,
             priority,
@@ -8319,7 +8319,7 @@ public sealed class AltRepo.Client : Object {
             @"$API_BASE/vuln/cve/fixes",
             null,
             {
-                { "vuln_id", vuln_id != null ? vuln_id.to_string () : null },
+                { "vuln_id", vuln_id.to_string () },
             },
             null,
             priority,
