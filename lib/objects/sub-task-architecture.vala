@@ -19,7 +19,7 @@
 
 // THIS CODE WAS GENERATED, DON'T MODIFY IT
 
-public class AltRepo.SubTaskArchitectures : Object {
+public class AltRepo.SubTaskArchitecture : Object {
 
     /**
      * stage status

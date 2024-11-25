@@ -89,5 +89,5 @@ public class AltRepo.SubTasksElement : Object {
     /**
      * list of subtask architectures
      */
-    public SubTaskArchitectures archs { get; set; }
+    public Gee.ArrayList<SubTaskArchitecture> archs { get; set; default = new Gee.ArrayList<SubTaskArchitecture> (); }
 }

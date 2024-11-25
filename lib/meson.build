@@ -228,7 +228,7 @@ vala_sources = files(
   'objects/site-watch-by-maintainer.vala',
   'objects/sitemap-packages-element.vala',
   'objects/sitemap-packages-export.vala',
-  'objects/sub-task-architectures.vala',
+  'objects/sub-task-architecture.vala',
   'objects/sub-task-info-element.vala',
   'objects/sub-tasks-element.vala',
   'objects/task-approval-element.vala',
