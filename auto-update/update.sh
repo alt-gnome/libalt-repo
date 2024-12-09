@@ -27,9 +27,9 @@ if git commit -m "update: regular lib update" ; then
     if git commit -m "chore: bump version to $current_api_version" ; then
         git push
     fi
-
-    git tag $tag_name
-    git push origin $tag_name
 else
     echo "Nothing to do"
 fi
+
+git tag $tag_name
+git push origin $tag_name
