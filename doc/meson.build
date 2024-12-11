@@ -5,40 +5,40 @@ foreach deps_pkg : deps_pkgs
   pkgs += '--pkg=' + deps_pkg
 endforeach
 
-valadoc_vala_dir = versioned_name + '-vala'
+valadoc_vala_dir = versioned_lib_name + '-vala'
 custom_target(
   'valadoc',
   command: [ valadoc ] + pkgs +
   [
-    libalt_repo_sources,
+    sources,
     '--target-glib=' + glib_min_version,
-    '--package-name=' + versioned_name,
+    '--package-name=' + versioned_lib_name,
     '--package-version=' + meson.project_version(),
     '--verbose',
     '--force',
     '-o', meson.current_build_dir() / valadoc_vala_dir,
   ],
   build_by_default: true,
-  input : libalt_repo_sources,
+  input : sources,
   output: valadoc_vala_dir,
-  depends: libalt_repo,
+  depends: lib,
 )
 
 custom_target(
   'cdocs',
   command: [ valadoc ] + pkgs +
   [
-    libalt_repo_sources,
+    sources,
     '--target-glib=' + glib_min_version,
-    '--package-name=' + versioned_name,
+    '--package-name=' + versioned_lib_name,
     '--package-version=' + meson.project_version(),
     '--verbose',
     '--force',
-    '-o', meson.current_build_dir() / versioned_name,
-    '--doclet-arg=lib/' + libalt_repo_header,
+    '-o', meson.current_build_dir() / versioned_lib_name,
+    '--doclet-arg=lib/' + header_name,
     '--doclet=gtkdoc',
   ],
   build_by_default: true,
-  output: versioned_name,
-  depends: libalt_repo,
+  output: versioned_lib_name,
+  depends: lib,
 )

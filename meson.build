@@ -9,18 +9,18 @@ project(
 api_version = '1'
 glib_min_version = '2.76'
 
-lib_name = 'alt-repo'
-project_name = meson.project_name()
+name = 'alt-repo'
 gir_name = 'AltRepo'
 
-versioned_name = meson.project_name() + '-' + api_version
+versioned_name = name + '-' + api_version
+versioned_lib_name = meson.project_name() + '-' + api_version
 versioned_gir_name = gir_name + '-' + api_version
 
-libalt_repo_deps = versioned_name + '.deps'
-libalt_repo_header = project_name + '.h'
-libalt_repo_vapi = versioned_name + '.vapi'
-libalt_repo_gir = versioned_gir_name + '.gir'
-libalt_repo_typelib = versioned_gir_name + '.typelib'
+deps_name = versioned_lib_name + '.deps'
+header_name = versioned_lib_name + '.h'
+vapi_name = versioned_lib_name + '.vapi'
+gir_name = versioned_gir_name + '.gir'
+typelib_name = versioned_gir_name + '.typelib'
 
 pkgconfig = import('pkgconfig')
 gnome = import('gnome')
@@ -33,20 +33,19 @@ deps_pkgs = [
 
 gee_dep = dependency('gee-0.8')
 gio_dep = dependency('gio-2.0')
-libapi_base_dep = dependency('libapi-base-1', fallback : ['libapi-base', 'libapi_base_dep'])
+libapi_base_dep = dependency('libapi-base-1', fallback : ['libapi-base', 'lib_dep'])
 
-libalt_repo_pgconfig_req = [
+pkgconfig_requires = [
   gee_dep,
   gio_dep,
 ]
-libalt_repo_dependencies = libalt_repo_pgconfig_req + [libapi_base_dep]
+dependencies = pkgconfig_requires + [libapi_base_dep]
 
 if libapi_base_dep.type_name() == 'pkgconfig'
-  libalt_repo_pgconfig_req += libapi_base_dep
+  pkgconfig_requires += libapi_base_dep
 endif
 
 gee_girdir = gee_dep.get_variable('datadir') / 'gir-1.0'
-gee_vapidir = gee_dep.get_variable('datadir') / 'vala' / 'vapi'
 
 add_project_arguments(
   # GCC14 COMPILE ERROR

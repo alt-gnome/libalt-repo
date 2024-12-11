@@ -274,35 +274,35 @@ vala_sources = files(
   'objects/vulnerability.vala',
 )
 
-libalt_repo_sources = [
+sources = [
   vapi_sources,
   vala_sources,
 ]
 
-libalt_repo = shared_library(
-  lib_name,
-  libalt_repo_sources,
-  dependencies: libalt_repo_dependencies,
-  vala_header: libalt_repo_header,
-  vala_vapi: libalt_repo_vapi,
-  vala_gir: libalt_repo_gir,
+lib = shared_library(
+  versioned_name,
+  sources,
+  dependencies: dependencies,
+  vala_header: header_name,
+  vala_vapi: vapi_name,
+  vala_gir: gir_name,
   version: meson.project_version(),
   install: true,
   install_dir: [ true, true, true, true ],
 )
 
-libalt_repo_dep = declare_dependency(
-  link_with: libalt_repo,
+lib_dep = declare_dependency(
+  link_with: lib,
   include_directories: include_directories('.'),
-  dependencies: libalt_repo_dependencies
+  dependencies: dependencies
 )
 
 deps_conf = configuration_data()
 deps_conf.set ('DEPS',  '\n'.join (deps_pkgs))
 
 configure_file(
-  input: project_name + '.deps.in',
-  output: libalt_repo_deps,
+  input: 'lib.deps.in',
+  output: deps_name,
   configuration: deps_conf,
   install: true,
   install_dir: get_option('datadir') / 'vala' / 'vapi',
@@ -317,22 +317,22 @@ if get_option('introspection')
       '--shared-library', '@PLAINNAME@',
       '--output', '@OUTPUT@',
       '--includedir', gee_girdir,
-      meson.current_build_dir() / libalt_repo_gir,
+      meson.current_build_dir() / gir_name,
     ],
-    input: libalt_repo,
-    output: libalt_repo_typelib,
-    depends: libalt_repo,
+    input: lib,
+    output: typelib_name,
+    depends: lib,
     install: true,
     install_dir: get_option('libdir') / 'girepository-1.0',
   )
 endif
 
 pkgconfig.generate(
-  libalt_repo,
-  name: versioned_name,
-  requires: libalt_repo_pgconfig_req,
-  subdirs: [ versioned_name ],
-  description: 'Base objects for API libraries',
+  lib,
+  name: versioned_lib_name,
+  requires: pkgconfig_requires,
+  subdirs: [ versioned_lib_name ],
+  description: 'ALT Repo API library',
   version: meson.project_version(),
-  url: 'https://github.com/Rirusha/libalt-repo',
+  url: 'https://github.com/alt-gnome/libalt-repo-vala',
 )
