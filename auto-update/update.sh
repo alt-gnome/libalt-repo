@@ -28,6 +28,13 @@ if git commit -m "update: regular lib update" ; then
         git push
     fi
 else
+    python3.12 auto-update/update_main_meson.py meson.build $current_api_version
+
+    git add .
+    if git commit -m "chore: bump version to $current_api_version" ; then
+        git push
+    fi
+
     echo "Nothing to do"
 fi
 
