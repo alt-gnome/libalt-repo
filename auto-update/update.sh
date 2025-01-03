@@ -6,7 +6,7 @@ set -e
 current_api_version=$(python3 auto-update/print_api_version.py)
 tag_name="v$current_api_version"
 
-if [ $tag_name = $(git describe --tags --abbrev=0) ]; then
+if [ $tag_name == $(git describe --tags --abbrev=0) ]; then
     echo "Nothing to do"
     exit 0
 fi
