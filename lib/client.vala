@@ -679,6 +679,34 @@ public sealed class AltRepo.Client : Object {
     }
 
     /**
+     * Beehive rebuild errors export
+     * 
+     * @param branch branch name
+     * @param arch package architecture
+     * 
+     * @return {@link ExportBeehiveFTBFSList}
+     */
+    public ExportBeehiveFTBFSList get_export_beehive_ftbfs (
+        string branch,
+        string? arch = null,
+        Cancellable? cancellable = null
+    ) throws CommonError, BadStatusCodeError {
+        var bytes = soup_wrapper.get (
+            @"$API_BASE/export/beehive/ftbfs",
+            null,
+            {
+                { "branch", branch.to_string () },
+                { "arch", arch != null ? arch.to_string () : null },
+            },
+            null,
+            cancellable
+        );
+        var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
+
+        return (ExportBeehiveFTBFSList) jsoner.deserialize_object (typeof (ExportBeehiveFTBFSList));
+    }
+
+    /**
      * Get branch binary packages info
      * 
      * @param branch branch name
@@ -4744,6 +4772,36 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         return (Erratas) yield jsoner.deserialize_object_async (typeof (Erratas));
+    }
+
+    /**
+     * Beehive rebuild errors export
+     * 
+     * @param branch branch name
+     * @param arch package architecture
+     * 
+     * @return {@link ExportBeehiveFTBFSList}
+     */
+    public async ExportBeehiveFTBFSList get_export_beehive_ftbfs_async (
+        string branch,
+        string? arch = null,
+        int priority = Priority.DEFAULT,
+        Cancellable? cancellable = null
+    ) throws CommonError, BadStatusCodeError {
+        var bytes = yield soup_wrapper.get_async (
+            @"$API_BASE/export/beehive/ftbfs",
+            null,
+            {
+                { "branch", branch.to_string () },
+                { "arch", arch != null ? arch.to_string () : null },
+            },
+            null,
+            priority,
+            cancellable
+        );
+        var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
+
+        return (ExportBeehiveFTBFSList) yield jsoner.deserialize_object_async (typeof (ExportBeehiveFTBFSList));
     }
 
     /**

@@ -61,6 +61,8 @@ vala_sources = files(
   'objects/errata-vulnerability.vala',
   'objects/errata.vala',
   'objects/erratas.vala',
+  'objects/export-beehive-f-t-b-f-s-element.vala',
+  'objects/export-beehive-f-t-b-f-s-list.vala',
   'objects/fast-dependency-search-element.vala',
   'objects/fast-dependency-search.vala',
   'objects/fast-file-search-element.vala',
