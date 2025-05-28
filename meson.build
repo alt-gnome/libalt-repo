@@ -1,7 +1,7 @@
 project(
   'libalt-repo',
   ['c', 'vala'],
-  version: '1.19.23',
+  version: '1.19.28',
   meson_version: '>= 1.0.0',
   license: 'GPL-3.0-or-later',
 )
