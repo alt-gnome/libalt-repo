@@ -1,4 +1,4 @@
-name: CI Auto Update
+name: Auto Update
 
 on:
   workflow_dispatch:
@@ -27,11 +27,12 @@ jobs:
         with:
           fetch-depth: 0
           fetch-tags: true
+          token: ${{ secrets.TOKEN }}
 
       - name: Setup git
         run: |
-          git config --global user.name "Automatic Updater Bot"
-          git config --global user.email "automatic@updater.bot"
+          git config --global user.name "Automatic Updater"
+          git config --global user.email "ci@altlinux.space"
           git config --global --add safe.directory '*'
 
       - name: Setup
