@@ -1,4 +1,4 @@
 [wrap-git]
 directory=libapi-base
 url=https://gitlab.gnome.org/Rirusha/libapi-base.git
-revision=v1.6
+revision=main
