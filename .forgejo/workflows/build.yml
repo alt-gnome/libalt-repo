@@ -58,7 +58,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build RPM
-        run: rbu install-deps
+        run: |
+          rbu install-deps
+          rbu to-gear
 
       - uses: alt-gnome/build-rpm-action@main
         name: Build RPMs
