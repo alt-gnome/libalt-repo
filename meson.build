@@ -33,7 +33,7 @@ deps_pkgs = [
 
 gee_dep = dependency('gee-0.8')
 gio_dep = dependency('gio-2.0')
-libapi_base_dep = dependency('libapi-base-1', fallback : ['libapi-base', 'lib_dep'])
+libapi_base_dep = dependency('libapi-base-2', fallback : ['libapi-base', 'lib_dep'])
 
 pkgconfig_requires = [
   gee_dep,
