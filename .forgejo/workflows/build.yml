@@ -69,5 +69,5 @@ jobs:
         uses: alt-gnome/upload-rpm-action@main
         if: github.event_name != 'pull_request'
         with:
-          directory: ~/.cache/hasherc/hasherc/out/RPMS
+          directory: ~/.cache/hasherc/libalt-repo/out/RPMS
           token: ${{ secrets.TOKEN }}
