@@ -1,20 +1,25 @@
 %define _unpackaged_files_terminate_build 1
 
+%define old_package libalt-repo-vala-1
+%define bare_name libalt-repo
 %define api_version @LAST_API_VERSION@
 %define minor_version @LAST_MINOR_VERSION@
 %define gir_name AltRepo-%api_version
 
-Name: libalt-repo-%api_version
+Name: %bare_name%api_version
 Version: %api_version.%minor_version
 Release: alt1
 
 Summary: ALT Repo API library on Vala
 License: GPL-3.0-or-later
 Group: System/Libraries
-Url: https://github.com/alt-gnome/libalt-repo-vala
-Vcs: https://github.com/alt-gnome/libalt-repo-vala.git
+Url: https://altlinux.space/alt-gnome/libalt-repo
+Vcs: https://altlinux.space/alt-gnome/libalt-repo.git
 
 Source0: %name-%version.tar
+
+Provides: %old_package = %version
+Obsoletes: %old_package
 
 BuildRequires(pre): rpm-macros-meson rpm-build-vala rpm-build-gir
 BuildRequires: meson
@@ -32,6 +37,10 @@ BuildRequires: gobject-introspection-devel
 Summary: Development files for %name
 Group: Development/C
 
+Provides: %bare_name-devel = %version
+Provides: %name-devel = %version
+Obsoletes: %old_package-devel
+
 Requires: %name = %EVR
 
 %description devel
@@ -42,7 +51,10 @@ Summary: Development vapi files for %name
 Group: System/Libraries
 BuildArch: noarch
 
-Requires: %name = %EVR
+Provides: %name-devel-vala = %version
+Obsoletes: %old_package-devel-vala
+
+Requires: %name-devel = %EVR
 
 %description devel-vala
 %summary.
@@ -50,6 +62,9 @@ Requires: %name = %EVR
 %package gir
 Summary: Typelib files for %name
 Group: System/Libraries
+
+Provides: %name-gir = %version
+Obsoletes: %old_package-gir
 
 Requires: %name = %EVR
 
@@ -61,6 +76,9 @@ Summary: Development gir files for %name for various bindings
 Group: Development/Other
 BuildArch: noarch
 
+Provides: %name-gir-devel = %version
+Obsoletes: %old_package-gir-devel
+
 Requires: %name = %EVR
 
 %description gir-devel
@@ -70,7 +88,7 @@ Requires: %name = %EVR
 %setup
 
 %build
-%meson
+%meson -Drun_net_tests=False
 %meson_build
 
 %install
