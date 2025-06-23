@@ -57,7 +57,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<AclByPackages> ();
-        jsoner.deserialize_array (array);
+        jsoner.deserialize_array_into (array);
 
         return array;
     }
@@ -88,7 +88,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<AclGroups> ();
-        jsoner.deserialize_array (array);
+        jsoner.deserialize_array_into (array);
 
         return array;
     }
@@ -119,7 +119,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<AclMaintainerGroups> ();
-        jsoner.deserialize_array (array);
+        jsoner.deserialize_array_into (array);
 
         return array;
     }
@@ -150,7 +150,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<BugzillaInfo> ();
-        jsoner.deserialize_array (array);
+        jsoner.deserialize_array_into (array);
 
         return array;
     }
@@ -181,7 +181,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<BugzillaInfo> ();
-        jsoner.deserialize_array (array);
+        jsoner.deserialize_array_into (array);
 
         return array;
     }
@@ -212,7 +212,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<BugzillaInfo> ();
-        jsoner.deserialize_array (array);
+        jsoner.deserialize_array_into (array);
 
         return array;
     }
@@ -252,7 +252,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<BackportHelper> ();
-        jsoner.deserialize_array (array);
+        jsoner.deserialize_array_into (array);
 
         return array;
     }
@@ -2061,7 +2061,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<AllMaintainers> ();
-        jsoner.deserialize_array (array);
+        jsoner.deserialize_array_into (array);
 
         return array;
     }
@@ -2089,7 +2089,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<AllMaintainers> ();
-        jsoner.deserialize_array (array);
+        jsoner.deserialize_array_into (array);
 
         return array;
     }
@@ -2236,7 +2236,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<SiteBeehiveByMaintainer> ();
-        jsoner.deserialize_array (array);
+        jsoner.deserialize_array_into (array);
 
         return array;
     }
@@ -2554,7 +2554,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<MaintainerBranches> ();
-        jsoner.deserialize_array (array);
+        jsoner.deserialize_array_into (array);
 
         return array;
     }
@@ -2585,7 +2585,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<MaintainerInfo> ();
-        jsoner.deserialize_array (array);
+        jsoner.deserialize_array_into (array);
 
         return array;
     }
@@ -2619,7 +2619,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<MaintainerPackages> ();
-        jsoner.deserialize_array (array);
+        jsoner.deserialize_array_into (array);
 
         return array;
     }
@@ -3183,7 +3183,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<RepocopByMaintainer> ();
-        jsoner.deserialize_array (array);
+        jsoner.deserialize_array_into (array);
 
         return array;
     }
@@ -3274,7 +3274,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<SiteTaskByName> ();
-        jsoner.deserialize_array (array);
+        jsoner.deserialize_array_into (array);
 
         return array;
     }
@@ -3356,7 +3356,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<SiteWatchByMaintainer> ();
-        jsoner.deserialize_array (array);
+        jsoner.deserialize_array_into (array);
 
         return array;
     }
@@ -4113,7 +4113,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<AclByPackages> ();
-        yield jsoner.deserialize_array_async (array);
+        yield jsoner.deserialize_array_into_async (array);
 
         return array;
     }
@@ -4146,7 +4146,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<AclGroups> ();
-        yield jsoner.deserialize_array_async (array);
+        yield jsoner.deserialize_array_into_async (array);
 
         return array;
     }
@@ -4179,7 +4179,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<AclMaintainerGroups> ();
-        yield jsoner.deserialize_array_async (array);
+        yield jsoner.deserialize_array_into_async (array);
 
         return array;
     }
@@ -4212,7 +4212,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<BugzillaInfo> ();
-        yield jsoner.deserialize_array_async (array);
+        yield jsoner.deserialize_array_into_async (array);
 
         return array;
     }
@@ -4245,7 +4245,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<BugzillaInfo> ();
-        yield jsoner.deserialize_array_async (array);
+        yield jsoner.deserialize_array_into_async (array);
 
         return array;
     }
@@ -4278,7 +4278,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<BugzillaInfo> ();
-        yield jsoner.deserialize_array_async (array);
+        yield jsoner.deserialize_array_into_async (array);
 
         return array;
     }
@@ -4320,7 +4320,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<BackportHelper> ();
-        yield jsoner.deserialize_array_async (array);
+        yield jsoner.deserialize_array_into_async (array);
 
         return array;
     }
@@ -6251,7 +6251,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<AllMaintainers> ();
-        yield jsoner.deserialize_array_async (array);
+        yield jsoner.deserialize_array_into_async (array);
 
         return array;
     }
@@ -6281,7 +6281,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<AllMaintainers> ();
-        yield jsoner.deserialize_array_async (array);
+        yield jsoner.deserialize_array_into_async (array);
 
         return array;
     }
@@ -6440,7 +6440,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<SiteBeehiveByMaintainer> ();
-        yield jsoner.deserialize_array_async (array);
+        yield jsoner.deserialize_array_into_async (array);
 
         return array;
     }
@@ -6780,7 +6780,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<MaintainerBranches> ();
-        yield jsoner.deserialize_array_async (array);
+        yield jsoner.deserialize_array_into_async (array);
 
         return array;
     }
@@ -6813,7 +6813,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<MaintainerInfo> ();
-        yield jsoner.deserialize_array_async (array);
+        yield jsoner.deserialize_array_into_async (array);
 
         return array;
     }
@@ -6849,7 +6849,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<MaintainerPackages> ();
-        yield jsoner.deserialize_array_async (array);
+        yield jsoner.deserialize_array_into_async (array);
 
         return array;
     }
@@ -7453,7 +7453,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<RepocopByMaintainer> ();
-        yield jsoner.deserialize_array_async (array);
+        yield jsoner.deserialize_array_into_async (array);
 
         return array;
     }
@@ -7550,7 +7550,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<SiteTaskByName> ();
-        yield jsoner.deserialize_array_async (array);
+        yield jsoner.deserialize_array_into_async (array);
 
         return array;
     }
@@ -7638,7 +7638,7 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         var array = new Gee.ArrayList<SiteWatchByMaintainer> ();
-        yield jsoner.deserialize_array_async (array);
+        yield jsoner.deserialize_array_into_async (array);
 
         return array;
     }
