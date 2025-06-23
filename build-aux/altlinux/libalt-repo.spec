@@ -22,6 +22,7 @@ BuildRequires: vala
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(libapi-base-1)
+BuildRequires: gir(Gee) = 0.8
 BuildRequires: gobject-introspection-devel
 
 %description
