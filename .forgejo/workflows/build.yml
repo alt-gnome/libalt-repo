@@ -46,6 +46,9 @@ jobs:
   test-build:
     name: Test Build
     runs-on: alt-sisyphus
+    needs:
+      - checkers
+      - lint-vala
 
     steps:
       - name: Install libs on container
