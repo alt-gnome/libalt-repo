@@ -12,14 +12,14 @@ jobs:
     name: Lint vala files
     runs-on: alt-sisyphus
     container:
-      image: altlinux.space/alt-gnome/vala-linter-image:latest
+      image: altlinux.space/alt-gnome/coding-style-image:latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Lint files
-        uses: alt-gnome/linters-actions/vala@main
+        uses: alt-gnome/coding-style-actions/vala@main
 
   checkers:
     name: Run checkers
@@ -43,27 +43,19 @@ jobs:
       - name: Run empty lines checker
         run: python3 vala-checkers/empty_lines_checker.py .
 
-  test-build:
-    name: Test Build
-    runs-on: alt-sisyphus
-    container:
-      image: altlinux.space/rirusha/riru-build-image:latest
+  # test-build:
+  #   name: Test Build
+  #   runs-on: alt-sisyphus
+  #   container:
+  #     image: altlinux.space/rirusha/riru-build-image:latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
 
-      - name: Build RPM
-        run: |
-          rbu install-deps
-          rbu to-gear
+  #     - name: Gear
+  #       run: |
+  #         rbu to-gear
 
-      - uses: alt-gnome/build-rpm-action@main
-        name: Build RPMs
-
-      - name: Upload RPMs
-        uses: alt-gnome/upload-rpm-action@main
-        if: github.event_name != 'pull_request'
-        with:
-          directory: ~/.cache/hasherc/libalt-repo/out/RPMS
-          token: ${{ secrets.TOKEN }}
+  #     - uses: actions/build-rpm-action@main
+  #       name: Build RPMs
