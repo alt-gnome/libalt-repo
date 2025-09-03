@@ -28,12 +28,12 @@ gnome = import('gnome')
 deps_pkgs = [
   'gee-0.8',
   'gio-2.0',
-  'libapi-base-1',
+  'libapi-base-3',
 ]
 
 gee_dep = dependency('gee-0.8')
 gio_dep = dependency('gio-2.0')
-libapi_base_dep = dependency('libapi-base-2', fallback : ['libapi-base', 'lib_dep'])
+libapi_base_dep = dependency('libapi-base-3', fallback : ['libapi-base', 'lib_dep'])
 
 pkgconfig_requires = [
   gee_dep,
