@@ -43,19 +43,26 @@ jobs:
       - name: Run empty lines checker
         run: python3 vala-checkers/empty_lines_checker.py .
 
-  # test-build:
-  #   name: Test Build
-  #   runs-on: alt-sisyphus
-  #   container:
-  #     image: altlinux.space/rirusha/riru-build-image:latest
+  test-build:
+    name: Test Build
+    runs-on: alt-sisyphus
 
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
+    steps:
+      - name: Install libs on container
+        run: |
+          apt-get update
+          apt-get install -y git meson vala "pkgconfig(json-glib-1.0)" "gir(Json)=1.0" "pkgconfig(gee-0.8)" "gir(Gee)=0.8" "pkgconfig(gio-2.0)" "pkgconfig(libsoup-3.0)" "gir(Soup)=3.0" "pkgconfig(json-glib-1.0)" "gobject-introspection-devel" valadoc /usr/bin/gtkdoc-scan
 
-  #     - name: Gear
-  #       run: |
-  #         rbu to-gear
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  #     - uses: actions/build-rpm-action@main
-  #       name: Build RPMs
+      - name: Setup
+        run: meson setup _build -Dprefix=/usr -Ddocumentation=true
+
+      - name: Build
+        run: ninja install -C _build
+
+      - name: Deploy pages
+        uses: actions/deploy-pages@v1
+        with:
+          directory: ./_build/doc/libalt-repo-1-vala
