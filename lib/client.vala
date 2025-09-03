@@ -4423,7 +4423,8 @@ public sealed class AltRepo.Client : Object {
      *     ]
      * }
      * ```
-     * Show information about **liblash** binary package inside images which edition is 'alt-kworkstation' with version '10.1.*' or edition 'slinux' with version '10.2.*'.
+     * Show information about **liblash** binary package inside images which edition is 'alt-kworkstation' with version '10.1.*' or edition 'slinux'
+     * with version '10.2.*'.
      * ```json
      * {
      *     "task_id": 312990,
@@ -4468,7 +4469,8 @@ public sealed class AltRepo.Client : Object {
     }
 
     /**
-     * Get the newest images which contain binary packages with the same names as binaries from a task with one of the following states: EPERM, TESTED or DONE. Listed only active images for task's branch.
+     * Get the newest images which contain binary packages with the same names as binaries from a task with one of the following states: EPERM,
+     * TESTED or DONE. Listed only active images for task's branch.
      * 
      * @param id task ID
      * 
@@ -9990,7 +9992,8 @@ public sealed class AltRepo.Client : Object {
      *     ]
      * }
      * ```
-     * Show information about **liblash** binary package inside images which edition is 'alt-kworkstation' with version '10.1.*' or edition 'slinux' with version '10.2.*'.
+     * Show information about **liblash** binary package inside images which edition is 'alt-kworkstation' with version '10.1.*' or edition 'slinux'
+     * with version '10.2.*'.
      * ```json
      * {
      *     "task_id": 312990,
@@ -10037,7 +10040,8 @@ public sealed class AltRepo.Client : Object {
     }
 
     /**
-     * Get the newest images which contain binary packages with the same names as binaries from a task with one of the following states: EPERM, TESTED or DONE. Listed only active images for task's branch.
+     * Get the newest images which contain binary packages with the same names as binaries from a task with one of the following states: EPERM,
+     * TESTED or DONE. Listed only active images for task's branch.
      * 
      * @param id task ID
      * 
