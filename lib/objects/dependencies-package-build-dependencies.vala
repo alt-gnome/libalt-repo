@@ -34,15 +34,21 @@ public class AltRepo.DependenciesPackageBuildDependencies : Object {
     /**
      * source package info
      */
-    public PackageInfo package_info { get; set; }
+    public DependenciesPackageInfo package_info { get; set; }
 
     /**
      * package dependencies list
      */
-    public Gee.ArrayList<DependenciesPackageDependenciesElement> dependencies { get; set; default = new Gee.ArrayList<DependenciesPackageDependenciesElement> (); }
+    public Gee.ArrayList<DependenciesPackageDependenciesElement> dependencies {
+        get; set;
+        default = new Gee.ArrayList<DependenciesPackageDependenciesElement> ()
+    }
 
     /**
      * list of source packages of binary packages that provides required dependencies
      */
-    public Gee.ArrayList<DependenciesPackageInfoElement> provided_by_src { get; set; default = new Gee.ArrayList<DependenciesPackageInfoElement> (); }
+    public Gee.ArrayList<DependenciesPackageInfoElement> provided_by_src {
+        get; set;
+        default = new Gee.ArrayList<DependenciesPackageInfoElement> ()
+    }
 }

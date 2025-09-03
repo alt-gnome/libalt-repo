@@ -29,5 +29,8 @@ public class AltRepo.SiteAllArchs : Object {
     /**
      * binary package archs
      */
-    public Gee.ArrayList<SiteAllArchsElement> archs { get; set; default = new Gee.ArrayList<SiteAllArchsElement> (); }
+    public Gee.ArrayList<SiteAllArchsElement> archs {
+        get; set;
+        default = new Gee.ArrayList<SiteAllArchsElement> ()
+    }
 }

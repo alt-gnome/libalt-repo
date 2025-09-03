@@ -34,7 +34,10 @@ public class AltRepo.SiteLastBranchPackages : Object {
     /**
      * last packages list
      */
-    public Gee.ArrayList<SiteLastBranchPackagesPackage> packages { get; set; default = new Gee.ArrayList<SiteLastBranchPackagesPackage> (); }
+    public Gee.ArrayList<SiteLastBranchPackagesPackage> packages {
+        get; set;
+        default = new Gee.ArrayList<SiteLastBranchPackagesPackage> ()
+    }
 
     /**
      * last loaded branch date

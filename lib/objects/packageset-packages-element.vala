@@ -64,15 +64,24 @@ public class AltRepo.PackagesetPackagesElement : Object {
     /**
      * package maintainers
      */
-    public Gee.ArrayList<string> maintainers { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> maintainers {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * package ACL list
      */
-    public Gee.ArrayList<string> acl_list { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> acl_list {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * package archs
      */
-    public Gee.ArrayList<string> archs { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> archs {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

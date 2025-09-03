@@ -29,5 +29,8 @@ public class AltRepo.AclByPackages : Object {
     /**
      * packages with its ACL members
      */
-    public Gee.ArrayList<AclByPackagesElement> packages { get; set; default = new Gee.ArrayList<AclByPackagesElement> (); }
+    public Gee.ArrayList<AclByPackagesElement> packages {
+        get; set;
+        default = new Gee.ArrayList<AclByPackagesElement> ()
+    }
 }

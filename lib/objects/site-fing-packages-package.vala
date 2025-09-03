@@ -49,7 +49,10 @@ public class AltRepo.SiteFingPackagesPackage : Object {
     /**
      * all package versions
      */
-    public Gee.ArrayList<SitePackageVersionsElement> versions { get; set; default = new Gee.ArrayList<SitePackageVersionsElement> (); }
+    public Gee.ArrayList<SitePackageVersionsElement> versions {
+        get; set;
+        default = new Gee.ArrayList<SitePackageVersionsElement> ()
+    }
 
     /**
      * found by binary package name

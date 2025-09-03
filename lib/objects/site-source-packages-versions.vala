@@ -29,5 +29,8 @@ public class AltRepo.SiteSourcePackagesVersions : Object {
     /**
      * Packages downloads
      */
-    public Gee.ArrayList<SitePackageVersionsElement> versions { get; set; default = new Gee.ArrayList<SitePackageVersionsElement> (); }
+    public Gee.ArrayList<SitePackageVersionsElement> versions {
+        get; set;
+        default = new Gee.ArrayList<SitePackageVersionsElement> ()
+    }
 }

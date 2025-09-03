@@ -59,5 +59,8 @@ public class AltRepo.PackageByFileNameElement : Object {
     /**
      * found files
      */
-    public Gee.ArrayList<string> files { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> files {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

@@ -24,5 +24,8 @@ public class AltRepo.ImageTagStatusGet : Object {
     /**
      * image info
      */
-    public Gee.ArrayList<ImageTagStatusGetElement> tags { get; set; default = new Gee.ArrayList<ImageTagStatusGetElement> (); }
+    public Gee.ArrayList<ImageTagStatusGetElement> tags {
+        get; set;
+        default = new Gee.ArrayList<ImageTagStatusGetElement> ()
+    }
 }

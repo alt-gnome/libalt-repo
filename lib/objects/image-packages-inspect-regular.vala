@@ -49,10 +49,16 @@ public class AltRepo.ImagePackagesInspectRegular : Object {
     /**
      * list of packages that not in branch but found in build tasks
      */
-    public Gee.ArrayList<ImagePackagesElement2> packages_in_tasks { get; set; default = new Gee.ArrayList<ImagePackagesElement2> (); }
+    public Gee.ArrayList<ImagePackagesElement2> packages_in_tasks {
+        get; set;
+        default = new Gee.ArrayList<ImagePackagesElement2> ()
+    }
 
     /**
      * list of packages that not found in database
      */
-    public Gee.ArrayList<ImagePackagesElement1> packages_not_in_db { get; set; default = new Gee.ArrayList<ImagePackagesElement1> (); }
+    public Gee.ArrayList<ImagePackagesElement1> packages_not_in_db {
+        get; set;
+        default = new Gee.ArrayList<ImagePackagesElement1> ()
+    }
 }

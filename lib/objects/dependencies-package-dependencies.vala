@@ -34,5 +34,8 @@ public class AltRepo.DependenciesPackageDependencies : Object {
     /**
      * package dependencies list
      */
-    public Gee.ArrayList<DependenciesPackageDependenciesElement> dependencies { get; set; default = new Gee.ArrayList<DependenciesPackageDependenciesElement> (); }
+    public Gee.ArrayList<DependenciesPackageDependenciesElement> dependencies {
+        get; set;
+        default = new Gee.ArrayList<DependenciesPackageDependenciesElement> ()
+    }
 }

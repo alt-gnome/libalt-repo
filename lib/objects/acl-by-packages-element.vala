@@ -31,5 +31,8 @@ public class AltRepo.AclByPackagesElement : Object {
      */
     public string updated { get; set; }
 
-    public Gee.ArrayList<string> members { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> members {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

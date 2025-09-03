@@ -34,10 +34,16 @@ public class AltRepo.TaskRepo : Object {
     /**
      * list of tasks applied to base package set
      */
-    public Gee.ArrayList<int64?> task_diff_list { get; set; default = new Gee.ArrayList<int64?> (); }
+    public Gee.ArrayList<int64?> task_diff_list {
+        get; set;
+        default = new Gee.ArrayList<int64?> ()
+    }
 
     /**
      * list of packages by architectures
      */
-    public Gee.ArrayList<TaskRepoArchs> archs { get; set; default = new Gee.ArrayList<TaskRepoArchs> (); }
+    public Gee.ArrayList<TaskRepoArchs> archs {
+        get; set;
+        default = new Gee.ArrayList<TaskRepoArchs> ()
+    }
 }

@@ -34,7 +34,10 @@ public class AltRepo.SiteLastPackages : Object {
     /**
      * last tasks packages information
      */
-    public Gee.ArrayList<SiteLastPackagesPackage> tasks { get; set; default = new Gee.ArrayList<SiteLastPackagesPackage> (); }
+    public Gee.ArrayList<SiteLastPackagesPackage> tasks {
+        get; set;
+        default = new Gee.ArrayList<SiteLastPackagesPackage> ()
+    }
 
     /**
      * last loaded branch task

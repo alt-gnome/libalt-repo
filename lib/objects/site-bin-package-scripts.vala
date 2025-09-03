@@ -44,5 +44,8 @@ public class AltRepo.SiteBinPackageScripts : Object {
     /**
      * unpackaged directories information
      */
-    public Gee.ArrayList<SiteBinPackageScriptsElement> scripts { get; set; default = new Gee.ArrayList<SiteBinPackageScriptsElement> (); }
+    public Gee.ArrayList<SiteBinPackageScriptsElement> scripts {
+        get; set;
+        default = new Gee.ArrayList<SiteBinPackageScriptsElement> ()
+    }
 }

@@ -34,5 +34,8 @@ public class AltRepo.SiteLastPackagesWithCVEFixes : Object {
     /**
      * last packages with CVE fixes information
      */
-    public Gee.ArrayList<SiteLastPackagesWithCVEFixesElement> packages { get; set; default = new Gee.ArrayList<SiteLastPackagesWithCVEFixesElement> (); }
+    public Gee.ArrayList<SiteLastPackagesWithCVEFixesElement> packages {
+        get; set;
+        default = new Gee.ArrayList<SiteLastPackagesWithCVEFixesElement> ()
+    }
 }

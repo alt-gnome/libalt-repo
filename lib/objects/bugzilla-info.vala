@@ -34,5 +34,8 @@ public class AltRepo.BugzillaInfo : Object {
     /**
      * bugzilla info
      */
-    public Gee.ArrayList<BugzillaInfoElement> bugs { get; set; default = new Gee.ArrayList<BugzillaInfoElement> (); }
+    public Gee.ArrayList<BugzillaInfoElement> bugs {
+        get; set;
+        default = new Gee.ArrayList<BugzillaInfoElement> ()
+    }
 }

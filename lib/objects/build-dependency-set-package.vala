@@ -44,10 +44,16 @@ public class AltRepo.BuildDependencySetPackage : Object {
     /**
      * binary packages archs
      */
-    public Gee.ArrayList<string> archs { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> archs {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * binary packages require dependencies
      */
-    public Gee.ArrayList<string> requires { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> requires {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

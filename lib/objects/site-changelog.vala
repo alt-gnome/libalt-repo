@@ -39,5 +39,8 @@ public class AltRepo.SiteChangelog : Object {
     /**
      * package changelog
      */
-    public Gee.ArrayList<SiteChangelogElement> changelog { get; set; default = new Gee.ArrayList<SiteChangelogElement> (); }
+    public Gee.ArrayList<SiteChangelogElement> changelog {
+        get; set;
+        default = new Gee.ArrayList<SiteChangelogElement> ()
+    }
 }

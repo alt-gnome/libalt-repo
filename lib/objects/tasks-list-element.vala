@@ -74,15 +74,24 @@ public class AltRepo.TasksListElement : Object {
     /**
      * task dependencies
      */
-    public Gee.ArrayList<int64?> dependencies { get; set; default = new Gee.ArrayList<int64?> (); }
+    public Gee.ArrayList<int64?> dependencies {
+        get; set;
+        default = new Gee.ArrayList<int64?> ()
+    }
 
     /**
      * list of subtasks by task
      */
-    public Gee.ArrayList<SubTasksElement> subtasks { get; set; default = new Gee.ArrayList<SubTasksElement> (); }
+    public Gee.ArrayList<SubTasksElement> subtasks {
+        get; set;
+        default = new Gee.ArrayList<SubTasksElement> ()
+    }
 
     /**
      * list of approvals for task
      */
-    public Gee.ArrayList<TaskApprovalElement> approval { get; set; default = new Gee.ArrayList<TaskApprovalElement> (); }
+    public Gee.ArrayList<TaskApprovalElement> approval {
+        get; set;
+        default = new Gee.ArrayList<TaskApprovalElement> ()
+    }
 }

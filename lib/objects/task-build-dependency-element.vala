@@ -69,20 +69,32 @@ public class AltRepo.TaskBuildDependencyElement : Object {
     /**
      * package archs
      */
-    public Gee.ArrayList<string> archs { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> archs {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * package cycle dependencies
      */
-    public Gee.ArrayList<string> cycle { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> cycle {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * package requirements
      */
-    public Gee.ArrayList<string> requires { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> requires {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * package ACL list
      */
-    public Gee.ArrayList<string> acl { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> acl {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

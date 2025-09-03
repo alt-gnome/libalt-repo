@@ -24,15 +24,24 @@ public class AltRepo.SiteTasksHistory : Object {
     /**
      * list of active branches
      */
-    public Gee.ArrayList<string> branches { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> branches {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * branches tasks list
      */
-    public Gee.ArrayList<TasksHistoryTask> tasks { get; set; default = new Gee.ArrayList<TasksHistoryTask> (); }
+    public Gee.ArrayList<TasksHistoryTask> tasks {
+        get; set;
+        default = new Gee.ArrayList<TasksHistoryTask> ()
+    }
 
     /**
      * branches commits list
      */
-    public Gee.ArrayList<TasksHistoryBranchCommit> branch_commits { get; set; default = new Gee.ArrayList<TasksHistoryBranchCommit> (); }
+    public Gee.ArrayList<TasksHistoryBranchCommit> branch_commits {
+        get; set;
+        default = new Gee.ArrayList<TasksHistoryBranchCommit> ()
+    }
 }

@@ -34,10 +34,16 @@ public class AltRepo.DependenciesPackages : Object {
     /**
      * package dependencies list
      */
-    public Gee.ArrayList<DependenciesPackagesElement> packages { get; set; default = new Gee.ArrayList<DependenciesPackagesElement> (); }
+    public Gee.ArrayList<DependenciesPackagesElement> packages {
+        get; set;
+        default = new Gee.ArrayList<DependenciesPackagesElement> ()
+    }
 
     /**
      * list of package sets with binary package count
      */
-    public Gee.ArrayList<DependenciesAllPackagasetsElement> branches { get; set; default = new Gee.ArrayList<DependenciesAllPackagasetsElement> (); }
+    public Gee.ArrayList<DependenciesAllPackagasetsElement> branches {
+        get; set;
+        default = new Gee.ArrayList<DependenciesAllPackagasetsElement> ()
+    }
 }

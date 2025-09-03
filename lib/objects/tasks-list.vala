@@ -34,5 +34,8 @@ public class AltRepo.TasksList : Object {
     /**
      * list of latest task changes
      */
-    public Gee.ArrayList<TasksListElement> tasks { get; set; default = new Gee.ArrayList<TasksListElement> (); }
+    public Gee.ArrayList<TasksListElement> tasks {
+        get; set;
+        default = new Gee.ArrayList<TasksListElement> ()
+    }
 }

@@ -24,5 +24,8 @@ public class AltRepo.Erratas : Object {
     /**
      * list of erratas
      */
-    public Gee.ArrayList<Errata> erratas { get; set; default = new Gee.ArrayList<Errata> (); }
+    public Gee.ArrayList<Errata> erratas {
+        get; set;
+        default = new Gee.ArrayList<Errata> ()
+    }
 }

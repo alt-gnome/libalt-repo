@@ -26,10 +26,16 @@ public class AltRepo.CheckImagesInput : Object {
      */
     public int64 task_id { get; set; }
 
-    public Gee.ArrayList<string> binpkgs_names { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> binpkgs_names {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * list of filters
      */
-    public Gee.ArrayList<CheckImagesInputFilter> filters { get; set; default = new Gee.ArrayList<CheckImagesInputFilter> (); }
+    public Gee.ArrayList<CheckImagesInputFilter> filters {
+        get; set;
+        default = new Gee.ArrayList<CheckImagesInputFilter> ()
+    }
 }

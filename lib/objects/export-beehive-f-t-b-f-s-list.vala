@@ -34,5 +34,8 @@ public class AltRepo.ExportBeehiveFTBFSList : Object {
     /**
      * Beehive packages rebuild errors
      */
-    public Gee.ArrayList<ExportBeehiveFTBFSElement> ftbfs { get; set; default = new Gee.ArrayList<ExportBeehiveFTBFSElement> (); }
+    public Gee.ArrayList<ExportBeehiveFTBFSElement> ftbfs {
+        get; set;
+        default = new Gee.ArrayList<ExportBeehiveFTBFSElement> ()
+    }
 }

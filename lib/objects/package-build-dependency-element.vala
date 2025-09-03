@@ -44,10 +44,16 @@ public class AltRepo.PackageBuildDependencyElement : Object {
     /**
      * package ACL list
      */
-    public Gee.ArrayList<string> acl { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> acl {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * package dependencies list
      */
-    public Gee.ArrayList<PackageDepends> depends { get; set; default = new Gee.ArrayList<PackageDepends> (); }
+    public Gee.ArrayList<PackageDepends> depends {
+        get; set;
+        default = new Gee.ArrayList<PackageDepends> ()
+    }
 }

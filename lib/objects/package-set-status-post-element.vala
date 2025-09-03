@@ -64,5 +64,8 @@ public class AltRepo.PackageSetStatusPostElement : Object {
     /**
      * packageset mirror's auxilary info as JSON substructure
      */
-    public Gee.ArrayList<Object> rs_mirrors_json { get; set; default = new Gee.ArrayList<Object> (); }
+    public Gee.ArrayList<Object> rs_mirrors_json {
+        get; set;
+        default = new Gee.ArrayList<Object> ()
+    }
 }

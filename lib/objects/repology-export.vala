@@ -34,10 +34,16 @@ public class AltRepo.RepologyExport : Object {
     /**
      * package set stats
      */
-    public Gee.ArrayList<RepologyExportBranchStatElement> stats { get; set; default = new Gee.ArrayList<RepologyExportBranchStatElement> (); }
+    public Gee.ArrayList<RepologyExportBranchStatElement> stats {
+        get; set;
+        default = new Gee.ArrayList<RepologyExportBranchStatElement> ()
+    }
 
     /**
      * source packages info
      */
-    public Gee.ArrayList<RepologyExportBranchSourcePackageElement> packages { get; set; default = new Gee.ArrayList<RepologyExportBranchSourcePackageElement> (); }
+    public Gee.ArrayList<RepologyExportBranchSourcePackageElement> packages {
+        get; set;
+        default = new Gee.ArrayList<RepologyExportBranchSourcePackageElement> ()
+    }
 }

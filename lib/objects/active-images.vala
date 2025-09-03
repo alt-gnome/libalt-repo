@@ -34,5 +34,8 @@ public class AltRepo.ActiveImages : Object {
     /**
      * active images list
      */
-    public Gee.ArrayList<ActiveImagesElement> images { get; set; default = new Gee.ArrayList<ActiveImagesElement> (); }
+    public Gee.ArrayList<ActiveImagesElement> images {
+        get; set;
+        default = new Gee.ArrayList<ActiveImagesElement> ()
+    }
 }

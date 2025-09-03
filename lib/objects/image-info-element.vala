@@ -96,7 +96,10 @@ public class AltRepo.ImageInfoElement : Object {
      */
     public string file { get; set; }
 
-    public Gee.ArrayList<string> url { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> url {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * Image MD5 checksum
@@ -116,5 +119,8 @@ public class AltRepo.ImageInfoElement : Object {
     /**
      * list of image components information
      */
-    public Gee.ArrayList<ImageInfoComponent> components { get; set; default = new Gee.ArrayList<ImageInfoComponent> (); }
+    public Gee.ArrayList<ImageInfoComponent> components {
+        get; set;
+        default = new Gee.ArrayList<ImageInfoComponent> ()
+    }
 }

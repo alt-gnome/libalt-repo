@@ -34,5 +34,8 @@ public class AltRepo.FastFileSearch : Object {
     /**
      * file list
      */
-    public Gee.ArrayList<FastFileSearchElement> files { get; set; default = new Gee.ArrayList<FastFileSearchElement> (); }
+    public Gee.ArrayList<FastFileSearchElement> files {
+        get; set;
+        default = new Gee.ArrayList<FastFileSearchElement> ()
+    }
 }

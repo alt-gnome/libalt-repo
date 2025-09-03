@@ -49,5 +49,8 @@ public class AltRepo.RepologyExportBranchBinaryPackageElement : Object {
     /**
      * package archs
      */
-    public Gee.ArrayList<string> archs { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> archs {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

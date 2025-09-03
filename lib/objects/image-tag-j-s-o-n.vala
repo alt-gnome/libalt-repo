@@ -24,5 +24,8 @@ public class AltRepo.ImageTagJSON : Object {
     /**
      * iso image info
      */
-    public Gee.ArrayList<ImageTagJSONElement> tags { get; set; default = new Gee.ArrayList<ImageTagJSONElement> (); }
+    public Gee.ArrayList<ImageTagJSONElement> tags {
+        get; set;
+        default = new Gee.ArrayList<ImageTagJSONElement> ()
+    }
 }

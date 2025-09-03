@@ -34,10 +34,16 @@ public class AltRepo.PackageByFileName : Object {
     /**
      * package set packages information
      */
-    public Gee.ArrayList<PackageByFileNameElement> packages { get; set; default = new Gee.ArrayList<PackageByFileNameElement> (); }
+    public Gee.ArrayList<PackageByFileNameElement> packages {
+        get; set;
+        default = new Gee.ArrayList<PackageByFileNameElement> ()
+    }
 
     /**
      * list of not found filenames
      */
-    public Gee.ArrayList<string> not_found { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> not_found {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

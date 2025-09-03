@@ -34,5 +34,8 @@ public class AltRepo.SiteFingPackages : Object {
     /**
      * found packages
      */
-    public Gee.ArrayList<SiteFingPackagesPackage> packages { get; set; default = new Gee.ArrayList<SiteFingPackagesPackage> (); }
+    public Gee.ArrayList<SiteFingPackagesPackage> packages {
+        get; set;
+        default = new Gee.ArrayList<SiteFingPackagesPackage> ()
+    }
 }

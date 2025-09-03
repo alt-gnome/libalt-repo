@@ -29,10 +29,16 @@ public class AltRepo.SitePackageInfoArchs : Object {
     /**
      * package arches
      */
-    public Gee.ArrayList<string> archs { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> archs {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * package hash UInt64 as string
      */
-    public Gee.ArrayList<string> pkghash { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> pkghash {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

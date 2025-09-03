@@ -39,5 +39,8 @@ public class AltRepo.TaskBuildDependency : Object {
     /**
      * build dependency results
      */
-    public Gee.ArrayList<TaskBuildDependencyElement> dependencies { get; set; default = new Gee.ArrayList<TaskBuildDependencyElement> (); }
+    public Gee.ArrayList<TaskBuildDependencyElement> dependencies {
+        get; set;
+        default = new Gee.ArrayList<TaskBuildDependencyElement> ()
+    }
 }

@@ -29,5 +29,8 @@ public class AltRepo.ImagePackageSet : Object {
     /**
      * list of packagesets
      */
-    public Gee.ArrayList<string> branches { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> branches {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

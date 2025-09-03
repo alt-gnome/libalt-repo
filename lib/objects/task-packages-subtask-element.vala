@@ -34,5 +34,8 @@ public class AltRepo.TaskPackagesSubtaskElement : Object {
     /**
      * binary packages
      */
-    public Gee.ArrayList<TaskPackagesPackageElement> binaries { get; set; default = new Gee.ArrayList<TaskPackagesPackageElement> (); }
+    public Gee.ArrayList<TaskPackagesPackageElement> binaries {
+        get; set;
+        default = new Gee.ArrayList<TaskPackagesPackageElement> ()
+    }
 }

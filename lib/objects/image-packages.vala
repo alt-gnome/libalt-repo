@@ -34,10 +34,16 @@ public class AltRepo.ImagePackages : Object {
     /**
      * list of subcategories
      */
-    public Gee.ArrayList<string> subcategories { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> subcategories {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * last packages list
      */
-    public Gee.ArrayList<ImagePackagesElement> packages { get; set; default = new Gee.ArrayList<ImagePackagesElement> (); }
+    public Gee.ArrayList<ImagePackagesElement> packages {
+        get; set;
+        default = new Gee.ArrayList<ImagePackagesElement> ()
+    }
 }

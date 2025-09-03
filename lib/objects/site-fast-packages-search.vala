@@ -34,5 +34,8 @@ public class AltRepo.SiteFastPackagesSearch : Object {
     /**
      * list of found packages
      */
-    public Gee.ArrayList<SiteFastPackagesSearchElement> packages { get; set; default = new Gee.ArrayList<SiteFastPackagesSearchElement> (); }
+    public Gee.ArrayList<SiteFastPackagesSearchElement> packages {
+        get; set;
+        default = new Gee.ArrayList<SiteFastPackagesSearchElement> ()
+    }
 }

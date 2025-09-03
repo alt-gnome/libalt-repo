@@ -29,5 +29,8 @@ public class AltRepo.AclMaintainerGroups : Object {
     /**
      * branches with maintainer and groups
      */
-    public Gee.ArrayList<AclMaintainerGroupsElement> branches { get; set; default = new Gee.ArrayList<AclMaintainerGroupsElement> (); }
+    public Gee.ArrayList<AclMaintainerGroupsElement> branches {
+        get; set;
+        default = new Gee.ArrayList<AclMaintainerGroupsElement> ()
+    }
 }

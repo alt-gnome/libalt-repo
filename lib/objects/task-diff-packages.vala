@@ -23,9 +23,18 @@ public class AltRepo.TaskDiffPackages : Object {
 
     public string package { get; set; }
 
-    public Gee.ArrayList<string> del { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> del {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
-    public Gee.ArrayList<string> add { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> add {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
-    public Gee.ArrayList<TaskDiffDependencies> dependencies { get; set; default = new Gee.ArrayList<TaskDiffDependencies> (); }
+    public Gee.ArrayList<TaskDiffDependencies> dependencies {
+        get; set;
+        default = new Gee.ArrayList<TaskDiffDependencies> ()
+    }
 }

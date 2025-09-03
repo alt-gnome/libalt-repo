@@ -29,5 +29,8 @@ public class AltRepo.TaskRepoArchs : Object {
     /**
      * packages list
      */
-    public Gee.ArrayList<TaskRepoPackage> packages { get; set; default = new Gee.ArrayList<TaskRepoPackage> (); }
+    public Gee.ArrayList<TaskRepoPackage> packages {
+        get; set;
+        default = new Gee.ArrayList<TaskRepoPackage> ()
+    }
 }

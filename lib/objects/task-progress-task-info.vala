@@ -74,15 +74,24 @@ public class AltRepo.TaskProgressTaskInfo : Object {
     /**
      * task dependencies
      */
-    public Gee.ArrayList<int64?> dependencies { get; set; default = new Gee.ArrayList<int64?> (); }
+    public Gee.ArrayList<int64?> dependencies {
+        get; set;
+        default = new Gee.ArrayList<int64?> ()
+    }
 
     /**
      * list of subtasks by task
      */
-    public Gee.ArrayList<SubTaskInfoElement> subtasks { get; set; default = new Gee.ArrayList<SubTaskInfoElement> (); }
+    public Gee.ArrayList<SubTaskInfoElement> subtasks {
+        get; set;
+        default = new Gee.ArrayList<SubTaskInfoElement> ()
+    }
 
     /**
      * task iteration list
      */
-    public Gee.ArrayList<TaskIterationsElement> iterations { get; set; default = new Gee.ArrayList<TaskIterationsElement> (); }
+    public Gee.ArrayList<TaskIterationsElement> iterations {
+        get; set;
+        default = new Gee.ArrayList<TaskIterationsElement> ()
+    }
 }

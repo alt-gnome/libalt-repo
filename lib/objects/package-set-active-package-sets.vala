@@ -29,5 +29,8 @@ public class AltRepo.PackageSetActivePackageSets : Object {
     /**
      * active package sets list
      */
-    public Gee.ArrayList<string> packagesets { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> packagesets {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

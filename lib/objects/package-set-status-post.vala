@@ -24,5 +24,8 @@ public class AltRepo.PackageSetStatusPost : Object {
     /**
      * package set info
      */
-    public Gee.ArrayList<PackageSetStatusPostElement> branches { get; set; default = new Gee.ArrayList<PackageSetStatusPostElement> (); }
+    public Gee.ArrayList<PackageSetStatusPostElement> branches {
+        get; set;
+        default = new Gee.ArrayList<PackageSetStatusPostElement> ()
+    }
 }

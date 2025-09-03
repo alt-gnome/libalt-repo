@@ -29,5 +29,8 @@ public class AltRepo.ImagePackagesJSON : Object {
     /**
      * list of packages
      */
-    public Gee.ArrayList<ImagePackagesJSONElement> packages { get; set; default = new Gee.ArrayList<ImagePackagesJSONElement> (); }
+    public Gee.ArrayList<ImagePackagesJSONElement> packages {
+        get; set;
+        default = new Gee.ArrayList<ImagePackagesJSONElement> ()
+    }
 }

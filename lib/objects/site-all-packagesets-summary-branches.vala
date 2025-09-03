@@ -29,5 +29,8 @@ public class AltRepo.SiteAllPackagesetsSummaryBranches : Object {
     /**
      * list of source packages count by binary packages archs
      */
-    public Gee.ArrayList<SiteAllPackagesetsSummaryCounts> packages_count { get; set; default = new Gee.ArrayList<SiteAllPackagesetsSummaryCounts> (); }
+    public Gee.ArrayList<SiteAllPackagesetsSummaryCounts> packages_count {
+        get; set;
+        default = new Gee.ArrayList<SiteAllPackagesetsSummaryCounts> ()
+    }
 }

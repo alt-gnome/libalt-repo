@@ -61,7 +61,10 @@ public class AltRepo.TaskPackages : Object {
      */
     public string message { get; set; }
 
-    public Gee.ArrayList<int64?> dependencies { get; set; default = new Gee.ArrayList<int64?> (); }
+    public Gee.ArrayList<int64?> dependencies {
+        get; set;
+        default = new Gee.ArrayList<int64?> ()
+    }
 
     /**
      * number of subtasks found
@@ -71,10 +74,16 @@ public class AltRepo.TaskPackages : Object {
     /**
      * subtask packages
      */
-    public Gee.ArrayList<TaskPackagesSubtaskElement> subtasks { get; set; default = new Gee.ArrayList<TaskPackagesSubtaskElement> (); }
+    public Gee.ArrayList<TaskPackagesSubtaskElement> subtasks {
+        get; set;
+        default = new Gee.ArrayList<TaskPackagesSubtaskElement> ()
+    }
 
     /**
      * arepo packages
      */
-    public Gee.ArrayList<TaskPackagesPackageElement> arepo { get; set; default = new Gee.ArrayList<TaskPackagesPackageElement> (); }
+    public Gee.ArrayList<TaskPackagesPackageElement> arepo {
+        get; set;
+        default = new Gee.ArrayList<TaskPackagesPackageElement> ()
+    }
 }

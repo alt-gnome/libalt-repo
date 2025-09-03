@@ -34,5 +34,8 @@ public class AltRepo.ImageInfo : Object {
     /**
      * list of images information
      */
-    public Gee.ArrayList<ImageInfoElement> images { get; set; default = new Gee.ArrayList<ImageInfoElement> (); }
+    public Gee.ArrayList<ImageInfoElement> images {
+        get; set;
+        default = new Gee.ArrayList<ImageInfoElement> ()
+    }
 }

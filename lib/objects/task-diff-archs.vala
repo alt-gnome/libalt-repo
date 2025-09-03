@@ -23,5 +23,8 @@ public class AltRepo.TaskDiffArchs : Object {
 
     public string arch { get; set; }
 
-    public Gee.ArrayList<TaskDiffPackages> packages { get; set; default = new Gee.ArrayList<TaskDiffPackages> (); }
+    public Gee.ArrayList<TaskDiffPackages> packages {
+        get; set;
+        default = new Gee.ArrayList<TaskDiffPackages> ()
+    }
 }

@@ -34,5 +34,8 @@ public class AltRepo.UnpackagedDirs : Object {
     /**
      * packages with unpackaged directories
      */
-    public Gee.ArrayList<UnpackagedDirsElement> packages { get; set; default = new Gee.ArrayList<UnpackagedDirsElement> (); }
+    public Gee.ArrayList<UnpackagedDirsElement> packages {
+        get; set;
+        default = new Gee.ArrayList<UnpackagedDirsElement> ()
+    }
 }

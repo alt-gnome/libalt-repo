@@ -34,5 +34,8 @@ public class AltRepo.AclGroups : Object {
     /**
      * ACL groups list
      */
-    public Gee.ArrayList<AclGroupsElement> groups { get; set; default = new Gee.ArrayList<AclGroupsElement> (); }
+    public Gee.ArrayList<AclGroupsElement> groups {
+        get; set;
+        default = new Gee.ArrayList<AclGroupsElement> ()
+    }
 }

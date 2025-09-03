@@ -31,5 +31,8 @@ public class AltRepo.AclGroupsElement : Object {
      */
     public string date { get; set; }
 
-    public Gee.ArrayList<string> maintainers { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> maintainers {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

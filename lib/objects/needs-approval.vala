@@ -29,5 +29,8 @@ public class AltRepo.NeedsApproval : Object {
     /**
      * list of tasks
      */
-    public Gee.ArrayList<NeedsApprovalTaskElement> tasks { get; set; default = new Gee.ArrayList<NeedsApprovalTaskElement> (); }
+    public Gee.ArrayList<NeedsApprovalTaskElement> tasks {
+        get; set;
+        default = new Gee.ArrayList<NeedsApprovalTaskElement> ()
+    }
 }

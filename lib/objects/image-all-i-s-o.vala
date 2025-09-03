@@ -29,5 +29,8 @@ public class AltRepo.ImageAllISO : Object {
     /**
      * list of ISO images package sets information
      */
-    public Gee.ArrayList<ImageAllISOElement> images { get; set; default = new Gee.ArrayList<ImageAllISOElement> (); }
+    public Gee.ArrayList<ImageAllISOElement> images {
+        get; set;
+        default = new Gee.ArrayList<ImageAllISOElement> ()
+    }
 }

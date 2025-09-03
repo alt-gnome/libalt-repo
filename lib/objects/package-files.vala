@@ -34,5 +34,8 @@ public class AltRepo.PackageFiles : Object {
     /**
      * package file list
      */
-    public Gee.ArrayList<PackageFilesElement> files { get; set; default = new Gee.ArrayList<PackageFilesElement> (); }
+    public Gee.ArrayList<PackageFilesElement> files {
+        get; set;
+        default = new Gee.ArrayList<PackageFilesElement> ()
+    }
 }

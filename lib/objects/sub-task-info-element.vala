@@ -99,10 +99,16 @@ public class AltRepo.SubTaskInfoElement : Object {
     /**
      * list of subtask architectures
      */
-    public Gee.ArrayList<SubTaskArchitecture> archs { get; set; default = new Gee.ArrayList<SubTaskArchitecture> (); }
+    public Gee.ArrayList<SubTaskArchitecture> archs {
+        get; set;
+        default = new Gee.ArrayList<SubTaskArchitecture> ()
+    }
 
     /**
      * list of approvals for task
      */
-    public Gee.ArrayList<TaskApprovalElement> approval { get; set; default = new Gee.ArrayList<TaskApprovalElement> (); }
+    public Gee.ArrayList<TaskApprovalElement> approval {
+        get; set;
+        default = new Gee.ArrayList<TaskApprovalElement> ()
+    }
 }

@@ -39,7 +39,10 @@ public class AltRepo.TaskFindPackagesetElement : Object {
     /**
      * binary packages list
      */
-    public Gee.ArrayList<string> packages { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> packages {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * package version
@@ -69,5 +72,8 @@ public class AltRepo.TaskFindPackagesetElement : Object {
     /**
      * binary packages archs
      */
-    public Gee.ArrayList<string> archs { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> archs {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

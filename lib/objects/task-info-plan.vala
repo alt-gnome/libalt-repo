@@ -24,10 +24,16 @@ public class AltRepo.TaskInfoPlan : Object {
     /**
      * source packages
      */
-    public Gee.ArrayList<TaskInfoPackage> src { get; set; default = new Gee.ArrayList<TaskInfoPackage> (); }
+    public Gee.ArrayList<TaskInfoPackage> src {
+        get; set;
+        default = new Gee.ArrayList<TaskInfoPackage> ()
+    }
 
     /**
      * binary packages
      */
-    public Gee.ArrayList<TaskInfoPackage> bin { get; set; default = new Gee.ArrayList<TaskInfoPackage> (); }
+    public Gee.ArrayList<TaskInfoPackage> bin {
+        get; set;
+        default = new Gee.ArrayList<TaskInfoPackage> ()
+    }
 }

@@ -74,5 +74,8 @@ public class AltRepo.DependenciesPackagesElement : Object {
     /**
      * list of dependency types
      */
-    public Gee.ArrayList<string> dp_types { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> dp_types {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

@@ -89,5 +89,8 @@ public class AltRepo.CheckImagesOutputImage : Object {
     /**
      * list of binary packages
      */
-    public Gee.ArrayList<CheckImagesOutputPackage> packages { get; set; default = new Gee.ArrayList<CheckImagesOutputPackage> (); }
+    public Gee.ArrayList<CheckImagesOutputPackage> packages {
+        get; set;
+        default = new Gee.ArrayList<CheckImagesOutputPackage> ()
+    }
 }

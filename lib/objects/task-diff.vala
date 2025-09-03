@@ -34,5 +34,8 @@ public class AltRepo.TaskDiff : Object {
     /**
      * task diff
      */
-    public Gee.ArrayList<TaskDiffArchs> task_diff { get; set; default = new Gee.ArrayList<TaskDiffArchs> (); }
+    public Gee.ArrayList<TaskDiffArchs> task_diff {
+        get; set;
+        default = new Gee.ArrayList<TaskDiffArchs> ()
+    }
 }

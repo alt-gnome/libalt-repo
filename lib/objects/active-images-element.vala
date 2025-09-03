@@ -29,5 +29,8 @@ public class AltRepo.ActiveImagesElement : Object {
     /**
      * active tags list
      */
-    public Gee.ArrayList<string> tags { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> tags {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

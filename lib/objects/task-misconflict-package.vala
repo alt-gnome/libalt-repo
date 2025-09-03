@@ -49,10 +49,16 @@ public class AltRepo.TaskMisconflictPackage : Object {
     /**
      * package archs
      */
-    public Gee.ArrayList<string> archs { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> archs {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * conflict files
      */
-    public Gee.ArrayList<string> files_with_conflict { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> files_with_conflict {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

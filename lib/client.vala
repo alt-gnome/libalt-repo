@@ -25,10 +25,14 @@ public sealed class AltRepo.Client : Object {
 
     internal const string API_BASE = "https://rdb.altlinux.org/api";
 
-    SoupWrapper soup_wrapper { get; default = new SoupWrapper (); }
+    Session session { get; default = new Session (); }
 
     construct {
 
+    }
+
+    public void add_headers_preset (string preset_name, Header[] headers_arr) {
+        session.add_headers_preset (preset_name, headers_arr);
     }
 
     /**
@@ -43,23 +47,30 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string[] packages_names,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/acl/by_packages",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "packages_names", string.joinv (",", packages_names) },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/acl/by_packages");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        var _packages_names = new string[packages_names.length];
+        for (int i = 0; i < packages_names.length; i++) {
+            _packages_names[i] = packages_names[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "packages_names",
+            string.joinv (",", _packages_names)
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<AclByPackages> ();
-        jsoner.deserialize_array_into (array);
-
-        return array;
+        return jsoner.deserialize_array<AclByPackages> ();
     }
 
     /**
@@ -74,23 +85,28 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string? name = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/acl/groups",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "name", name != null ? name.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/acl/groups");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (name != null) {
+            request.add_parameter_simple (
+                "name",
+                name.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<AclGroups> ();
-        jsoner.deserialize_array_into (array);
-
-        return array;
+        return jsoner.deserialize_array<AclGroups> ();
     }
 
     /**
@@ -105,23 +121,32 @@ public sealed class AltRepo.Client : Object {
         string nickname,
         string[]? branch = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/acl/maintainer_groups",
-            null,
-            {
-                { "branch", branch != null ? string.joinv (",", branch) : null },
-                { "nickname", nickname.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/acl/maintainer_groups");
+
+        if (branch != null) {
+            var _branch = new string[branch.length];
+            for (int i = 0; i < branch.length; i++) {
+                _branch[i] = branch[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "branch",
+                string.joinv (",", _branch)
+            );
+        }
+        request.add_parameter_simple (
+            "nickname",
+            nickname.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<AclMaintainerGroups> ();
-        jsoner.deserialize_array_into (array);
-
-        return array;
+        return jsoner.deserialize_array<AclMaintainerGroups> ();
     }
 
     /**
@@ -136,23 +161,26 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string edition,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/bug/bugzilla_by_image_edition",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "edition", edition.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/bug/bugzilla_by_image_edition");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "edition",
+            edition.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<BugzillaInfo> ();
-        jsoner.deserialize_array_into (array);
-
-        return array;
+        return jsoner.deserialize_array<BugzillaInfo> ();
     }
 
     /**
@@ -167,23 +195,28 @@ public sealed class AltRepo.Client : Object {
         string maintainer_nickname,
         string? by_acl = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/bug/bugzilla_by_maintainer",
-            null,
-            {
-                { "maintainer_nickname", maintainer_nickname.to_string () },
-                { "by_acl", by_acl != null ? by_acl.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/bug/bugzilla_by_maintainer");
+
+        request.add_parameter_simple (
+            "maintainer_nickname",
+            maintainer_nickname.to_string ()
+        );
+        if (by_acl != null) {
+            request.add_parameter_simple (
+                "by_acl",
+                by_acl.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<BugzillaInfo> ();
-        jsoner.deserialize_array_into (array);
-
-        return array;
+        return jsoner.deserialize_array<BugzillaInfo> ();
     }
 
     /**
@@ -198,23 +231,28 @@ public sealed class AltRepo.Client : Object {
         string package_name,
         string? package_type = "source",
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/bug/bugzilla_by_package",
-            null,
-            {
-                { "package_name", package_name.to_string () },
-                { "package_type", package_type != null ? package_type.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/bug/bugzilla_by_package");
+
+        request.add_parameter_simple (
+            "package_name",
+            package_name.to_string ()
+        );
+        if (package_type != null) {
+            request.add_parameter_simple (
+                "package_type",
+                package_type.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<BugzillaInfo> ();
-        jsoner.deserialize_array_into (array);
-
-        return array;
+        return jsoner.deserialize_array<BugzillaInfo> ();
     }
 
     /**
@@ -235,26 +273,50 @@ public sealed class AltRepo.Client : Object {
         string? dp_type = "both",
         string[]? archs = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/dependencies/backport_helper",
-            null,
-            {
-                { "from_branch", from_branch.to_string () },
-                { "into_branch", into_branch.to_string () },
-                { "packages_names", string.joinv (",", packages_names) },
-                { "dp_type", dp_type != null ? dp_type.to_string () : null },
-                { "archs", archs != null ? string.joinv (",", archs) : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/dependencies/backport_helper");
+
+        request.add_parameter_simple (
+            "from_branch",
+            from_branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "into_branch",
+            into_branch.to_string ()
+        );
+        var _packages_names = new string[packages_names.length];
+        for (int i = 0; i < packages_names.length; i++) {
+            _packages_names[i] = packages_names[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "packages_names",
+            string.joinv (",", _packages_names)
+        );
+        if (dp_type != null) {
+            request.add_parameter_simple (
+                "dp_type",
+                dp_type.to_string ()
+            );
+        }
+        if (archs != null) {
+            var _archs = new string[archs.length];
+            for (int i = 0; i < archs.length; i++) {
+                _archs[i] = archs[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "archs",
+                string.joinv (",", _archs)
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<BackportHelper> ();
-        jsoner.deserialize_array_into (array);
-
-        return array;
+        return jsoner.deserialize_array<BackportHelper> ();
     }
 
     /**
@@ -267,17 +329,17 @@ public sealed class AltRepo.Client : Object {
     public DependenciesPackageDependencies get_dependencies_binary_package_dependencies_pkghash (
         int64 pkghash,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/dependencies/binary_package_dependencies/$pkghash",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/dependencies/binary_package_dependencies/$pkghash");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (DependenciesPackageDependencies) jsoner.deserialize_object (typeof (DependenciesPackageDependencies));
+        return jsoner.deserialize_object<DependenciesPackageDependencies> ();
     }
 
     /**
@@ -295,21 +357,32 @@ public sealed class AltRepo.Client : Object {
         string dp_name,
         int64? limit = 10,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/dependencies/fast_lookup",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "dp_name", dp_name.to_string () },
-                { "limit", limit != null ? limit.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/dependencies/fast_lookup");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "dp_name",
+            dp_name.to_string ()
+        );
+        if (limit != null) {
+            request.add_parameter_simple (
+                "limit",
+                limit.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (FastDependencySearch) jsoner.deserialize_object (typeof (FastDependencySearch));
+        return jsoner.deserialize_object<FastDependencySearch> ();
     }
 
     /**
@@ -326,21 +399,32 @@ public sealed class AltRepo.Client : Object {
         string dp_name,
         string? dp_type = "all",
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/dependencies/packages_by_dependency",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "dp_name", dp_name.to_string () },
-                { "dp_type", dp_type != null ? dp_type.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/dependencies/packages_by_dependency");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "dp_name",
+            dp_name.to_string ()
+        );
+        if (dp_type != null) {
+            request.add_parameter_simple (
+                "dp_type",
+                dp_type.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (DependenciesPackages) jsoner.deserialize_object (typeof (DependenciesPackages));
+        return jsoner.deserialize_object<DependenciesPackages> ();
     }
 
     /**
@@ -357,20 +441,28 @@ public sealed class AltRepo.Client : Object {
         int64 pkghash,
         int64? depth = 1,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/dependencies/source_package_dependencies/$pkghash",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "depth", depth != null ? depth.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/dependencies/source_package_dependencies/$pkghash");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (depth != null) {
+            request.add_parameter_simple (
+                "depth",
+                depth.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (DependenciesPackageBuildDependencies) jsoner.deserialize_object (typeof (DependenciesPackageBuildDependencies));
+        return jsoner.deserialize_object<DependenciesPackageBuildDependencies> ();
     }
 
     /**
@@ -387,51 +479,68 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string? dp_type = "both",
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/dependencies/what_depends_src",
-            null,
-            {
-                { "name", name.to_string () },
-                { "branch", branch.to_string () },
-                { "dp_type", dp_type != null ? dp_type.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/dependencies/what_depends_src");
+
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (dp_type != null) {
+            request.add_parameter_simple (
+                "dp_type",
+                dp_type.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageBuildDependency) jsoner.deserialize_object (typeof (PackageBuildDependency));
+        return jsoner.deserialize_object<PackageBuildDependency> ();
     }
 
     /**
      * Get information about branch update erratas
      * 
+     * @param exclude_json exclude vulnerability raw JSON from results
      * @param payload 
      * 
      * @return {@link ErrataBranchesUpdates}
      */
     public ErrataBranchesUpdates post_errata_branches_updates (
         ErrataJsonPostList payload,
+        bool? exclude_json = false,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        PostContent post_content = {
-            PostContentType.JSON,
-            Jsoner.serialize (payload, Case.SNAKE)
-        };
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.POST (@"$API_BASE/errata/branches_updates");
 
-        var bytes = soup_wrapper.post (
-            @"$API_BASE/errata/branches_updates",
-            null,
-            post_content,
-            null,
-            null,
+        var post_content = new PostContent (PostContentType.JSON);
+        post_content.content = Jsoner.serialize (payload, Case.SNAKE);
+        request.add_post_content (post_content);
+
+        if (exclude_json != null) {
+            request.add_parameter_simple (
+                "exclude_json",
+                exclude_json.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
 
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ErrataBranchesUpdates) jsoner.deserialize_object (typeof (ErrataBranchesUpdates));
+        return jsoner.deserialize_object<ErrataBranchesUpdates> ();
     }
 
     /**
@@ -442,17 +551,17 @@ public sealed class AltRepo.Client : Object {
      */
     public ErrataBranches get_errata_errata_branches (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/errata/errata_branches",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/errata/errata_branches");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ErrataBranches) jsoner.deserialize_object (typeof (ErrataBranches));
+        return jsoner.deserialize_object<ErrataBranches> ();
     }
 
     /**
@@ -463,17 +572,17 @@ public sealed class AltRepo.Client : Object {
      */
     public OvalBranches get_errata_export_oval_branches (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/errata/export/oval/branches",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/errata/export/oval/branches");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (OvalBranches) jsoner.deserialize_object (typeof (OvalBranches));
+        return jsoner.deserialize_object<OvalBranches> ();
     }
 
     /**
@@ -490,17 +599,27 @@ public sealed class AltRepo.Client : Object {
         string? package_name = null,
         bool? one_file = false,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/errata/export/oval/$branch",
-            null,
-            {
-                { "package_name", package_name != null ? package_name.to_string () : null },
-                { "one_file", one_file != null ? one_file.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/errata/export/oval/$branch");
+
+        if (package_name != null) {
+            request.add_parameter_simple (
+                "package_name",
+                package_name.to_string ()
+            );
+        }
+        if (one_file != null) {
+            request.add_parameter_simple (
+                "one_file",
+                one_file.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         return (string) bytes.get_data ();
     }
 
@@ -524,24 +643,58 @@ public sealed class AltRepo.Client : Object {
         int64? limit = null,
         string? state = "all",
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/errata/find_erratas",
-            null,
-            {
-                { "input", input != null ? string.joinv (",", input) : null },
-                { "branch", branch != null ? branch.to_string () : null },
-                { "type", type != null ? type.to_string () : null },
-                { "page", page != null ? page.to_string () : null },
-                { "limit", limit != null ? limit.to_string () : null },
-                { "state", state != null ? state.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/errata/find_erratas");
+
+        if (input != null) {
+            var _input = new string[input.length];
+            for (int i = 0; i < input.length; i++) {
+                _input[i] = input[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "input",
+                string.joinv (",", _input)
+            );
+        }
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (type != null) {
+            request.add_parameter_simple (
+                "type",
+                type.to_string ()
+            );
+        }
+        if (page != null) {
+            request.add_parameter_simple (
+                "page",
+                page.to_string ()
+            );
+        }
+        if (limit != null) {
+            request.add_parameter_simple (
+                "limit",
+                limit.to_string ()
+            );
+        }
+        if (state != null) {
+            request.add_parameter_simple (
+                "state",
+                state.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ErrataLastChanged) jsoner.deserialize_object (typeof (ErrataLastChanged));
+        return jsoner.deserialize_object<ErrataLastChanged> ();
     }
 
     /**
@@ -570,27 +723,76 @@ public sealed class AltRepo.Client : Object {
         bool? is_discarded = false,
         string[]? sort = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/errata/find_image_erratas",
-            null,
-            {
-                { "uuid", uuid.to_string () },
-                { "branch", branch.to_string () },
-                { "component", component != null ? component.to_string () : null },
-                { "input", input != null ? string.joinv (",", input) : null },
-                { "type", type != null ? type.to_string () : null },
-                { "page", page != null ? page.to_string () : null },
-                { "limit", limit != null ? limit.to_string () : null },
-                { "is_discarded", is_discarded != null ? is_discarded.to_string () : null },
-                { "sort", sort != null ? string.joinv (",", sort) : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/errata/find_image_erratas");
+
+        request.add_parameter_simple (
+            "uuid",
+            uuid.to_string ()
+        );
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (component != null) {
+            request.add_parameter_simple (
+                "component",
+                component.to_string ()
+            );
+        }
+        if (input != null) {
+            var _input = new string[input.length];
+            for (int i = 0; i < input.length; i++) {
+                _input[i] = input[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "input",
+                string.joinv (",", _input)
+            );
+        }
+        if (type != null) {
+            request.add_parameter_simple (
+                "type",
+                type.to_string ()
+            );
+        }
+        if (page != null) {
+            request.add_parameter_simple (
+                "page",
+                page.to_string ()
+            );
+        }
+        if (limit != null) {
+            request.add_parameter_simple (
+                "limit",
+                limit.to_string ()
+            );
+        }
+        if (is_discarded != null) {
+            request.add_parameter_simple (
+                "is_discarded",
+                is_discarded.to_string ()
+            );
+        }
+        if (sort != null) {
+            var _sort = new string[sort.length];
+            for (int i = 0; i < sort.length; i++) {
+                _sort[i] = sort[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "sort",
+                string.joinv (",", _sort)
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImageErrata) jsoner.deserialize_object (typeof (ImageErrata));
+        return jsoner.deserialize_object<ImageErrata> ();
     }
 
     /**
@@ -601,47 +803,53 @@ public sealed class AltRepo.Client : Object {
      */
     public ErrataIdsList get_errata_ids (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/errata/ids",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/errata/ids");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ErrataIdsList) jsoner.deserialize_object (typeof (ErrataIdsList));
+        return jsoner.deserialize_object<ErrataIdsList> ();
     }
 
     /**
      * Get information about package update erratas
      * 
+     * @param exclude_json exclude vulnerability raw JSON from results
      * @param payload 
      * 
      * @return {@link ErrataPackagesUpdates}
      */
     public ErrataPackagesUpdates post_errata_packages_updates (
         ErrataJsonPostList payload,
+        bool? exclude_json = false,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        PostContent post_content = {
-            PostContentType.JSON,
-            Jsoner.serialize (payload, Case.SNAKE)
-        };
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.POST (@"$API_BASE/errata/packages_updates");
 
-        var bytes = soup_wrapper.post (
-            @"$API_BASE/errata/packages_updates",
-            null,
-            post_content,
-            null,
-            null,
+        var post_content = new PostContent (PostContentType.JSON);
+        post_content.content = Jsoner.serialize (payload, Case.SNAKE);
+        request.add_post_content (post_content);
+
+        if (exclude_json != null) {
+            request.add_parameter_simple (
+                "exclude_json",
+                exclude_json.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
 
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ErrataPackagesUpdates) jsoner.deserialize_object (typeof (ErrataPackagesUpdates));
+        return jsoner.deserialize_object<ErrataPackagesUpdates> ();
     }
 
     /**
@@ -660,22 +868,42 @@ public sealed class AltRepo.Client : Object {
         string? vuln_id = null,
         string? errata_id = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/errata/search",
-            null,
-            {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "name", name != null ? name.to_string () : null },
-                { "vuln_id", vuln_id != null ? vuln_id.to_string () : null },
-                { "errata_id", errata_id != null ? errata_id.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/errata/search");
+
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (name != null) {
+            request.add_parameter_simple (
+                "name",
+                name.to_string ()
+            );
+        }
+        if (vuln_id != null) {
+            request.add_parameter_simple (
+                "vuln_id",
+                vuln_id.to_string ()
+            );
+        }
+        if (errata_id != null) {
+            request.add_parameter_simple (
+                "errata_id",
+                errata_id.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (Erratas) jsoner.deserialize_object (typeof (Erratas));
+        return jsoner.deserialize_object<Erratas> ();
     }
 
     /**
@@ -690,20 +918,28 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string? arch = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/export/beehive/ftbfs",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/export/beehive/ftbfs");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ExportBeehiveFTBFSList) jsoner.deserialize_object (typeof (ExportBeehiveFTBFSList));
+        return jsoner.deserialize_object<ExportBeehiveFTBFSList> ();
     }
 
     /**
@@ -718,19 +954,24 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string? arch = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/export/branch_binary_packages/$branch",
-            null,
-            {
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/export/branch_binary_packages/$branch");
+
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackagesetPackagesExport) jsoner.deserialize_object (typeof (PackagesetPackagesExport));
+        return jsoner.deserialize_object<PackagesetPackagesExport> ();
     }
 
     /**
@@ -741,17 +982,17 @@ public sealed class AltRepo.Client : Object {
      */
     public BranchTree get_export_branch_tree (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/export/branch_tree",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/export/branch_tree");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (BranchTree) jsoner.deserialize_object (typeof (BranchTree));
+        return jsoner.deserialize_object<BranchTree> ();
     }
 
     /**
@@ -764,17 +1005,17 @@ public sealed class AltRepo.Client : Object {
     public RepologyExport get_export_repology_branch (
         string branch,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/export/repology/$branch",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/export/repology/$branch");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (RepologyExport) jsoner.deserialize_object (typeof (RepologyExport));
+        return jsoner.deserialize_object<RepologyExport> ();
     }
 
     /**
@@ -787,17 +1028,17 @@ public sealed class AltRepo.Client : Object {
     public SitemapPackagesExport get_export_sitemap_packages_branch (
         string branch,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/export/sitemap_packages/$branch",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/export/sitemap_packages/$branch");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitemapPackagesExport) jsoner.deserialize_object (typeof (SitemapPackagesExport));
+        return jsoner.deserialize_object<SitemapPackagesExport> ();
     }
 
     /**
@@ -812,17 +1053,29 @@ public sealed class AltRepo.Client : Object {
         string[] branches,
         string? from_date = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/export/translation/packages_po_files",
-            null,
-            {
-                { "branches", string.joinv (",", branches) },
-                { "from_date", from_date != null ? from_date.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/export/translation/packages_po_files");
+
+        var _branches = new string[branches.length];
+        for (int i = 0; i < branches.length; i++) {
+            _branches[i] = branches[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "branches",
+            string.joinv (",", _branches)
+        );
+        if (from_date != null) {
+            request.add_parameter_simple (
+                "from_date",
+                from_date.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         return (string) bytes.get_data ();
     }
 
@@ -840,21 +1093,32 @@ public sealed class AltRepo.Client : Object {
         string file_name,
         int64? limit = 10,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/file/fast_lookup",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "file_name", file_name.to_string () },
-                { "limit", limit != null ? limit.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/file/fast_lookup");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "file_name",
+            file_name.to_string ()
+        );
+        if (limit != null) {
+            request.add_parameter_simple (
+                "limit",
+                limit.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (FastFileSearch) jsoner.deserialize_object (typeof (FastFileSearch));
+        return jsoner.deserialize_object<FastFileSearch> ();
     }
 
     /**
@@ -869,20 +1133,26 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string file_name,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/file/packages_by_file",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "file_name", file_name.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/file/packages_by_file");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "file_name",
+            file_name.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (FilePackagesByFile) jsoner.deserialize_object (typeof (FilePackagesByFile));
+        return jsoner.deserialize_object<FilePackagesByFile> ();
     }
 
     /**
@@ -899,21 +1169,32 @@ public sealed class AltRepo.Client : Object {
         string file_name,
         int64? limit = 1000,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/file/search",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "file_name", file_name.to_string () },
-                { "limit", limit != null ? limit.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/file/search");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "file_name",
+            file_name.to_string ()
+        );
+        if (limit != null) {
+            request.add_parameter_simple (
+                "limit",
+                limit.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (Files) jsoner.deserialize_object (typeof (Files));
+        return jsoner.deserialize_object<Files> ();
     }
 
     /**
@@ -936,24 +1217,54 @@ public sealed class AltRepo.Client : Object {
         string? variant = null,
         string? type = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/image/active_images",
-            null,
-            {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "edition", edition != null ? edition.to_string () : null },
-                { "version", version != null ? version.to_string () : null },
-                { "release", release != null ? release.to_string () : null },
-                { "variant", variant != null ? variant.to_string () : null },
-                { "type", type != null ? type.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/active_images");
+
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (edition != null) {
+            request.add_parameter_simple (
+                "edition",
+                edition.to_string ()
+            );
+        }
+        if (version != null) {
+            request.add_parameter_simple (
+                "version",
+                version.to_string ()
+            );
+        }
+        if (release != null) {
+            request.add_parameter_simple (
+                "release",
+                release.to_string ()
+            );
+        }
+        if (variant != null) {
+            request.add_parameter_simple (
+                "variant",
+                variant.to_string ()
+            );
+        }
+        if (type != null) {
+            request.add_parameter_simple (
+                "type",
+                type.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ActiveImages) jsoner.deserialize_object (typeof (ActiveImages));
+        return jsoner.deserialize_object<ActiveImages> ();
     }
 
     /**
@@ -974,23 +1285,46 @@ public sealed class AltRepo.Client : Object {
         string? pkg_type = "source",
         string? img_show = "all",
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/image/find_images_by_package_name",
-            null,
-            {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "pkg_name", pkg_name.to_string () },
-                { "edition", edition != null ? edition.to_string () : null },
-                { "pkg_type", pkg_type != null ? pkg_type.to_string () : null },
-                { "img_show", img_show != null ? img_show.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/find_images_by_package_name");
+
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        request.add_parameter_simple (
+            "pkg_name",
+            pkg_name.to_string ()
+        );
+        if (edition != null) {
+            request.add_parameter_simple (
+                "edition",
+                edition.to_string ()
+            );
+        }
+        if (pkg_type != null) {
+            request.add_parameter_simple (
+                "pkg_type",
+                pkg_type.to_string ()
+            );
+        }
+        if (img_show != null) {
+            request.add_parameter_simple (
+                "img_show",
+                img_show.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (FindImagesByPackage) jsoner.deserialize_object (typeof (FindImagesByPackage));
+        return jsoner.deserialize_object<FindImagesByPackage> ();
     }
 
     /**
@@ -1005,20 +1339,28 @@ public sealed class AltRepo.Client : Object {
         string uuid,
         string? component = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/image/image_categories_count",
-            null,
-            {
-                { "uuid", uuid.to_string () },
-                { "component", component != null ? component.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/image_categories_count");
+
+        request.add_parameter_simple (
+            "uuid",
+            uuid.to_string ()
+        );
+        if (component != null) {
+            request.add_parameter_simple (
+                "component",
+                component.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteImageCategories) jsoner.deserialize_object (typeof (SiteImageCategories));
+        return jsoner.deserialize_object<SiteImageCategories> ();
     }
 
     /**
@@ -1049,28 +1391,78 @@ public sealed class AltRepo.Client : Object {
         string? platform = null,
         string? type = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/image/image_info",
-            null,
-            {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "edition", edition != null ? edition.to_string () : null },
-                { "version", version != null ? version.to_string () : null },
-                { "release", release != null ? release.to_string () : null },
-                { "variant", variant != null ? variant.to_string () : null },
-                { "flavor", flavor != null ? flavor.to_string () : null },
-                { "arch", arch != null ? arch.to_string () : null },
-                { "component", component != null ? component.to_string () : null },
-                { "platform", platform != null ? platform.to_string () : null },
-                { "type", type != null ? type.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/image_info");
+
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (edition != null) {
+            request.add_parameter_simple (
+                "edition",
+                edition.to_string ()
+            );
+        }
+        if (version != null) {
+            request.add_parameter_simple (
+                "version",
+                version.to_string ()
+            );
+        }
+        if (release != null) {
+            request.add_parameter_simple (
+                "release",
+                release.to_string ()
+            );
+        }
+        if (variant != null) {
+            request.add_parameter_simple (
+                "variant",
+                variant.to_string ()
+            );
+        }
+        if (flavor != null) {
+            request.add_parameter_simple (
+                "flavor",
+                flavor.to_string ()
+            );
+        }
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+        if (component != null) {
+            request.add_parameter_simple (
+                "component",
+                component.to_string ()
+            );
+        }
+        if (platform != null) {
+            request.add_parameter_simple (
+                "platform",
+                platform.to_string ()
+            );
+        }
+        if (type != null) {
+            request.add_parameter_simple (
+                "type",
+                type.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImageInfo) jsoner.deserialize_object (typeof (ImageInfo));
+        return jsoner.deserialize_object<ImageInfo> ();
     }
 
     /**
@@ -1087,21 +1479,34 @@ public sealed class AltRepo.Client : Object {
         string? group = null,
         string? component = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/image/image_packages",
-            null,
-            {
-                { "uuid", uuid.to_string () },
-                { "group", group != null ? group.to_string () : null },
-                { "component", component != null ? component.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/image_packages");
+
+        request.add_parameter_simple (
+            "uuid",
+            uuid.to_string ()
+        );
+        if (group != null) {
+            request.add_parameter_simple (
+                "group",
+                group.to_string ()
+            );
+        }
+        if (component != null) {
+            request.add_parameter_simple (
+                "component",
+                component.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImagePackages) jsoner.deserialize_object (typeof (ImagePackages));
+        return jsoner.deserialize_object<ImagePackages> ();
     }
 
     /**
@@ -1112,17 +1517,17 @@ public sealed class AltRepo.Client : Object {
      */
     public ImagePackageSet get_image_image_packageset (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/image/image_packageset",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/image_packageset");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImagePackageSet) jsoner.deserialize_object (typeof (ImagePackageSet));
+        return jsoner.deserialize_object<ImagePackageSet> ();
     }
 
     /**
@@ -1133,17 +1538,17 @@ public sealed class AltRepo.Client : Object {
      */
     public ImageStatusGet get_image_image_status (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/image/image_status",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/image_status");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImageStatusGet) jsoner.deserialize_object (typeof (ImageStatusGet));
+        return jsoner.deserialize_object<ImageStatusGet> ();
     }
 
     /**
@@ -1158,20 +1563,30 @@ public sealed class AltRepo.Client : Object {
         string? branch = null,
         string? edition = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/image/image_tag_status",
-            null,
-            {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "edition", edition != null ? edition.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/image_tag_status");
+
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (edition != null) {
+            request.add_parameter_simple (
+                "edition",
+                edition.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImageTagStatusGet) jsoner.deserialize_object (typeof (ImageTagStatusGet));
+        return jsoner.deserialize_object<ImageTagStatusGet> ();
     }
 
     /**
@@ -1184,19 +1599,22 @@ public sealed class AltRepo.Client : Object {
     public ImageTagUUID get_image_image_uuid_by_tag (
         string tag,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/image/image_uuid_by_tag",
-            null,
-            {
-                { "tag", tag.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/image_uuid_by_tag");
+
+        request.add_parameter_simple (
+            "tag",
+            tag.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImageTagUUID) jsoner.deserialize_object (typeof (ImageTagUUID));
+        return jsoner.deserialize_object<ImageTagUUID> ();
     }
 
     /**
@@ -1209,24 +1627,21 @@ public sealed class AltRepo.Client : Object {
     public ImagePackagesInspectRegular post_image_inspect_regular (
         ImagePackagesJSON payload,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        PostContent post_content = {
-            PostContentType.JSON,
-            Jsoner.serialize (payload, Case.SNAKE)
-        };
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.POST (@"$API_BASE/image/inspect/regular");
 
-        var bytes = soup_wrapper.post (
-            @"$API_BASE/image/inspect/regular",
-            null,
-            post_content,
-            null,
-            null,
+        var post_content = new PostContent (PostContentType.JSON);
+        post_content.content = Jsoner.serialize (payload, Case.SNAKE);
+        request.add_post_content (post_content);
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
 
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImagePackagesInspectRegular) jsoner.deserialize_object (typeof (ImagePackagesInspectRegular));
+        return jsoner.deserialize_object<ImagePackagesInspectRegular> ();
     }
 
     /**
@@ -1239,24 +1654,21 @@ public sealed class AltRepo.Client : Object {
     public ImagePackagesInspectSP post_image_inspect_sp (
         ImagePackagesJSON payload,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        PostContent post_content = {
-            PostContentType.JSON,
-            Jsoner.serialize (payload, Case.SNAKE)
-        };
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.POST (@"$API_BASE/image/inspect/sp");
 
-        var bytes = soup_wrapper.post (
-            @"$API_BASE/image/inspect/sp",
-            null,
-            post_content,
-            null,
-            null,
+        var post_content = new PostContent (PostContentType.JSON);
+        post_content.content = Jsoner.serialize (payload, Case.SNAKE);
+        request.add_post_content (post_content);
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
 
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImagePackagesInspectSP) jsoner.deserialize_object (typeof (ImagePackagesInspectSP));
+        return jsoner.deserialize_object<ImagePackagesInspectSP> ();
     }
 
     /**
@@ -1267,17 +1679,17 @@ public sealed class AltRepo.Client : Object {
      */
     public ImageAllISO get_image_iso_all_images (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/image/iso/all_images",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/iso/all_images");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImageAllISO) jsoner.deserialize_object (typeof (ImageAllISO));
+        return jsoner.deserialize_object<ImageAllISO> ();
     }
 
     /**
@@ -1296,22 +1708,38 @@ public sealed class AltRepo.Client : Object {
         int64? packages_limit = null,
         string? component = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/image/last_packages_by_image",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "uuid", uuid.to_string () },
-                { "packages_limit", packages_limit != null ? packages_limit.to_string () : null },
-                { "component", component != null ? component.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/last_packages_by_image");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "uuid",
+            uuid.to_string ()
+        );
+        if (packages_limit != null) {
+            request.add_parameter_simple (
+                "packages_limit",
+                packages_limit.to_string ()
+            );
+        }
+        if (component != null) {
+            request.add_parameter_simple (
+                "component",
+                component.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (LastImagePackages) jsoner.deserialize_object (typeof (LastImagePackages));
+        return jsoner.deserialize_object<LastImagePackages> ();
     }
 
     /**
@@ -1330,22 +1758,38 @@ public sealed class AltRepo.Client : Object {
         int64? packages_limit = null,
         string? component = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/image/last_packages_image_with_cve_fixed",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "uuid", uuid.to_string () },
-                { "packages_limit", packages_limit != null ? packages_limit.to_string () : null },
-                { "component", component != null ? component.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/last_packages_image_with_cve_fixed");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "uuid",
+            uuid.to_string ()
+        );
+        if (packages_limit != null) {
+            request.add_parameter_simple (
+                "packages_limit",
+                packages_limit.to_string ()
+            );
+        }
+        if (component != null) {
+            request.add_parameter_simple (
+                "component",
+                component.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (LastImagePackages) jsoner.deserialize_object (typeof (LastImagePackages));
+        return jsoner.deserialize_object<LastImagePackages> ();
     }
 
     /**
@@ -1356,14 +1800,14 @@ public sealed class AltRepo.Client : Object {
      */
     public string get_license (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/license",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/license");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         return (string) bytes.get_data ();
     }
 
@@ -1377,19 +1821,22 @@ public sealed class AltRepo.Client : Object {
     public LicenseInfo get_license_info (
         string license,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/license/info",
-            null,
-            {
-                { "license", license.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/license/info");
+
+        request.add_parameter_simple (
+            "license",
+            license.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (LicenseInfo) jsoner.deserialize_object (typeof (LicenseInfo));
+        return jsoner.deserialize_object<LicenseInfo> ();
     }
 
     /**
@@ -1402,19 +1849,22 @@ public sealed class AltRepo.Client : Object {
     public LicenseTokens get_license_tokens (
         string license,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/license/tokens",
-            null,
-            {
-                { "license", license.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/license/tokens");
+
+        request.add_parameter_simple (
+            "license",
+            license.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (LicenseTokens) jsoner.deserialize_object (typeof (LicenseTokens));
+        return jsoner.deserialize_object<LicenseTokens> ();
     }
 
     /**
@@ -1431,21 +1881,36 @@ public sealed class AltRepo.Client : Object {
         string[] packages,
         string? arch = "x86_64",
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/package/build_dependency_set",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "packages", string.joinv (",", packages) },
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/build_dependency_set");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        var _packages = new string[packages.length];
+        for (int i = 0; i < packages.length; i++) {
+            _packages[i] = packages[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "packages",
+            string.joinv (",", _packages)
+        );
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (BuildDependencySet) jsoner.deserialize_object (typeof (BuildDependencySet));
+        return jsoner.deserialize_object<BuildDependencySet> ();
     }
 
     /**
@@ -1460,20 +1925,36 @@ public sealed class AltRepo.Client : Object {
         string[] packages,
         string[]? branches = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/package/find_packageset",
-            null,
-            {
-                { "packages", string.joinv (",", packages) },
-                { "branches", branches != null ? string.joinv (",", branches) : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/find_packageset");
+
+        var _packages = new string[packages.length];
+        for (int i = 0; i < packages.length; i++) {
+            _packages[i] = packages[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "packages",
+            string.joinv (",", _packages)
+        );
+        if (branches != null) {
+            var _branches = new string[branches.length];
+            for (int i = 0; i < branches.length; i++) {
+                _branches[i] = branches[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "branches",
+                string.joinv (",", _branches)
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageFindPackageset) jsoner.deserialize_object (typeof (PackageFindPackageset));
+        return jsoner.deserialize_object<PackageFindPackageset> ();
     }
 
     /**
@@ -1490,21 +1971,40 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string[]? archs = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/package/misconflict",
-            null,
-            {
-                { "packages", string.joinv (",", packages) },
-                { "branch", branch.to_string () },
-                { "archs", archs != null ? string.joinv (",", archs) : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/misconflict");
+
+        var _packages = new string[packages.length];
+        for (int i = 0; i < packages.length; i++) {
+            _packages[i] = packages[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "packages",
+            string.joinv (",", _packages)
+        );
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (archs != null) {
+            var _archs = new string[archs.length];
+            for (int i = 0; i < archs.length; i++) {
+                _archs[i] = archs[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "archs",
+                string.joinv (",", _archs)
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageMisconflictPackages) jsoner.deserialize_object (typeof (PackageMisconflictPackages));
+        return jsoner.deserialize_object<PackageMisconflictPackages> ();
     }
 
     /**
@@ -1521,21 +2021,32 @@ public sealed class AltRepo.Client : Object {
         string md5,
         string? arch = "x86_64",
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/package/package_by_file_md5",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "md5", md5.to_string () },
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/package_by_file_md5");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "md5",
+            md5.to_string ()
+        );
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageByFileName) jsoner.deserialize_object (typeof (PackageByFileName));
+        return jsoner.deserialize_object<PackageByFileName> ();
     }
 
     /**
@@ -1553,21 +2064,32 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string? arch = "x86_64",
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/package/package_by_file_name",
-            null,
-            {
-                { "file", file.to_string () },
-                { "branch", branch.to_string () },
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/package_by_file_name");
+
+        request.add_parameter_simple (
+            "file",
+            file.to_string ()
+        );
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageByFileName) jsoner.deserialize_object (typeof (PackageByFileName));
+        return jsoner.deserialize_object<PackageByFileName> ();
     }
 
     /**
@@ -1580,17 +2102,17 @@ public sealed class AltRepo.Client : Object {
     public PackageFiles get_package_package_files_pkghash (
         int64 pkghash,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/package/package_files/$pkghash",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/package_files/$pkghash");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageFiles) jsoner.deserialize_object (typeof (PackageFiles));
+        return jsoner.deserialize_object<PackageFiles> ();
     }
 
     /**
@@ -1623,29 +2145,84 @@ public sealed class AltRepo.Client : Object {
         string? packager_email = null,
         bool? full = false,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/package/package_info",
-            null,
-            {
-                { "name", name != null ? name.to_string () : null },
-                { "version", version != null ? version.to_string () : null },
-                { "release", release != null ? release.to_string () : null },
-                { "arch", arch != null ? arch.to_string () : null },
-                { "source", source != null ? source.to_string () : null },
-                { "branch", branch != null ? branch.to_string () : null },
-                { "disttag", disttag != null ? disttag.to_string () : null },
-                { "sha1", sha1 != null ? sha1.to_string () : null },
-                { "packager", packager != null ? packager.to_string () : null },
-                { "packager_email", packager_email != null ? packager_email.to_string () : null },
-                { "full", full != null ? full.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/package_info");
+
+        if (name != null) {
+            request.add_parameter_simple (
+                "name",
+                name.to_string ()
+            );
+        }
+        if (version != null) {
+            request.add_parameter_simple (
+                "version",
+                version.to_string ()
+            );
+        }
+        if (release != null) {
+            request.add_parameter_simple (
+                "release",
+                release.to_string ()
+            );
+        }
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+        if (source != null) {
+            request.add_parameter_simple (
+                "source",
+                source.to_string ()
+            );
+        }
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (disttag != null) {
+            request.add_parameter_simple (
+                "disttag",
+                disttag.to_string ()
+            );
+        }
+        if (sha1 != null) {
+            request.add_parameter_simple (
+                "sha1",
+                sha1.to_string ()
+            );
+        }
+        if (packager != null) {
+            request.add_parameter_simple (
+                "packager",
+                packager.to_string ()
+            );
+        }
+        if (packager_email != null) {
+            request.add_parameter_simple (
+                "packager_email",
+                packager_email.to_string ()
+            );
+        }
+        if (full != null) {
+            request.add_parameter_simple (
+                "full",
+                full.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageInfo) jsoner.deserialize_object (typeof (PackageInfo));
+        return jsoner.deserialize_object<PackageInfo> ();
     }
 
     /**
@@ -1659,24 +2236,21 @@ public sealed class AltRepo.Client : Object {
     public PackageByFileName post_package_packages_by_file_names (
         PackagesByFileNamesJson payload,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        PostContent post_content = {
-            PostContentType.JSON,
-            Jsoner.serialize (payload, Case.SNAKE)
-        };
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.POST (@"$API_BASE/package/packages_by_file_names");
 
-        var bytes = soup_wrapper.post (
-            @"$API_BASE/package/packages_by_file_names",
-            null,
-            post_content,
-            null,
-            null,
+        var post_content = new PostContent (PostContentType.JSON);
+        post_content.content = Jsoner.serialize (payload, Case.SNAKE);
+        request.add_post_content (post_content);
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
 
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageByFileName) jsoner.deserialize_object (typeof (PackageByFileName));
+        return jsoner.deserialize_object<PackageByFileName> ();
     }
 
     /**
@@ -1699,24 +2273,50 @@ public sealed class AltRepo.Client : Object {
         string? bin_package_arch = null,
         string? package_type = "source",
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/package/repocop",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "package_name", package_name.to_string () },
-                { "package_version", package_version != null ? package_version.to_string () : null },
-                { "package_release", package_release != null ? package_release.to_string () : null },
-                { "bin_package_arch", bin_package_arch != null ? bin_package_arch.to_string () : null },
-                { "package_type", package_type != null ? package_type.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/repocop");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "package_name",
+            package_name.to_string ()
+        );
+        if (package_version != null) {
+            request.add_parameter_simple (
+                "package_version",
+                package_version.to_string ()
+            );
+        }
+        if (package_release != null) {
+            request.add_parameter_simple (
+                "package_release",
+                package_release.to_string ()
+            );
+        }
+        if (bin_package_arch != null) {
+            request.add_parameter_simple (
+                "bin_package_arch",
+                bin_package_arch.to_string ()
+            );
+        }
+        if (package_type != null) {
+            request.add_parameter_simple (
+                "package_type",
+                package_type.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (RepocopJsonGetList) jsoner.deserialize_object (typeof (RepocopJsonGetList));
+        return jsoner.deserialize_object<RepocopJsonGetList> ();
     }
 
     /**
@@ -1729,17 +2329,17 @@ public sealed class AltRepo.Client : Object {
     public PackageSpecfile get_package_specfile_by_hash_pkghash (
         int64 pkghash,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/package/specfile_by_hash/$pkghash",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/specfile_by_hash/$pkghash");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageSpecfile) jsoner.deserialize_object (typeof (PackageSpecfile));
+        return jsoner.deserialize_object<PackageSpecfile> ();
     }
 
     /**
@@ -1754,20 +2354,26 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string name,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/package/specfile_by_name",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "name", name.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/specfile_by_name");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageSpecfile) jsoner.deserialize_object (typeof (PackageSpecfile));
+        return jsoner.deserialize_object<PackageSpecfile> ();
     }
 
     /**
@@ -1784,21 +2390,36 @@ public sealed class AltRepo.Client : Object {
         string packager,
         string[]? archs = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/package/unpackaged_dirs",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "packager", packager.to_string () },
-                { "archs", archs != null ? string.joinv (",", archs) : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/unpackaged_dirs");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "packager",
+            packager.to_string ()
+        );
+        if (archs != null) {
+            var _archs = new string[archs.length];
+            for (int i = 0; i < archs.length; i++) {
+                _archs[i] = archs[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "archs",
+                string.joinv (",", _archs)
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (UnpackagedDirs) jsoner.deserialize_object (typeof (UnpackagedDirs));
+        return jsoner.deserialize_object<UnpackagedDirs> ();
     }
 
     /**
@@ -1831,29 +2452,92 @@ public sealed class AltRepo.Client : Object {
         bool? oneandhalf = false,
         bool? use_last_tasks = false,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/package/what_depends_src",
-            null,
-            {
-                { "packages", string.joinv (",", packages) },
-                { "branch", branch.to_string () },
-                { "depth", depth != null ? depth.to_string () : null },
-                { "dptype", dptype != null ? dptype.to_string () : null },
-                { "archs", archs != null ? string.joinv (",", archs) : null },
-                { "leaf", leaf != null ? leaf.to_string () : null },
-                { "finite_package", finite_package != null ? finite_package.to_string () : null },
-                { "filter_by_package", filter_by_package != null ? string.joinv (",", filter_by_package) : null },
-                { "filter_by_source", filter_by_source != null ? filter_by_source.to_string () : null },
-                { "oneandhalf", oneandhalf != null ? oneandhalf.to_string () : null },
-                { "use_last_tasks", use_last_tasks != null ? use_last_tasks.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/what_depends_src");
+
+        var _packages = new string[packages.length];
+        for (int i = 0; i < packages.length; i++) {
+            _packages[i] = packages[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "packages",
+            string.joinv (",", _packages)
+        );
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (depth != null) {
+            request.add_parameter_simple (
+                "depth",
+                depth.to_string ()
+            );
+        }
+        if (dptype != null) {
+            request.add_parameter_simple (
+                "dptype",
+                dptype.to_string ()
+            );
+        }
+        if (archs != null) {
+            var _archs = new string[archs.length];
+            for (int i = 0; i < archs.length; i++) {
+                _archs[i] = archs[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "archs",
+                string.joinv (",", _archs)
+            );
+        }
+        if (leaf != null) {
+            request.add_parameter_simple (
+                "leaf",
+                leaf.to_string ()
+            );
+        }
+        if (finite_package != null) {
+            request.add_parameter_simple (
+                "finite_package",
+                finite_package.to_string ()
+            );
+        }
+        if (filter_by_package != null) {
+            var _filter_by_package = new string[filter_by_package.length];
+            for (int i = 0; i < filter_by_package.length; i++) {
+                _filter_by_package[i] = filter_by_package[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "filter_by_package",
+                string.joinv (",", _filter_by_package)
+            );
+        }
+        if (filter_by_source != null) {
+            request.add_parameter_simple (
+                "filter_by_source",
+                filter_by_source.to_string ()
+            );
+        }
+        if (oneandhalf != null) {
+            request.add_parameter_simple (
+                "oneandhalf",
+                oneandhalf.to_string ()
+            );
+        }
+        if (use_last_tasks != null) {
+            request.add_parameter_simple (
+                "use_last_tasks",
+                use_last_tasks.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageBuildDependency) jsoner.deserialize_object (typeof (PackageBuildDependency));
+        return jsoner.deserialize_object<PackageBuildDependency> ();
     }
 
     /**
@@ -1864,17 +2548,17 @@ public sealed class AltRepo.Client : Object {
      */
     public PackageSetActivePackageSets get_packageset_active_packagesets (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/packageset/active_packagesets",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/packageset/active_packagesets");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageSetActivePackageSets) jsoner.deserialize_object (typeof (PackageSetActivePackageSets));
+        return jsoner.deserialize_object<PackageSetActivePackageSets> ();
     }
 
     /**
@@ -1889,20 +2573,26 @@ public sealed class AltRepo.Client : Object {
         string pkgset1,
         string pkgset2,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/packageset/compare_packagesets",
-            null,
-            {
-                { "pkgset1", pkgset1.to_string () },
-                { "pkgset2", pkgset2.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/packageset/compare_packagesets");
+
+        request.add_parameter_simple (
+            "pkgset1",
+            pkgset1.to_string ()
+        );
+        request.add_parameter_simple (
+            "pkgset2",
+            pkgset2.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackagesetCompare) jsoner.deserialize_object (typeof (PackagesetCompare));
+        return jsoner.deserialize_object<PackagesetCompare> ();
     }
 
     /**
@@ -1919,21 +2609,30 @@ public sealed class AltRepo.Client : Object {
         string arch,
         string component,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/packageset/packages_by_component",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "arch", arch.to_string () },
-                { "component", component.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/packageset/packages_by_component");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "arch",
+            arch.to_string ()
+        );
+        request.add_parameter_simple (
+            "component",
+            component.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackagesByUuid) jsoner.deserialize_object (typeof (PackagesByUuid));
+        return jsoner.deserialize_object<PackagesByUuid> ();
     }
 
     /**
@@ -1946,19 +2645,22 @@ public sealed class AltRepo.Client : Object {
     public PackagesByUuid get_packageset_packages_by_uuid (
         string uuid,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/packageset/packages_by_uuid",
-            null,
-            {
-                { "uuid", uuid.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/packageset/packages_by_uuid");
+
+        request.add_parameter_simple (
+            "uuid",
+            uuid.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackagesByUuid) jsoner.deserialize_object (typeof (PackagesByUuid));
+        return jsoner.deserialize_object<PackagesByUuid> ();
     }
 
     /**
@@ -1969,17 +2671,17 @@ public sealed class AltRepo.Client : Object {
      */
     public PackageSetStatusGet get_packageset_pkgset_status (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/packageset/pkgset_status",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/packageset/pkgset_status");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageSetStatusGet) jsoner.deserialize_object (typeof (PackageSetStatusGet));
+        return jsoner.deserialize_object<PackageSetStatusGet> ();
     }
 
     /**
@@ -1996,21 +2698,38 @@ public sealed class AltRepo.Client : Object {
         string? package_type = "all",
         string[]? archs = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/packageset/repository_packages",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "package_type", package_type != null ? package_type.to_string () : null },
-                { "archs", archs != null ? string.joinv (",", archs) : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/packageset/repository_packages");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (package_type != null) {
+            request.add_parameter_simple (
+                "package_type",
+                package_type.to_string ()
+            );
+        }
+        if (archs != null) {
+            var _archs = new string[archs.length];
+            for (int i = 0; i < archs.length; i++) {
+                _archs[i] = archs[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "archs",
+                string.joinv (",", _archs)
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackagesetPackages) jsoner.deserialize_object (typeof (PackagesetPackages));
+        return jsoner.deserialize_object<PackagesetPackages> ();
     }
 
     /**
@@ -2023,19 +2742,24 @@ public sealed class AltRepo.Client : Object {
     public RepositoryStatistics get_packageset_repository_statistics (
         string? branch = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/packageset/repository_statistics",
-            null,
-            {
-                { "branch", branch != null ? branch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/packageset/repository_statistics");
+
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (RepositoryStatistics) jsoner.deserialize_object (typeof (RepositoryStatistics));
+        return jsoner.deserialize_object<RepositoryStatistics> ();
     }
 
     /**
@@ -2048,22 +2772,22 @@ public sealed class AltRepo.Client : Object {
     public Gee.ArrayList<AllMaintainers> get_site_all_maintainers (
         string branch,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/all_maintainers",
-            null,
-            {
-                { "branch", branch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/all_maintainers");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<AllMaintainers> ();
-        jsoner.deserialize_array_into (array);
-
-        return array;
+        return jsoner.deserialize_array<AllMaintainers> ();
     }
 
     /**
@@ -2076,22 +2800,22 @@ public sealed class AltRepo.Client : Object {
     public Gee.ArrayList<AllMaintainers> get_site_all_maintainers_with_nicknames (
         string branch,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/all_maintainers_with_nicknames",
-            null,
-            {
-                { "branch", branch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/all_maintainers_with_nicknames");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<AllMaintainers> ();
-        jsoner.deserialize_array_into (array);
-
-        return array;
+        return jsoner.deserialize_array<AllMaintainers> ();
     }
 
     /**
@@ -2104,19 +2828,22 @@ public sealed class AltRepo.Client : Object {
     public SiteAllArchs get_site_all_pkgset_archs (
         string branch,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/all_pkgset_archs",
-            null,
-            {
-                { "branch", branch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/all_pkgset_archs");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteAllArchs) jsoner.deserialize_object (typeof (SiteAllArchs));
+        return jsoner.deserialize_object<SiteAllArchs> ();
     }
 
     /**
@@ -2129,19 +2856,22 @@ public sealed class AltRepo.Client : Object {
     public SiteAllArchs get_site_all_pkgset_archs_with_src_count (
         string branch,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/all_pkgset_archs_with_src_count",
-            null,
-            {
-                { "branch", branch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/all_pkgset_archs_with_src_count");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteAllArchs) jsoner.deserialize_object (typeof (SiteAllArchs));
+        return jsoner.deserialize_object<SiteAllArchs> ();
     }
 
     /**
@@ -2152,17 +2882,17 @@ public sealed class AltRepo.Client : Object {
      */
     public SiteAllPackagasets get_site_all_pkgsets (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/all_pkgsets",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/all_pkgsets");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteAllPackagasets) jsoner.deserialize_object (typeof (SiteAllPackagasets));
+        return jsoner.deserialize_object<SiteAllPackagasets> ();
     }
 
     /**
@@ -2173,17 +2903,17 @@ public sealed class AltRepo.Client : Object {
      */
     public SiteAllPackagesetsSummary get_site_all_pkgsets_summary (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/all_pkgsets_summary",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/all_pkgsets_summary");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteAllPackagesetsSummary) jsoner.deserialize_object (typeof (SiteAllPackagesetsSummary));
+        return jsoner.deserialize_object<SiteAllPackagesetsSummary> ();
     }
 
     /**
@@ -2194,17 +2924,17 @@ public sealed class AltRepo.Client : Object {
      */
     public SiteAllPackagasets get_site_all_pkgsets_with_src_count (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/all_pkgsets_with_src_count",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/all_pkgsets_with_src_count");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteAllPackagasets) jsoner.deserialize_object (typeof (SiteAllPackagasets));
+        return jsoner.deserialize_object<SiteAllPackagasets> ();
     }
 
     /**
@@ -2221,24 +2951,32 @@ public sealed class AltRepo.Client : Object {
         string maintainer_nickname,
         string? by_acl = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/beehive_errors_by_maintainer",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "maintainer_nickname", maintainer_nickname.to_string () },
-                { "by_acl", by_acl != null ? by_acl.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/beehive_errors_by_maintainer");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "maintainer_nickname",
+            maintainer_nickname.to_string ()
+        );
+        if (by_acl != null) {
+            request.add_parameter_simple (
+                "by_acl",
+                by_acl.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<SiteBeehiveByMaintainer> ();
-        jsoner.deserialize_array_into (array);
-
-        return array;
+        return jsoner.deserialize_array<SiteBeehiveByMaintainer> ();
     }
 
     /**
@@ -2253,20 +2991,26 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string name,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/binary_package_archs_and_versions",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "name", name.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/binary_package_archs_and_versions");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesBinaryList) jsoner.deserialize_object (typeof (SitePackagesBinaryList));
+        return jsoner.deserialize_object<SitePackagesBinaryList> ();
     }
 
     /**
@@ -2279,17 +3023,17 @@ public sealed class AltRepo.Client : Object {
     public SiteBinPackageScripts get_site_binary_package_scripts_pkghash (
         int64 pkghash,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/binary_package_scripts/$pkghash",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/binary_package_scripts/$pkghash");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteBinPackageScripts) jsoner.deserialize_object (typeof (SiteBinPackageScripts));
+        return jsoner.deserialize_object<SiteBinPackageScripts> ();
     }
 
     /**
@@ -2308,22 +3052,38 @@ public sealed class AltRepo.Client : Object {
         string? package_type = "source",
         string? arch = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/deleted_package_info",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "name", name.to_string () },
-                { "package_type", package_type != null ? package_type.to_string () : null },
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/deleted_package_info");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+        if (package_type != null) {
+            request.add_parameter_simple (
+                "package_type",
+                package_type.to_string ()
+            );
+        }
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteDeletedPackage) jsoner.deserialize_object (typeof (SiteDeletedPackage));
+        return jsoner.deserialize_object<SiteDeletedPackage> ();
     }
 
     /**
@@ -2338,20 +3098,32 @@ public sealed class AltRepo.Client : Object {
         string[] name,
         string? branch = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/fast_packages_search_lookup",
-            null,
-            {
-                { "name", string.joinv (",", name) },
-                { "branch", branch != null ? branch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/fast_packages_search_lookup");
+
+        var _name = new string[name.length];
+        for (int i = 0; i < name.length; i++) {
+            _name[i] = name[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "name",
+            string.joinv (",", _name)
+        );
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteFastPackagesSearch) jsoner.deserialize_object (typeof (SiteFastPackagesSearch));
+        return jsoner.deserialize_object<SiteFastPackagesSearch> ();
     }
 
     /**
@@ -2368,21 +3140,38 @@ public sealed class AltRepo.Client : Object {
         string? branch = null,
         string? arch = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/find_packages",
-            null,
-            {
-                { "name", string.joinv (",", name) },
-                { "branch", branch != null ? branch.to_string () : null },
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/find_packages");
+
+        var _name = new string[name.length];
+        for (int i = 0; i < name.length; i++) {
+            _name[i] = name[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "name",
+            string.joinv (",", _name)
+        );
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteFingPackages) jsoner.deserialize_object (typeof (SiteFingPackages));
+        return jsoner.deserialize_object<SiteFingPackages> ();
     }
 
     /**
@@ -2397,20 +3186,26 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string name,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/find_source_package",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "name", name.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/find_source_package");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (FindSourcePackageInBranch) jsoner.deserialize_object (typeof (FindSourcePackageInBranch));
+        return jsoner.deserialize_object<FindSourcePackageInBranch> ();
     }
 
     /**
@@ -2427,21 +3222,32 @@ public sealed class AltRepo.Client : Object {
         int64 tasks_limit = 10,
         string? task_owner = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/last_packages",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "tasks_limit", tasks_limit.to_string () },
-                { "task_owner", task_owner != null ? task_owner.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/last_packages");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "tasks_limit",
+            tasks_limit.to_string ()
+        );
+        if (task_owner != null) {
+            request.add_parameter_simple (
+                "task_owner",
+                task_owner.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteLastPackages) jsoner.deserialize_object (typeof (SiteLastPackages));
+        return jsoner.deserialize_object<SiteLastPackages> ();
     }
 
     /**
@@ -2458,21 +3264,32 @@ public sealed class AltRepo.Client : Object {
         int64 packages_limit = 10,
         string? packager = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/last_packages_by_branch",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "packages_limit", packages_limit.to_string () },
-                { "packager", packager != null ? packager.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/last_packages_by_branch");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "packages_limit",
+            packages_limit.to_string ()
+        );
+        if (packager != null) {
+            request.add_parameter_simple (
+                "packager",
+                packager.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteLastBranchPackages) jsoner.deserialize_object (typeof (SiteLastBranchPackages));
+        return jsoner.deserialize_object<SiteLastBranchPackages> ();
     }
 
     /**
@@ -2489,21 +3306,32 @@ public sealed class AltRepo.Client : Object {
         int64 tasks_limit = 10,
         string? task_owner = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/last_packages_by_tasks",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "tasks_limit", tasks_limit.to_string () },
-                { "task_owner", task_owner != null ? task_owner.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/last_packages_by_tasks");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "tasks_limit",
+            tasks_limit.to_string ()
+        );
+        if (task_owner != null) {
+            request.add_parameter_simple (
+                "task_owner",
+                task_owner.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteLastPackages) jsoner.deserialize_object (typeof (SiteLastPackages));
+        return jsoner.deserialize_object<SiteLastPackages> ();
     }
 
     /**
@@ -2516,19 +3344,22 @@ public sealed class AltRepo.Client : Object {
     public SiteLastPackagesWithCVEFixes get_site_last_packages_with_cve_fixed (
         string branch,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/last_packages_with_cve_fixed",
-            null,
-            {
-                { "branch", branch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/last_packages_with_cve_fixed");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteLastPackagesWithCVEFixes) jsoner.deserialize_object (typeof (SiteLastPackagesWithCVEFixes));
+        return jsoner.deserialize_object<SiteLastPackagesWithCVEFixes> ();
     }
 
     /**
@@ -2541,22 +3372,22 @@ public sealed class AltRepo.Client : Object {
     public Gee.ArrayList<MaintainerBranches> get_site_maintainer_branches (
         string maintainer_nickname,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/maintainer_branches",
-            null,
-            {
-                { "maintainer_nickname", maintainer_nickname.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/maintainer_branches");
+
+        request.add_parameter_simple (
+            "maintainer_nickname",
+            maintainer_nickname.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<MaintainerBranches> ();
-        jsoner.deserialize_array_into (array);
-
-        return array;
+        return jsoner.deserialize_array<MaintainerBranches> ();
     }
 
     /**
@@ -2571,23 +3402,26 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string maintainer_nickname,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/maintainer_info",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "maintainer_nickname", maintainer_nickname.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/maintainer_info");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "maintainer_nickname",
+            maintainer_nickname.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<MaintainerInfo> ();
-        jsoner.deserialize_array_into (array);
-
-        return array;
+        return jsoner.deserialize_array<MaintainerInfo> ();
     }
 
     /**
@@ -2604,24 +3438,32 @@ public sealed class AltRepo.Client : Object {
         string maintainer_nickname,
         string? by_acl = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/maintainer_packages",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "maintainer_nickname", maintainer_nickname.to_string () },
-                { "by_acl", by_acl != null ? by_acl.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/maintainer_packages");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "maintainer_nickname",
+            maintainer_nickname.to_string ()
+        );
+        if (by_acl != null) {
+            request.add_parameter_simple (
+                "by_acl",
+                by_acl.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<MaintainerPackages> ();
-        jsoner.deserialize_array_into (array);
-
-        return array;
+        return jsoner.deserialize_array<MaintainerPackages> ();
     }
 
     /**
@@ -2636,19 +3478,24 @@ public sealed class AltRepo.Client : Object {
         int64 pkghash,
         int64? changelog_last = 3,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/package_changelog/$pkghash",
-            null,
-            {
-                { "changelog_last", changelog_last != null ? changelog_last.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_changelog/$pkghash");
+
+        if (changelog_last != null) {
+            request.add_parameter_simple (
+                "changelog_last",
+                changelog_last.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteChangelog) jsoner.deserialize_object (typeof (SiteChangelog));
+        return jsoner.deserialize_object<SiteChangelog> ();
     }
 
     /**
@@ -2663,19 +3510,22 @@ public sealed class AltRepo.Client : Object {
         string branch,
         int64 pkghash,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/package_downloads/$pkghash",
-            null,
-            {
-                { "branch", branch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_downloads/$pkghash");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesDownloads) jsoner.deserialize_object (typeof (SitePackagesDownloads));
+        return jsoner.deserialize_object<SitePackagesDownloads> ();
     }
 
     /**
@@ -2692,20 +3542,26 @@ public sealed class AltRepo.Client : Object {
         string arch,
         int64 pkghash,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/package_downloads_bin/$pkghash",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "arch", arch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_downloads_bin/$pkghash");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "arch",
+            arch.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesDownloads) jsoner.deserialize_object (typeof (SitePackagesDownloads));
+        return jsoner.deserialize_object<SitePackagesDownloads> ();
     }
 
     /**
@@ -2720,19 +3576,22 @@ public sealed class AltRepo.Client : Object {
         string branch,
         int64 pkghash,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/package_downloads_src/$pkghash",
-            null,
-            {
-                { "branch", branch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_downloads_src/$pkghash");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesDownloads) jsoner.deserialize_object (typeof (SitePackagesDownloads));
+        return jsoner.deserialize_object<SitePackagesDownloads> ();
     }
 
     /**
@@ -2751,21 +3610,34 @@ public sealed class AltRepo.Client : Object {
         int64? changelog_last = 3,
         string? package_type = "source",
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/package_info/$pkghash",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "changelog_last", changelog_last != null ? changelog_last.to_string () : null },
-                { "package_type", package_type != null ? package_type.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_info/$pkghash");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (changelog_last != null) {
+            request.add_parameter_simple (
+                "changelog_last",
+                changelog_last.to_string ()
+            );
+        }
+        if (package_type != null) {
+            request.add_parameter_simple (
+                "package_type",
+                package_type.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackageInfo) jsoner.deserialize_object (typeof (SitePackageInfo));
+        return jsoner.deserialize_object<SitePackageInfo> ();
     }
 
     /**
@@ -2778,17 +3650,17 @@ public sealed class AltRepo.Client : Object {
     public SiteBriefPackageInfo get_site_package_info_brief_pkghash (
         int64 pkghash,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/package_info_brief/$pkghash",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_info_brief/$pkghash");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteBriefPackageInfo) jsoner.deserialize_object (typeof (SiteBriefPackageInfo));
+        return jsoner.deserialize_object<SiteBriefPackageInfo> ();
     }
 
     /**
@@ -2801,17 +3673,17 @@ public sealed class AltRepo.Client : Object {
     public BinPackageLogElement get_site_package_log_bin_pkghash (
         int64 pkghash,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/package_log_bin/$pkghash",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_log_bin/$pkghash");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (BinPackageLogElement) jsoner.deserialize_object (typeof (BinPackageLogElement));
+        return jsoner.deserialize_object<BinPackageLogElement> ();
     }
 
     /**
@@ -2826,19 +3698,22 @@ public sealed class AltRepo.Client : Object {
         string branch,
         int64 pkghash,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/package_misconflict/$pkghash",
-            null,
-            {
-                { "branch", branch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_misconflict/$pkghash");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageMisconflictBySrc) jsoner.deserialize_object (typeof (PackageMisconflictBySrc));
+        return jsoner.deserialize_object<PackageMisconflictBySrc> ();
     }
 
     /**
@@ -2853,20 +3728,26 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string name,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/package_name_from_repology",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "name", name.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_name_from_repology");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageNameFromRepology) jsoner.deserialize_object (typeof (PackageNameFromRepology));
+        return jsoner.deserialize_object<PackageNameFromRepology> ();
     }
 
     /**
@@ -2881,19 +3762,24 @@ public sealed class AltRepo.Client : Object {
         int64 pkghash,
         string? name = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/package_nvr_by_hash/$pkghash",
-            null,
-            {
-                { "name", name != null ? name.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_nvr_by_hash/$pkghash");
+
+        if (name != null) {
+            request.add_parameter_simple (
+                "name",
+                name.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageNVRByHash) jsoner.deserialize_object (typeof (PackageNVRByHash));
+        return jsoner.deserialize_object<PackageNVRByHash> ();
     }
 
     /**
@@ -2910,21 +3796,34 @@ public sealed class AltRepo.Client : Object {
         string? package_type = "source",
         string? arch = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/package_versions",
-            null,
-            {
-                { "name", name.to_string () },
-                { "package_type", package_type != null ? package_type.to_string () : null },
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_versions");
+
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+        if (package_type != null) {
+            request.add_parameter_simple (
+                "package_type",
+                package_type.to_string ()
+            );
+        }
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteSourcePackagesVersions) jsoner.deserialize_object (typeof (SiteSourcePackagesVersions));
+        return jsoner.deserialize_object<SiteSourcePackagesVersions> ();
     }
 
     /**
@@ -2943,22 +3842,34 @@ public sealed class AltRepo.Client : Object {
         string edition,
         string type,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/package_versions_from_images",
-            null,
-            {
-                { "name", name.to_string () },
-                { "branch", branch.to_string () },
-                { "edition", edition.to_string () },
-                { "type", type.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_versions_from_images");
+
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "edition",
+            edition.to_string ()
+        );
+        request.add_parameter_simple (
+            "type",
+            type.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteImagePackageVersions) jsoner.deserialize_object (typeof (SiteImagePackageVersions));
+        return jsoner.deserialize_object<SiteImagePackageVersions> ();
     }
 
     /**
@@ -2973,20 +3884,28 @@ public sealed class AltRepo.Client : Object {
         string name,
         string? branch = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/package_versions_from_tasks",
-            null,
-            {
-                { "name", name.to_string () },
-                { "branch", branch != null ? branch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_versions_from_tasks");
+
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SItePackagesVersionsFromTasks) jsoner.deserialize_object (typeof (SItePackagesVersionsFromTasks));
+        return jsoner.deserialize_object<SItePackagesVersionsFromTasks> ();
     }
 
     /**
@@ -2999,17 +3918,17 @@ public sealed class AltRepo.Client : Object {
     public SitePackagesetsByHash get_site_packagesets_by_hash_pkghash (
         int64 pkghash,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/packagesets_by_hash/$pkghash",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/packagesets_by_hash/$pkghash");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesetsByHash) jsoner.deserialize_object (typeof (SitePackagesetsByHash));
+        return jsoner.deserialize_object<SitePackagesetsByHash> ();
     }
 
     /**
@@ -3026,21 +3945,30 @@ public sealed class AltRepo.Client : Object {
         string name,
         string arch,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/pkghash_by_binary_name",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "name", name.to_string () },
-                { "arch", arch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/pkghash_by_binary_name");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+        request.add_parameter_simple (
+            "arch",
+            arch.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesetPackageHash) jsoner.deserialize_object (typeof (SitePackagesetPackageHash));
+        return jsoner.deserialize_object<SitePackagesetPackageHash> ();
     }
 
     /**
@@ -3055,20 +3983,26 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string name,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/pkghash_by_name",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "name", name.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/pkghash_by_name");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesetPackageHash) jsoner.deserialize_object (typeof (SitePackagesetPackageHash));
+        return jsoner.deserialize_object<SitePackagesetPackageHash> ();
     }
 
     /**
@@ -3087,22 +4021,34 @@ public sealed class AltRepo.Client : Object {
         string version,
         string release,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/pkghash_by_nvr",
-            null,
-            {
-                { "name", name.to_string () },
-                { "branch", branch.to_string () },
-                { "version", version.to_string () },
-                { "release", release.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/pkghash_by_nvr");
+
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "version",
+            version.to_string ()
+        );
+        request.add_parameter_simple (
+            "release",
+            release.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesetPackageHashByNameVersionRelease) jsoner.deserialize_object (typeof (SitePackagesetPackageHashByNameVersionRelease));
+        return jsoner.deserialize_object<SitePackagesetPackageHashByNameVersionRelease> ();
     }
 
     /**
@@ -3117,20 +4063,28 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string? package_type = "source",
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/pkgset_categories_count",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "package_type", package_type != null ? package_type.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/pkgset_categories_count");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (package_type != null) {
+            request.add_parameter_simple (
+                "package_type",
+                package_type.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesetCategories) jsoner.deserialize_object (typeof (SitePackagesetCategories));
+        return jsoner.deserialize_object<SitePackagesetCategories> ();
     }
 
     /**
@@ -3141,17 +4095,17 @@ public sealed class AltRepo.Client : Object {
      */
     public SitePackagesetsSummaryStatus get_site_pkgsets_summary_status (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/pkgsets_summary_status",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/pkgsets_summary_status");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesetsSummaryStatus) jsoner.deserialize_object (typeof (SitePackagesetsSummaryStatus));
+        return jsoner.deserialize_object<SitePackagesetsSummaryStatus> ();
     }
 
     /**
@@ -3168,24 +4122,32 @@ public sealed class AltRepo.Client : Object {
         string maintainer_nickname,
         string? by_acl = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/repocop_by_maintainer",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "maintainer_nickname", maintainer_nickname.to_string () },
-                { "by_acl", by_acl != null ? by_acl.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/repocop_by_maintainer");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "maintainer_nickname",
+            maintainer_nickname.to_string ()
+        );
+        if (by_acl != null) {
+            request.add_parameter_simple (
+                "by_acl",
+                by_acl.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<RepocopByMaintainer> ();
-        jsoner.deserialize_array_into (array);
-
-        return array;
+        return jsoner.deserialize_array<RepocopByMaintainer> ();
     }
 
     /**
@@ -3204,22 +4166,40 @@ public sealed class AltRepo.Client : Object {
         string? group = null,
         int64? buildtime = 0,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/repository_packages",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "package_type", package_type != null ? package_type.to_string () : null },
-                { "group", group != null ? group.to_string () : null },
-                { "buildtime", buildtime != null ? buildtime.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/repository_packages");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (package_type != null) {
+            request.add_parameter_simple (
+                "package_type",
+                package_type.to_string ()
+            );
+        }
+        if (group != null) {
+            request.add_parameter_simple (
+                "group",
+                group.to_string ()
+            );
+        }
+        if (buildtime != null) {
+            request.add_parameter_simple (
+                "buildtime",
+                buildtime.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackages) jsoner.deserialize_object (typeof (SitePackages));
+        return jsoner.deserialize_object<SitePackages> ();
     }
 
     /**
@@ -3232,19 +4212,22 @@ public sealed class AltRepo.Client : Object {
     public SiteSourcePackagesVersions get_site_source_package_versions (
         string name,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/source_package_versions",
-            null,
-            {
-                { "name", name.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/source_package_versions");
+
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteSourcePackagesVersions) jsoner.deserialize_object (typeof (SiteSourcePackagesVersions));
+        return jsoner.deserialize_object<SiteSourcePackagesVersions> ();
     }
 
     /**
@@ -3260,23 +4243,26 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string maintainer_nickname,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/tasks_by_maintainer",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "maintainer_nickname", maintainer_nickname.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/tasks_by_maintainer");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "maintainer_nickname",
+            maintainer_nickname.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<SiteTaskByName> ();
-        jsoner.deserialize_array_into (array);
-
-        return array;
+        return jsoner.deserialize_array<SiteTaskByName> ();
     }
 
     /**
@@ -3290,19 +4276,22 @@ public sealed class AltRepo.Client : Object {
     public SiteTaskByName get_site_tasks_by_package (
         string name,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/tasks_by_package",
-            null,
-            {
-                { "name", name.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/tasks_by_package");
+
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteTaskByName) jsoner.deserialize_object (typeof (SiteTaskByName));
+        return jsoner.deserialize_object<SiteTaskByName> ();
     }
 
     /**
@@ -3315,19 +4304,24 @@ public sealed class AltRepo.Client : Object {
     public SiteTasksHistory get_site_tasks_history (
         int64? task_id = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/tasks_history",
-            null,
-            {
-                { "task_id", task_id != null ? task_id.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/tasks_history");
+
+        if (task_id != null) {
+            request.add_parameter_simple (
+                "task_id",
+                task_id.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteTasksHistory) jsoner.deserialize_object (typeof (SiteTasksHistory));
+        return jsoner.deserialize_object<SiteTasksHistory> ();
     }
 
     /**
@@ -3342,23 +4336,28 @@ public sealed class AltRepo.Client : Object {
         string maintainer_nickname,
         string? by_acl = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/site/watch_by_maintainer",
-            null,
-            {
-                { "maintainer_nickname", maintainer_nickname.to_string () },
-                { "by_acl", by_acl != null ? by_acl.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/watch_by_maintainer");
+
+        request.add_parameter_simple (
+            "maintainer_nickname",
+            maintainer_nickname.to_string ()
+        );
+        if (by_acl != null) {
+            request.add_parameter_simple (
+                "by_acl",
+                by_acl.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<SiteWatchByMaintainer> ();
-        jsoner.deserialize_array_into (array);
-
-        return array;
+        return jsoner.deserialize_array<SiteWatchByMaintainer> ();
     }
 
     /**
@@ -3373,19 +4372,24 @@ public sealed class AltRepo.Client : Object {
         int64 id,
         string? arch = "x86_64",
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/build_dependency_set/$id",
-            null,
-            {
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/build_dependency_set/$id");
+
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (BuildDependencySet) jsoner.deserialize_object (typeof (BuildDependencySet));
+        return jsoner.deserialize_object<BuildDependencySet> ();
     }
 
     /**
@@ -3446,24 +4450,21 @@ public sealed class AltRepo.Client : Object {
     public CheckImagesOutput post_task_check_images (
         CheckImagesInput payload,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        PostContent post_content = {
-            PostContentType.JSON,
-            Jsoner.serialize (payload, Case.SNAKE)
-        };
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.POST (@"$API_BASE/task/check_images");
 
-        var bytes = soup_wrapper.post (
-            @"$API_BASE/task/check_images",
-            null,
-            post_content,
-            null,
-            null,
+        var post_content = new PostContent (PostContentType.JSON);
+        post_content.content = Jsoner.serialize (payload, Case.SNAKE);
+        request.add_post_content (post_content);
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
 
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (CheckImagesOutput) jsoner.deserialize_object (typeof (CheckImagesOutput));
+        return jsoner.deserialize_object<CheckImagesOutput> ();
     }
 
     /**
@@ -3476,17 +4477,17 @@ public sealed class AltRepo.Client : Object {
     public FindImagesByTask get_task_find_images_id (
         int64 id,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/find_images/$id",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/find_images/$id");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (FindImagesByTask) jsoner.deserialize_object (typeof (FindImagesByTask));
+        return jsoner.deserialize_object<FindImagesByTask> ();
     }
 
     /**
@@ -3501,19 +4502,28 @@ public sealed class AltRepo.Client : Object {
         int64 id,
         string[]? branches = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/find_packageset/$id",
-            null,
-            {
-                { "branches", branches != null ? string.joinv (",", branches) : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/find_packageset/$id");
+
+        if (branches != null) {
+            var _branches = new string[branches.length];
+            for (int i = 0; i < branches.length; i++) {
+                _branches[i] = branches[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "branches",
+                string.joinv (",", _branches)
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskFindPackageset) jsoner.deserialize_object (typeof (TaskFindPackageset));
+        return jsoner.deserialize_object<TaskFindPackageset> ();
     }
 
     /**
@@ -3530,20 +4540,34 @@ public sealed class AltRepo.Client : Object {
         string[]? archs = null,
         string? no_cache = "",
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/misconflict/$id",
-            null,
-            {
-                { "archs", archs != null ? string.joinv (",", archs) : null },
-                { "no_cache", no_cache != null ? no_cache.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/misconflict/$id");
+
+        if (archs != null) {
+            var _archs = new string[archs.length];
+            for (int i = 0; i < archs.length; i++) {
+                _archs[i] = archs[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "archs",
+                string.joinv (",", _archs)
+            );
+        }
+        if (no_cache != null) {
+            request.add_parameter_simple (
+                "no_cache",
+                no_cache.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskMisconflictPackages) jsoner.deserialize_object (typeof (TaskMisconflictPackages));
+        return jsoner.deserialize_object<TaskMisconflictPackages> ();
     }
 
     /**
@@ -3560,21 +4584,38 @@ public sealed class AltRepo.Client : Object {
         string[]? branches = null,
         string? before = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/needs_approval",
-            null,
-            {
-                { "acl_group", acl_group.to_string () },
-                { "branches", branches != null ? string.joinv (",", branches) : null },
-                { "before", before != null ? before.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/needs_approval");
+
+        request.add_parameter_simple (
+            "acl_group",
+            acl_group.to_string ()
+        );
+        if (branches != null) {
+            var _branches = new string[branches.length];
+            for (int i = 0; i < branches.length; i++) {
+                _branches[i] = branches[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "branches",
+                string.joinv (",", _branches)
+            );
+        }
+        if (before != null) {
+            request.add_parameter_simple (
+                "before",
+                before.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (NeedsApproval) jsoner.deserialize_object (typeof (NeedsApproval));
+        return jsoner.deserialize_object<NeedsApproval> ();
     }
 
     /**
@@ -3587,17 +4628,17 @@ public sealed class AltRepo.Client : Object {
     public TaskPackages get_task_packages_id (
         int64 id,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/packages/$id",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/packages/$id");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskPackages) jsoner.deserialize_object (typeof (TaskPackages));
+        return jsoner.deserialize_object<TaskPackages> ();
     }
 
     /**
@@ -3609,17 +4650,17 @@ public sealed class AltRepo.Client : Object {
     [Version (deprecated = true, deprecated_since = "")]
     public AllTasksBranches get_task_progress_all_packagesets (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/progress/all_packagesets",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/progress/all_packagesets");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (AllTasksBranches) jsoner.deserialize_object (typeof (AllTasksBranches));
+        return jsoner.deserialize_object<AllTasksBranches> ();
     }
 
     /**
@@ -3630,17 +4671,17 @@ public sealed class AltRepo.Client : Object {
      */
     public AllTasksBranches get_task_progress_all_tasks_branches (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/progress/all_tasks_branches",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/progress/all_tasks_branches");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (AllTasksBranches) jsoner.deserialize_object (typeof (AllTasksBranches));
+        return jsoner.deserialize_object<AllTasksBranches> ();
     }
 
     /**
@@ -3663,24 +4704,60 @@ public sealed class AltRepo.Client : Object {
         int64? tasks_limit = 100,
         bool? by_package = false,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/progress/find_tasks",
-            null,
-            {
-                { "input", string.joinv (",", input) },
-                { "owner", owner != null ? owner.to_string () : null },
-                { "branch", branch != null ? branch.to_string () : null },
-                { "state", state != null ? string.joinv (",", state) : null },
-                { "tasks_limit", tasks_limit != null ? tasks_limit.to_string () : null },
-                { "by_package", by_package != null ? by_package.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/progress/find_tasks");
+
+        var _input = new string[input.length];
+        for (int i = 0; i < input.length; i++) {
+            _input[i] = input[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "input",
+            string.joinv (",", _input)
+        );
+        if (owner != null) {
+            request.add_parameter_simple (
+                "owner",
+                owner.to_string ()
+            );
+        }
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (state != null) {
+            var _state = new string[state.length];
+            for (int i = 0; i < state.length; i++) {
+                _state[i] = state[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "state",
+                string.joinv (",", _state)
+            );
+        }
+        if (tasks_limit != null) {
+            request.add_parameter_simple (
+                "tasks_limit",
+                tasks_limit.to_string ()
+            );
+        }
+        if (by_package != null) {
+            request.add_parameter_simple (
+                "by_package",
+                by_package.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TasksList) jsoner.deserialize_object (typeof (TasksList));
+        return jsoner.deserialize_object<TasksList> ();
     }
 
     /**
@@ -3697,21 +4774,38 @@ public sealed class AltRepo.Client : Object {
         string? branch = null,
         int64? tasks_limit = 10,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/progress/find_tasks_lookup",
-            null,
-            {
-                { "input", string.joinv (",", input) },
-                { "branch", branch != null ? branch.to_string () : null },
-                { "tasks_limit", tasks_limit != null ? tasks_limit.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/progress/find_tasks_lookup");
+
+        var _input = new string[input.length];
+        for (int i = 0; i < input.length; i++) {
+            _input[i] = input[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "input",
+            string.joinv (",", _input)
+        );
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (tasks_limit != null) {
+            request.add_parameter_simple (
+                "tasks_limit",
+                tasks_limit.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (FindTasks) jsoner.deserialize_object (typeof (FindTasks));
+        return jsoner.deserialize_object<FindTasks> ();
     }
 
     /**
@@ -3726,20 +4820,30 @@ public sealed class AltRepo.Client : Object {
         string? branch = null,
         int64? tasks_limit = 10,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/progress/last_tasks",
-            null,
-            {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "tasks_limit", tasks_limit != null ? tasks_limit.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/progress/last_tasks");
+
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (tasks_limit != null) {
+            request.add_parameter_simple (
+                "tasks_limit",
+                tasks_limit.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TasksList) jsoner.deserialize_object (typeof (TasksList));
+        return jsoner.deserialize_object<TasksList> ();
     }
 
     /**
@@ -3752,17 +4856,17 @@ public sealed class AltRepo.Client : Object {
     public TaskProgressTaskInfo get_task_progress_task_info_id (
         int64 id,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/progress/task_info/$id",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/progress/task_info/$id");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskProgressTaskInfo) jsoner.deserialize_object (typeof (TaskProgressTaskInfo));
+        return jsoner.deserialize_object<TaskProgressTaskInfo> ();
     }
 
     /**
@@ -3775,17 +4879,17 @@ public sealed class AltRepo.Client : Object {
     public TaskDiff get_task_task_diff_id (
         int64 id,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/task_diff/$id",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/task_diff/$id");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskDiff) jsoner.deserialize_object (typeof (TaskDiff));
+        return jsoner.deserialize_object<TaskDiff> ();
     }
 
     /**
@@ -3806,23 +4910,46 @@ public sealed class AltRepo.Client : Object {
         string? start_date = null,
         string? end_date = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/task_history",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "start_task", start_task != null ? start_task.to_string () : null },
-                { "end_task", end_task != null ? end_task.to_string () : null },
-                { "start_date", start_date != null ? start_date.to_string () : null },
-                { "end_date", end_date != null ? end_date.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/task_history");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (start_task != null) {
+            request.add_parameter_simple (
+                "start_task",
+                start_task.to_string ()
+            );
+        }
+        if (end_task != null) {
+            request.add_parameter_simple (
+                "end_task",
+                end_task.to_string ()
+            );
+        }
+        if (start_date != null) {
+            request.add_parameter_simple (
+                "start_date",
+                start_date.to_string ()
+            );
+        }
+        if (end_date != null) {
+            request.add_parameter_simple (
+                "end_date",
+                end_date.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskHistory) jsoner.deserialize_object (typeof (TaskHistory));
+        return jsoner.deserialize_object<TaskHistory> ();
     }
 
     /**
@@ -3843,22 +4970,46 @@ public sealed class AltRepo.Client : Object {
         string? no_cache = "",
         string[]? states = null,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/task_info/$id",
-            null,
-            {
-                { "try", try != null ? try.to_string () : null },
-                { "iteration", iteration != null ? iteration.to_string () : null },
-                { "no_cache", no_cache != null ? no_cache.to_string () : null },
-                { "states", states != null ? string.joinv (",", states) : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/task_info/$id");
+
+        if (try != null) {
+            request.add_parameter_simple (
+                "try",
+                try.to_string ()
+            );
+        }
+        if (iteration != null) {
+            request.add_parameter_simple (
+                "iteration",
+                iteration.to_string ()
+            );
+        }
+        if (no_cache != null) {
+            request.add_parameter_simple (
+                "no_cache",
+                no_cache.to_string ()
+            );
+        }
+        if (states != null) {
+            var _states = new string[states.length];
+            for (int i = 0; i < states.length; i++) {
+                _states[i] = states[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "states",
+                string.joinv (",", _states)
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskInfo) jsoner.deserialize_object (typeof (TaskInfo));
+        return jsoner.deserialize_object<TaskInfo> ();
     }
 
     /**
@@ -3873,19 +5024,24 @@ public sealed class AltRepo.Client : Object {
         int64 id,
         bool? include_task_packages = false,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/task_repo/$id",
-            null,
-            {
-                { "include_task_packages", include_task_packages != null ? include_task_packages.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/task_repo/$id");
+
+        if (include_task_packages != null) {
+            request.add_parameter_simple (
+                "include_task_packages",
+                include_task_packages.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskRepo) jsoner.deserialize_object (typeof (TaskRepo));
+        return jsoner.deserialize_object<TaskRepo> ();
     }
 
     /**
@@ -3916,27 +5072,80 @@ public sealed class AltRepo.Client : Object {
         bool? oneandhalf = false,
         string? no_cache = "",
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/task/what_depends_src/$id",
-            null,
-            {
-                { "depth", depth != null ? depth.to_string () : null },
-                { "dptype", dptype != null ? dptype.to_string () : null },
-                { "archs", archs != null ? string.joinv (",", archs) : null },
-                { "leaf", leaf != null ? leaf.to_string () : null },
-                { "finite_package", finite_package != null ? finite_package.to_string () : null },
-                { "filter_by_package", filter_by_package != null ? string.joinv (",", filter_by_package) : null },
-                { "filter_by_source", filter_by_source != null ? filter_by_source.to_string () : null },
-                { "oneandhalf", oneandhalf != null ? oneandhalf.to_string () : null },
-                { "no_cache", no_cache != null ? no_cache.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/what_depends_src/$id");
+
+        if (depth != null) {
+            request.add_parameter_simple (
+                "depth",
+                depth.to_string ()
+            );
+        }
+        if (dptype != null) {
+            request.add_parameter_simple (
+                "dptype",
+                dptype.to_string ()
+            );
+        }
+        if (archs != null) {
+            var _archs = new string[archs.length];
+            for (int i = 0; i < archs.length; i++) {
+                _archs[i] = archs[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "archs",
+                string.joinv (",", _archs)
+            );
+        }
+        if (leaf != null) {
+            request.add_parameter_simple (
+                "leaf",
+                leaf.to_string ()
+            );
+        }
+        if (finite_package != null) {
+            request.add_parameter_simple (
+                "finite_package",
+                finite_package.to_string ()
+            );
+        }
+        if (filter_by_package != null) {
+            var _filter_by_package = new string[filter_by_package.length];
+            for (int i = 0; i < filter_by_package.length; i++) {
+                _filter_by_package[i] = filter_by_package[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "filter_by_package",
+                string.joinv (",", _filter_by_package)
+            );
+        }
+        if (filter_by_source != null) {
+            request.add_parameter_simple (
+                "filter_by_source",
+                filter_by_source.to_string ()
+            );
+        }
+        if (oneandhalf != null) {
+            request.add_parameter_simple (
+                "oneandhalf",
+                oneandhalf.to_string ()
+            );
+        }
+        if (no_cache != null) {
+            request.add_parameter_simple (
+                "no_cache",
+                no_cache.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskBuildDependency) jsoner.deserialize_object (typeof (TaskBuildDependency));
+        return jsoner.deserialize_object<TaskBuildDependency> ();
     }
 
     /**
@@ -3947,117 +5156,195 @@ public sealed class AltRepo.Client : Object {
      */
     public APIVersion get_version (
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/version",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/version");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (APIVersion) jsoner.deserialize_object (typeof (APIVersion));
+        return jsoner.deserialize_object<APIVersion> ();
     }
 
     /**
      * Get BDU information
      * 
      * @param vuln_id BDU id
+     * @param exclude_json exclude vulnerability raw JSON from results
      * 
      * @return {@link VulnerabilityInfo}
      */
     public VulnerabilityInfo get_vuln_bdu (
         string vuln_id,
+        bool? exclude_json = false,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/vuln/bdu",
-            null,
-            {
-                { "vuln_id", vuln_id.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/bdu");
+
+        request.add_parameter_simple (
+            "vuln_id",
+            vuln_id.to_string ()
+        );
+        if (exclude_json != null) {
+            request.add_parameter_simple (
+                "exclude_json",
+                exclude_json.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (VulnerabilityInfo) jsoner.deserialize_object (typeof (VulnerabilityInfo));
+        return jsoner.deserialize_object<VulnerabilityInfo> ();
     }
 
     /**
      * Get a list of packages in which the specified BDU vulnerability is closed.
      * 
      * @param vuln_id BDU id
+     * @param exclude_json exclude vulnerability raw JSON from results
      * 
      * @return {@link VulnFixesPackages}
      */
     public VulnFixesPackages get_vuln_bdu_fixes (
         string vuln_id,
+        bool? exclude_json = false,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/vuln/bdu/fixes",
-            null,
-            {
-                { "vuln_id", vuln_id.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/bdu/fixes");
+
+        request.add_parameter_simple (
+            "vuln_id",
+            vuln_id.to_string ()
+        );
+        if (exclude_json != null) {
+            request.add_parameter_simple (
+                "exclude_json",
+                exclude_json.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (VulnFixesPackages) jsoner.deserialize_object (typeof (VulnFixesPackages));
+        return jsoner.deserialize_object<VulnFixesPackages> ();
     }
 
     /**
      * Get CVE information
      * 
      * @param vuln_id CVE id
+     * @param exclude_json exclude vulnerability raw JSON from results
      * 
      * @return {@link VulnerabilityInfo}
      */
     public VulnerabilityInfo get_vuln_cve (
         string vuln_id,
+        bool? exclude_json = false,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/vuln/cve",
-            null,
-            {
-                { "vuln_id", vuln_id.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/cve");
+
+        request.add_parameter_simple (
+            "vuln_id",
+            vuln_id.to_string ()
+        );
+        if (exclude_json != null) {
+            request.add_parameter_simple (
+                "exclude_json",
+                exclude_json.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (VulnerabilityInfo) jsoner.deserialize_object (typeof (VulnerabilityInfo));
+        return jsoner.deserialize_object<VulnerabilityInfo> ();
     }
 
     /**
      * Get a list of packages in which the specified CVE vulnerability is closed.
      * 
      * @param vuln_id CVE id
+     * @param exclude_json exclude vulnerability raw JSON from results
      * 
      * @return {@link VulnFixesPackages}
      */
     public VulnFixesPackages get_vuln_cve_fixes (
         string vuln_id,
+        bool? exclude_json = false,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/vuln/cve/fixes",
-            null,
-            {
-                { "vuln_id", vuln_id.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/cve/fixes");
+
+        request.add_parameter_simple (
+            "vuln_id",
+            vuln_id.to_string ()
+        );
+        if (exclude_json != null) {
+            request.add_parameter_simple (
+                "exclude_json",
+                exclude_json.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (VulnFixesPackages) jsoner.deserialize_object (typeof (VulnFixesPackages));
+        return jsoner.deserialize_object<VulnFixesPackages> ();
+    }
+
+    /**
+     * Get GHSA information
+     * 
+     * @param vuln_id GHSA id
+     * @param exclude_json exclude vulnerability raw JSON from results
+     * 
+     * @return {@link string}
+     */
+    public string get_vuln_ghsa (
+        string vuln_id,
+        bool? exclude_json = false,
+        Cancellable? cancellable = null
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/ghsa");
+
+        request.add_parameter_simple (
+            "vuln_id",
+            vuln_id.to_string ()
+        );
+        if (exclude_json != null) {
+            request.add_parameter_simple (
+                "exclude_json",
+                exclude_json.to_string ()
+            );
+        }
+
+        var bytes = session.exec (
+            request,
+            cancellable
+        );
+
+        return (string) bytes.get_data ();
     }
 
     /**
@@ -4070,17 +5357,17 @@ public sealed class AltRepo.Client : Object {
     public CveVulnerableTask get_vuln_task_id (
         int64 id,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = soup_wrapper.get (
-            @"$API_BASE/vuln/task/$id",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/task/$id");
+
+        var bytes = session.exec (
+            request,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (CveVulnerableTask) jsoner.deserialize_object (typeof (CveVulnerableTask));
+        return jsoner.deserialize_object<CveVulnerableTask> ();
     }
 
     //ASYNC
@@ -4098,24 +5385,31 @@ public sealed class AltRepo.Client : Object {
         string[] packages_names,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/acl/by_packages",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "packages_names", string.joinv (",", packages_names) },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/acl/by_packages");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        var _packages_names = new string[packages_names.length];
+        for (int i = 0; i < packages_names.length; i++) {
+            _packages_names[i] = packages_names[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "packages_names",
+            string.joinv (",", _packages_names)
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<AclByPackages> ();
-        yield jsoner.deserialize_array_into_async (array);
-
-        return array;
+        return yield jsoner.deserialize_array_async<AclByPackages> ();
     }
 
     /**
@@ -4131,24 +5425,29 @@ public sealed class AltRepo.Client : Object {
         string? name = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/acl/groups",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "name", name != null ? name.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/acl/groups");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (name != null) {
+            request.add_parameter_simple (
+                "name",
+                name.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<AclGroups> ();
-        yield jsoner.deserialize_array_into_async (array);
-
-        return array;
+        return yield jsoner.deserialize_array_async<AclGroups> ();
     }
 
     /**
@@ -4164,24 +5463,33 @@ public sealed class AltRepo.Client : Object {
         string[]? branch = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/acl/maintainer_groups",
-            null,
-            {
-                { "branch", branch != null ? string.joinv (",", branch) : null },
-                { "nickname", nickname.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/acl/maintainer_groups");
+
+        if (branch != null) {
+            var _branch = new string[branch.length];
+            for (int i = 0; i < branch.length; i++) {
+                _branch[i] = branch[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "branch",
+                string.joinv (",", _branch)
+            );
+        }
+        request.add_parameter_simple (
+            "nickname",
+            nickname.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<AclMaintainerGroups> ();
-        yield jsoner.deserialize_array_into_async (array);
-
-        return array;
+        return yield jsoner.deserialize_array_async<AclMaintainerGroups> ();
     }
 
     /**
@@ -4197,24 +5505,27 @@ public sealed class AltRepo.Client : Object {
         string edition,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/bug/bugzilla_by_image_edition",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "edition", edition.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/bug/bugzilla_by_image_edition");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "edition",
+            edition.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<BugzillaInfo> ();
-        yield jsoner.deserialize_array_into_async (array);
-
-        return array;
+        return yield jsoner.deserialize_array_async<BugzillaInfo> ();
     }
 
     /**
@@ -4230,24 +5541,29 @@ public sealed class AltRepo.Client : Object {
         string? by_acl = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/bug/bugzilla_by_maintainer",
-            null,
-            {
-                { "maintainer_nickname", maintainer_nickname.to_string () },
-                { "by_acl", by_acl != null ? by_acl.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/bug/bugzilla_by_maintainer");
+
+        request.add_parameter_simple (
+            "maintainer_nickname",
+            maintainer_nickname.to_string ()
+        );
+        if (by_acl != null) {
+            request.add_parameter_simple (
+                "by_acl",
+                by_acl.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<BugzillaInfo> ();
-        yield jsoner.deserialize_array_into_async (array);
-
-        return array;
+        return yield jsoner.deserialize_array_async<BugzillaInfo> ();
     }
 
     /**
@@ -4263,24 +5579,29 @@ public sealed class AltRepo.Client : Object {
         string? package_type = "source",
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/bug/bugzilla_by_package",
-            null,
-            {
-                { "package_name", package_name.to_string () },
-                { "package_type", package_type != null ? package_type.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/bug/bugzilla_by_package");
+
+        request.add_parameter_simple (
+            "package_name",
+            package_name.to_string ()
+        );
+        if (package_type != null) {
+            request.add_parameter_simple (
+                "package_type",
+                package_type.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<BugzillaInfo> ();
-        yield jsoner.deserialize_array_into_async (array);
-
-        return array;
+        return yield jsoner.deserialize_array_async<BugzillaInfo> ();
     }
 
     /**
@@ -4302,27 +5623,51 @@ public sealed class AltRepo.Client : Object {
         string[]? archs = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/dependencies/backport_helper",
-            null,
-            {
-                { "from_branch", from_branch.to_string () },
-                { "into_branch", into_branch.to_string () },
-                { "packages_names", string.joinv (",", packages_names) },
-                { "dp_type", dp_type != null ? dp_type.to_string () : null },
-                { "archs", archs != null ? string.joinv (",", archs) : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/dependencies/backport_helper");
+
+        request.add_parameter_simple (
+            "from_branch",
+            from_branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "into_branch",
+            into_branch.to_string ()
+        );
+        var _packages_names = new string[packages_names.length];
+        for (int i = 0; i < packages_names.length; i++) {
+            _packages_names[i] = packages_names[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "packages_names",
+            string.joinv (",", _packages_names)
+        );
+        if (dp_type != null) {
+            request.add_parameter_simple (
+                "dp_type",
+                dp_type.to_string ()
+            );
+        }
+        if (archs != null) {
+            var _archs = new string[archs.length];
+            for (int i = 0; i < archs.length; i++) {
+                _archs[i] = archs[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "archs",
+                string.joinv (",", _archs)
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<BackportHelper> ();
-        yield jsoner.deserialize_array_into_async (array);
-
-        return array;
+        return yield jsoner.deserialize_array_async<BackportHelper> ();
     }
 
     /**
@@ -4336,18 +5681,18 @@ public sealed class AltRepo.Client : Object {
         int64 pkghash,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/dependencies/binary_package_dependencies/$pkghash",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/dependencies/binary_package_dependencies/$pkghash");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (DependenciesPackageDependencies) yield jsoner.deserialize_object_async (typeof (DependenciesPackageDependencies));
+        return yield jsoner.deserialize_object_async<DependenciesPackageDependencies> ();
     }
 
     /**
@@ -4366,22 +5711,33 @@ public sealed class AltRepo.Client : Object {
         int64? limit = 10,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/dependencies/fast_lookup",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "dp_name", dp_name.to_string () },
-                { "limit", limit != null ? limit.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/dependencies/fast_lookup");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "dp_name",
+            dp_name.to_string ()
+        );
+        if (limit != null) {
+            request.add_parameter_simple (
+                "limit",
+                limit.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (FastDependencySearch) yield jsoner.deserialize_object_async (typeof (FastDependencySearch));
+        return yield jsoner.deserialize_object_async<FastDependencySearch> ();
     }
 
     /**
@@ -4399,22 +5755,33 @@ public sealed class AltRepo.Client : Object {
         string? dp_type = "all",
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/dependencies/packages_by_dependency",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "dp_name", dp_name.to_string () },
-                { "dp_type", dp_type != null ? dp_type.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/dependencies/packages_by_dependency");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "dp_name",
+            dp_name.to_string ()
+        );
+        if (dp_type != null) {
+            request.add_parameter_simple (
+                "dp_type",
+                dp_type.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (DependenciesPackages) yield jsoner.deserialize_object_async (typeof (DependenciesPackages));
+        return yield jsoner.deserialize_object_async<DependenciesPackages> ();
     }
 
     /**
@@ -4432,21 +5799,29 @@ public sealed class AltRepo.Client : Object {
         int64? depth = 1,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/dependencies/source_package_dependencies/$pkghash",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "depth", depth != null ? depth.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/dependencies/source_package_dependencies/$pkghash");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (depth != null) {
+            request.add_parameter_simple (
+                "depth",
+                depth.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (DependenciesPackageBuildDependencies) yield jsoner.deserialize_object_async (typeof (DependenciesPackageBuildDependencies));
+        return yield jsoner.deserialize_object_async<DependenciesPackageBuildDependencies> ();
     }
 
     /**
@@ -4464,54 +5839,71 @@ public sealed class AltRepo.Client : Object {
         string? dp_type = "both",
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/dependencies/what_depends_src",
-            null,
-            {
-                { "name", name.to_string () },
-                { "branch", branch.to_string () },
-                { "dp_type", dp_type != null ? dp_type.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/dependencies/what_depends_src");
+
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (dp_type != null) {
+            request.add_parameter_simple (
+                "dp_type",
+                dp_type.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageBuildDependency) yield jsoner.deserialize_object_async (typeof (PackageBuildDependency));
+        return yield jsoner.deserialize_object_async<PackageBuildDependency> ();
     }
 
     /**
      * Get information about branch update erratas
      * 
+     * @param exclude_json exclude vulnerability raw JSON from results
      * @param payload 
      * 
      * @return {@link ErrataBranchesUpdates}
      */
     public async ErrataBranchesUpdates post_errata_branches_updates_async (
         ErrataJsonPostList payload,
+        bool? exclude_json = false,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        PostContent post_content = {
-            PostContentType.JSON,
-            yield Jsoner.serialize_async (payload, Case.SNAKE)
-        };
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.POST (@"$API_BASE/errata/branches_updates");
 
-        var bytes = yield soup_wrapper.post_async (
-            @"$API_BASE/errata/branches_updates",
-            null,
-            post_content,
-            null,
-            null,
+        var post_content = new PostContent (PostContentType.JSON);
+        post_content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
+        request.add_post_content (post_content);
+
+        if (exclude_json != null) {
+            request.add_parameter_simple (
+                "exclude_json",
+                exclude_json.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
 
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ErrataBranchesUpdates) yield jsoner.deserialize_object_async (typeof (ErrataBranchesUpdates));
+        return yield jsoner.deserialize_object_async<ErrataBranchesUpdates> ();
     }
 
     /**
@@ -4523,18 +5915,18 @@ public sealed class AltRepo.Client : Object {
     public async ErrataBranches get_errata_errata_branches_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/errata/errata_branches",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/errata/errata_branches");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ErrataBranches) yield jsoner.deserialize_object_async (typeof (ErrataBranches));
+        return yield jsoner.deserialize_object_async<ErrataBranches> ();
     }
 
     /**
@@ -4546,18 +5938,18 @@ public sealed class AltRepo.Client : Object {
     public async OvalBranches get_errata_export_oval_branches_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/errata/export/oval/branches",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/errata/export/oval/branches");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (OvalBranches) yield jsoner.deserialize_object_async (typeof (OvalBranches));
+        return yield jsoner.deserialize_object_async<OvalBranches> ();
     }
 
     /**
@@ -4575,18 +5967,28 @@ public sealed class AltRepo.Client : Object {
         bool? one_file = false,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/errata/export/oval/$branch",
-            null,
-            {
-                { "package_name", package_name != null ? package_name.to_string () : null },
-                { "one_file", one_file != null ? one_file.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/errata/export/oval/$branch");
+
+        if (package_name != null) {
+            request.add_parameter_simple (
+                "package_name",
+                package_name.to_string ()
+            );
+        }
+        if (one_file != null) {
+            request.add_parameter_simple (
+                "one_file",
+                one_file.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         return (string) bytes.get_data ();
     }
 
@@ -4611,25 +6013,59 @@ public sealed class AltRepo.Client : Object {
         string? state = "all",
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/errata/find_erratas",
-            null,
-            {
-                { "input", input != null ? string.joinv (",", input) : null },
-                { "branch", branch != null ? branch.to_string () : null },
-                { "type", type != null ? type.to_string () : null },
-                { "page", page != null ? page.to_string () : null },
-                { "limit", limit != null ? limit.to_string () : null },
-                { "state", state != null ? state.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/errata/find_erratas");
+
+        if (input != null) {
+            var _input = new string[input.length];
+            for (int i = 0; i < input.length; i++) {
+                _input[i] = input[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "input",
+                string.joinv (",", _input)
+            );
+        }
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (type != null) {
+            request.add_parameter_simple (
+                "type",
+                type.to_string ()
+            );
+        }
+        if (page != null) {
+            request.add_parameter_simple (
+                "page",
+                page.to_string ()
+            );
+        }
+        if (limit != null) {
+            request.add_parameter_simple (
+                "limit",
+                limit.to_string ()
+            );
+        }
+        if (state != null) {
+            request.add_parameter_simple (
+                "state",
+                state.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ErrataLastChanged) yield jsoner.deserialize_object_async (typeof (ErrataLastChanged));
+        return yield jsoner.deserialize_object_async<ErrataLastChanged> ();
     }
 
     /**
@@ -4659,28 +6095,77 @@ public sealed class AltRepo.Client : Object {
         string[]? sort = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/errata/find_image_erratas",
-            null,
-            {
-                { "uuid", uuid.to_string () },
-                { "branch", branch.to_string () },
-                { "component", component != null ? component.to_string () : null },
-                { "input", input != null ? string.joinv (",", input) : null },
-                { "type", type != null ? type.to_string () : null },
-                { "page", page != null ? page.to_string () : null },
-                { "limit", limit != null ? limit.to_string () : null },
-                { "is_discarded", is_discarded != null ? is_discarded.to_string () : null },
-                { "sort", sort != null ? string.joinv (",", sort) : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/errata/find_image_erratas");
+
+        request.add_parameter_simple (
+            "uuid",
+            uuid.to_string ()
+        );
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (component != null) {
+            request.add_parameter_simple (
+                "component",
+                component.to_string ()
+            );
+        }
+        if (input != null) {
+            var _input = new string[input.length];
+            for (int i = 0; i < input.length; i++) {
+                _input[i] = input[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "input",
+                string.joinv (",", _input)
+            );
+        }
+        if (type != null) {
+            request.add_parameter_simple (
+                "type",
+                type.to_string ()
+            );
+        }
+        if (page != null) {
+            request.add_parameter_simple (
+                "page",
+                page.to_string ()
+            );
+        }
+        if (limit != null) {
+            request.add_parameter_simple (
+                "limit",
+                limit.to_string ()
+            );
+        }
+        if (is_discarded != null) {
+            request.add_parameter_simple (
+                "is_discarded",
+                is_discarded.to_string ()
+            );
+        }
+        if (sort != null) {
+            var _sort = new string[sort.length];
+            for (int i = 0; i < sort.length; i++) {
+                _sort[i] = sort[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "sort",
+                string.joinv (",", _sort)
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImageErrata) yield jsoner.deserialize_object_async (typeof (ImageErrata));
+        return yield jsoner.deserialize_object_async<ImageErrata> ();
     }
 
     /**
@@ -4692,50 +6177,56 @@ public sealed class AltRepo.Client : Object {
     public async ErrataIdsList get_errata_ids_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/errata/ids",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/errata/ids");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ErrataIdsList) yield jsoner.deserialize_object_async (typeof (ErrataIdsList));
+        return yield jsoner.deserialize_object_async<ErrataIdsList> ();
     }
 
     /**
      * Get information about package update erratas
      * 
+     * @param exclude_json exclude vulnerability raw JSON from results
      * @param payload 
      * 
      * @return {@link ErrataPackagesUpdates}
      */
     public async ErrataPackagesUpdates post_errata_packages_updates_async (
         ErrataJsonPostList payload,
+        bool? exclude_json = false,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        PostContent post_content = {
-            PostContentType.JSON,
-            yield Jsoner.serialize_async (payload, Case.SNAKE)
-        };
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.POST (@"$API_BASE/errata/packages_updates");
 
-        var bytes = yield soup_wrapper.post_async (
-            @"$API_BASE/errata/packages_updates",
-            null,
-            post_content,
-            null,
-            null,
+        var post_content = new PostContent (PostContentType.JSON);
+        post_content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
+        request.add_post_content (post_content);
+
+        if (exclude_json != null) {
+            request.add_parameter_simple (
+                "exclude_json",
+                exclude_json.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
 
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ErrataPackagesUpdates) yield jsoner.deserialize_object_async (typeof (ErrataPackagesUpdates));
+        return yield jsoner.deserialize_object_async<ErrataPackagesUpdates> ();
     }
 
     /**
@@ -4755,23 +6246,43 @@ public sealed class AltRepo.Client : Object {
         string? errata_id = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/errata/search",
-            null,
-            {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "name", name != null ? name.to_string () : null },
-                { "vuln_id", vuln_id != null ? vuln_id.to_string () : null },
-                { "errata_id", errata_id != null ? errata_id.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/errata/search");
+
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (name != null) {
+            request.add_parameter_simple (
+                "name",
+                name.to_string ()
+            );
+        }
+        if (vuln_id != null) {
+            request.add_parameter_simple (
+                "vuln_id",
+                vuln_id.to_string ()
+            );
+        }
+        if (errata_id != null) {
+            request.add_parameter_simple (
+                "errata_id",
+                errata_id.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (Erratas) yield jsoner.deserialize_object_async (typeof (Erratas));
+        return yield jsoner.deserialize_object_async<Erratas> ();
     }
 
     /**
@@ -4787,21 +6298,29 @@ public sealed class AltRepo.Client : Object {
         string? arch = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/export/beehive/ftbfs",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/export/beehive/ftbfs");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ExportBeehiveFTBFSList) yield jsoner.deserialize_object_async (typeof (ExportBeehiveFTBFSList));
+        return yield jsoner.deserialize_object_async<ExportBeehiveFTBFSList> ();
     }
 
     /**
@@ -4817,20 +6336,25 @@ public sealed class AltRepo.Client : Object {
         string? arch = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/export/branch_binary_packages/$branch",
-            null,
-            {
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/export/branch_binary_packages/$branch");
+
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackagesetPackagesExport) yield jsoner.deserialize_object_async (typeof (PackagesetPackagesExport));
+        return yield jsoner.deserialize_object_async<PackagesetPackagesExport> ();
     }
 
     /**
@@ -4842,18 +6366,18 @@ public sealed class AltRepo.Client : Object {
     public async BranchTree get_export_branch_tree_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/export/branch_tree",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/export/branch_tree");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (BranchTree) yield jsoner.deserialize_object_async (typeof (BranchTree));
+        return yield jsoner.deserialize_object_async<BranchTree> ();
     }
 
     /**
@@ -4867,18 +6391,18 @@ public sealed class AltRepo.Client : Object {
         string branch,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/export/repology/$branch",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/export/repology/$branch");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (RepologyExport) yield jsoner.deserialize_object_async (typeof (RepologyExport));
+        return yield jsoner.deserialize_object_async<RepologyExport> ();
     }
 
     /**
@@ -4892,18 +6416,18 @@ public sealed class AltRepo.Client : Object {
         string branch,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/export/sitemap_packages/$branch",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/export/sitemap_packages/$branch");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitemapPackagesExport) yield jsoner.deserialize_object_async (typeof (SitemapPackagesExport));
+        return yield jsoner.deserialize_object_async<SitemapPackagesExport> ();
     }
 
     /**
@@ -4919,18 +6443,30 @@ public sealed class AltRepo.Client : Object {
         string? from_date = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/export/translation/packages_po_files",
-            null,
-            {
-                { "branches", string.joinv (",", branches) },
-                { "from_date", from_date != null ? from_date.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/export/translation/packages_po_files");
+
+        var _branches = new string[branches.length];
+        for (int i = 0; i < branches.length; i++) {
+            _branches[i] = branches[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "branches",
+            string.joinv (",", _branches)
+        );
+        if (from_date != null) {
+            request.add_parameter_simple (
+                "from_date",
+                from_date.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         return (string) bytes.get_data ();
     }
 
@@ -4949,22 +6485,33 @@ public sealed class AltRepo.Client : Object {
         int64? limit = 10,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/file/fast_lookup",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "file_name", file_name.to_string () },
-                { "limit", limit != null ? limit.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/file/fast_lookup");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "file_name",
+            file_name.to_string ()
+        );
+        if (limit != null) {
+            request.add_parameter_simple (
+                "limit",
+                limit.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (FastFileSearch) yield jsoner.deserialize_object_async (typeof (FastFileSearch));
+        return yield jsoner.deserialize_object_async<FastFileSearch> ();
     }
 
     /**
@@ -4980,21 +6527,27 @@ public sealed class AltRepo.Client : Object {
         string file_name,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/file/packages_by_file",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "file_name", file_name.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/file/packages_by_file");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "file_name",
+            file_name.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (FilePackagesByFile) yield jsoner.deserialize_object_async (typeof (FilePackagesByFile));
+        return yield jsoner.deserialize_object_async<FilePackagesByFile> ();
     }
 
     /**
@@ -5012,22 +6565,33 @@ public sealed class AltRepo.Client : Object {
         int64? limit = 1000,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/file/search",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "file_name", file_name.to_string () },
-                { "limit", limit != null ? limit.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/file/search");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "file_name",
+            file_name.to_string ()
+        );
+        if (limit != null) {
+            request.add_parameter_simple (
+                "limit",
+                limit.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (Files) yield jsoner.deserialize_object_async (typeof (Files));
+        return yield jsoner.deserialize_object_async<Files> ();
     }
 
     /**
@@ -5051,25 +6615,55 @@ public sealed class AltRepo.Client : Object {
         string? type = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/image/active_images",
-            null,
-            {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "edition", edition != null ? edition.to_string () : null },
-                { "version", version != null ? version.to_string () : null },
-                { "release", release != null ? release.to_string () : null },
-                { "variant", variant != null ? variant.to_string () : null },
-                { "type", type != null ? type.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/active_images");
+
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (edition != null) {
+            request.add_parameter_simple (
+                "edition",
+                edition.to_string ()
+            );
+        }
+        if (version != null) {
+            request.add_parameter_simple (
+                "version",
+                version.to_string ()
+            );
+        }
+        if (release != null) {
+            request.add_parameter_simple (
+                "release",
+                release.to_string ()
+            );
+        }
+        if (variant != null) {
+            request.add_parameter_simple (
+                "variant",
+                variant.to_string ()
+            );
+        }
+        if (type != null) {
+            request.add_parameter_simple (
+                "type",
+                type.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ActiveImages) yield jsoner.deserialize_object_async (typeof (ActiveImages));
+        return yield jsoner.deserialize_object_async<ActiveImages> ();
     }
 
     /**
@@ -5091,24 +6685,47 @@ public sealed class AltRepo.Client : Object {
         string? img_show = "all",
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/image/find_images_by_package_name",
-            null,
-            {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "pkg_name", pkg_name.to_string () },
-                { "edition", edition != null ? edition.to_string () : null },
-                { "pkg_type", pkg_type != null ? pkg_type.to_string () : null },
-                { "img_show", img_show != null ? img_show.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/find_images_by_package_name");
+
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        request.add_parameter_simple (
+            "pkg_name",
+            pkg_name.to_string ()
+        );
+        if (edition != null) {
+            request.add_parameter_simple (
+                "edition",
+                edition.to_string ()
+            );
+        }
+        if (pkg_type != null) {
+            request.add_parameter_simple (
+                "pkg_type",
+                pkg_type.to_string ()
+            );
+        }
+        if (img_show != null) {
+            request.add_parameter_simple (
+                "img_show",
+                img_show.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (FindImagesByPackage) yield jsoner.deserialize_object_async (typeof (FindImagesByPackage));
+        return yield jsoner.deserialize_object_async<FindImagesByPackage> ();
     }
 
     /**
@@ -5124,21 +6741,29 @@ public sealed class AltRepo.Client : Object {
         string? component = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/image/image_categories_count",
-            null,
-            {
-                { "uuid", uuid.to_string () },
-                { "component", component != null ? component.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/image_categories_count");
+
+        request.add_parameter_simple (
+            "uuid",
+            uuid.to_string ()
+        );
+        if (component != null) {
+            request.add_parameter_simple (
+                "component",
+                component.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteImageCategories) yield jsoner.deserialize_object_async (typeof (SiteImageCategories));
+        return yield jsoner.deserialize_object_async<SiteImageCategories> ();
     }
 
     /**
@@ -5170,29 +6795,79 @@ public sealed class AltRepo.Client : Object {
         string? type = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/image/image_info",
-            null,
-            {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "edition", edition != null ? edition.to_string () : null },
-                { "version", version != null ? version.to_string () : null },
-                { "release", release != null ? release.to_string () : null },
-                { "variant", variant != null ? variant.to_string () : null },
-                { "flavor", flavor != null ? flavor.to_string () : null },
-                { "arch", arch != null ? arch.to_string () : null },
-                { "component", component != null ? component.to_string () : null },
-                { "platform", platform != null ? platform.to_string () : null },
-                { "type", type != null ? type.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/image_info");
+
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (edition != null) {
+            request.add_parameter_simple (
+                "edition",
+                edition.to_string ()
+            );
+        }
+        if (version != null) {
+            request.add_parameter_simple (
+                "version",
+                version.to_string ()
+            );
+        }
+        if (release != null) {
+            request.add_parameter_simple (
+                "release",
+                release.to_string ()
+            );
+        }
+        if (variant != null) {
+            request.add_parameter_simple (
+                "variant",
+                variant.to_string ()
+            );
+        }
+        if (flavor != null) {
+            request.add_parameter_simple (
+                "flavor",
+                flavor.to_string ()
+            );
+        }
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+        if (component != null) {
+            request.add_parameter_simple (
+                "component",
+                component.to_string ()
+            );
+        }
+        if (platform != null) {
+            request.add_parameter_simple (
+                "platform",
+                platform.to_string ()
+            );
+        }
+        if (type != null) {
+            request.add_parameter_simple (
+                "type",
+                type.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImageInfo) yield jsoner.deserialize_object_async (typeof (ImageInfo));
+        return yield jsoner.deserialize_object_async<ImageInfo> ();
     }
 
     /**
@@ -5210,22 +6885,35 @@ public sealed class AltRepo.Client : Object {
         string? component = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/image/image_packages",
-            null,
-            {
-                { "uuid", uuid.to_string () },
-                { "group", group != null ? group.to_string () : null },
-                { "component", component != null ? component.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/image_packages");
+
+        request.add_parameter_simple (
+            "uuid",
+            uuid.to_string ()
+        );
+        if (group != null) {
+            request.add_parameter_simple (
+                "group",
+                group.to_string ()
+            );
+        }
+        if (component != null) {
+            request.add_parameter_simple (
+                "component",
+                component.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImagePackages) yield jsoner.deserialize_object_async (typeof (ImagePackages));
+        return yield jsoner.deserialize_object_async<ImagePackages> ();
     }
 
     /**
@@ -5237,18 +6925,18 @@ public sealed class AltRepo.Client : Object {
     public async ImagePackageSet get_image_image_packageset_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/image/image_packageset",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/image_packageset");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImagePackageSet) yield jsoner.deserialize_object_async (typeof (ImagePackageSet));
+        return yield jsoner.deserialize_object_async<ImagePackageSet> ();
     }
 
     /**
@@ -5260,18 +6948,18 @@ public sealed class AltRepo.Client : Object {
     public async ImageStatusGet get_image_image_status_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/image/image_status",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/image_status");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImageStatusGet) yield jsoner.deserialize_object_async (typeof (ImageStatusGet));
+        return yield jsoner.deserialize_object_async<ImageStatusGet> ();
     }
 
     /**
@@ -5287,21 +6975,31 @@ public sealed class AltRepo.Client : Object {
         string? edition = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/image/image_tag_status",
-            null,
-            {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "edition", edition != null ? edition.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/image_tag_status");
+
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (edition != null) {
+            request.add_parameter_simple (
+                "edition",
+                edition.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImageTagStatusGet) yield jsoner.deserialize_object_async (typeof (ImageTagStatusGet));
+        return yield jsoner.deserialize_object_async<ImageTagStatusGet> ();
     }
 
     /**
@@ -5315,20 +7013,23 @@ public sealed class AltRepo.Client : Object {
         string tag,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/image/image_uuid_by_tag",
-            null,
-            {
-                { "tag", tag.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/image_uuid_by_tag");
+
+        request.add_parameter_simple (
+            "tag",
+            tag.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImageTagUUID) yield jsoner.deserialize_object_async (typeof (ImageTagUUID));
+        return yield jsoner.deserialize_object_async<ImageTagUUID> ();
     }
 
     /**
@@ -5342,25 +7043,22 @@ public sealed class AltRepo.Client : Object {
         ImagePackagesJSON payload,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        PostContent post_content = {
-            PostContentType.JSON,
-            yield Jsoner.serialize_async (payload, Case.SNAKE)
-        };
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.POST (@"$API_BASE/image/inspect/regular");
 
-        var bytes = yield soup_wrapper.post_async (
-            @"$API_BASE/image/inspect/regular",
-            null,
-            post_content,
-            null,
-            null,
+        var post_content = new PostContent (PostContentType.JSON);
+        post_content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
+        request.add_post_content (post_content);
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
 
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImagePackagesInspectRegular) yield jsoner.deserialize_object_async (typeof (ImagePackagesInspectRegular));
+        return yield jsoner.deserialize_object_async<ImagePackagesInspectRegular> ();
     }
 
     /**
@@ -5374,25 +7072,22 @@ public sealed class AltRepo.Client : Object {
         ImagePackagesJSON payload,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        PostContent post_content = {
-            PostContentType.JSON,
-            yield Jsoner.serialize_async (payload, Case.SNAKE)
-        };
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.POST (@"$API_BASE/image/inspect/sp");
 
-        var bytes = yield soup_wrapper.post_async (
-            @"$API_BASE/image/inspect/sp",
-            null,
-            post_content,
-            null,
-            null,
+        var post_content = new PostContent (PostContentType.JSON);
+        post_content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
+        request.add_post_content (post_content);
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
 
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImagePackagesInspectSP) yield jsoner.deserialize_object_async (typeof (ImagePackagesInspectSP));
+        return yield jsoner.deserialize_object_async<ImagePackagesInspectSP> ();
     }
 
     /**
@@ -5404,18 +7099,18 @@ public sealed class AltRepo.Client : Object {
     public async ImageAllISO get_image_iso_all_images_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/image/iso/all_images",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/iso/all_images");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (ImageAllISO) yield jsoner.deserialize_object_async (typeof (ImageAllISO));
+        return yield jsoner.deserialize_object_async<ImageAllISO> ();
     }
 
     /**
@@ -5435,23 +7130,39 @@ public sealed class AltRepo.Client : Object {
         string? component = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/image/last_packages_by_image",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "uuid", uuid.to_string () },
-                { "packages_limit", packages_limit != null ? packages_limit.to_string () : null },
-                { "component", component != null ? component.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/last_packages_by_image");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "uuid",
+            uuid.to_string ()
+        );
+        if (packages_limit != null) {
+            request.add_parameter_simple (
+                "packages_limit",
+                packages_limit.to_string ()
+            );
+        }
+        if (component != null) {
+            request.add_parameter_simple (
+                "component",
+                component.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (LastImagePackages) yield jsoner.deserialize_object_async (typeof (LastImagePackages));
+        return yield jsoner.deserialize_object_async<LastImagePackages> ();
     }
 
     /**
@@ -5471,23 +7182,39 @@ public sealed class AltRepo.Client : Object {
         string? component = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/image/last_packages_image_with_cve_fixed",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "uuid", uuid.to_string () },
-                { "packages_limit", packages_limit != null ? packages_limit.to_string () : null },
-                { "component", component != null ? component.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/image/last_packages_image_with_cve_fixed");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "uuid",
+            uuid.to_string ()
+        );
+        if (packages_limit != null) {
+            request.add_parameter_simple (
+                "packages_limit",
+                packages_limit.to_string ()
+            );
+        }
+        if (component != null) {
+            request.add_parameter_simple (
+                "component",
+                component.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (LastImagePackages) yield jsoner.deserialize_object_async (typeof (LastImagePackages));
+        return yield jsoner.deserialize_object_async<LastImagePackages> ();
     }
 
     /**
@@ -5499,15 +7226,15 @@ public sealed class AltRepo.Client : Object {
     public async string get_license_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/license",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/license");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         return (string) bytes.get_data ();
     }
 
@@ -5522,20 +7249,23 @@ public sealed class AltRepo.Client : Object {
         string license,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/license/info",
-            null,
-            {
-                { "license", license.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/license/info");
+
+        request.add_parameter_simple (
+            "license",
+            license.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (LicenseInfo) yield jsoner.deserialize_object_async (typeof (LicenseInfo));
+        return yield jsoner.deserialize_object_async<LicenseInfo> ();
     }
 
     /**
@@ -5549,20 +7279,23 @@ public sealed class AltRepo.Client : Object {
         string license,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/license/tokens",
-            null,
-            {
-                { "license", license.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/license/tokens");
+
+        request.add_parameter_simple (
+            "license",
+            license.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (LicenseTokens) yield jsoner.deserialize_object_async (typeof (LicenseTokens));
+        return yield jsoner.deserialize_object_async<LicenseTokens> ();
     }
 
     /**
@@ -5580,22 +7313,37 @@ public sealed class AltRepo.Client : Object {
         string? arch = "x86_64",
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/package/build_dependency_set",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "packages", string.joinv (",", packages) },
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/build_dependency_set");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        var _packages = new string[packages.length];
+        for (int i = 0; i < packages.length; i++) {
+            _packages[i] = packages[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "packages",
+            string.joinv (",", _packages)
+        );
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (BuildDependencySet) yield jsoner.deserialize_object_async (typeof (BuildDependencySet));
+        return yield jsoner.deserialize_object_async<BuildDependencySet> ();
     }
 
     /**
@@ -5611,21 +7359,37 @@ public sealed class AltRepo.Client : Object {
         string[]? branches = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/package/find_packageset",
-            null,
-            {
-                { "packages", string.joinv (",", packages) },
-                { "branches", branches != null ? string.joinv (",", branches) : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/find_packageset");
+
+        var _packages = new string[packages.length];
+        for (int i = 0; i < packages.length; i++) {
+            _packages[i] = packages[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "packages",
+            string.joinv (",", _packages)
+        );
+        if (branches != null) {
+            var _branches = new string[branches.length];
+            for (int i = 0; i < branches.length; i++) {
+                _branches[i] = branches[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "branches",
+                string.joinv (",", _branches)
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageFindPackageset) yield jsoner.deserialize_object_async (typeof (PackageFindPackageset));
+        return yield jsoner.deserialize_object_async<PackageFindPackageset> ();
     }
 
     /**
@@ -5643,22 +7407,41 @@ public sealed class AltRepo.Client : Object {
         string[]? archs = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/package/misconflict",
-            null,
-            {
-                { "packages", string.joinv (",", packages) },
-                { "branch", branch.to_string () },
-                { "archs", archs != null ? string.joinv (",", archs) : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/misconflict");
+
+        var _packages = new string[packages.length];
+        for (int i = 0; i < packages.length; i++) {
+            _packages[i] = packages[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "packages",
+            string.joinv (",", _packages)
+        );
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (archs != null) {
+            var _archs = new string[archs.length];
+            for (int i = 0; i < archs.length; i++) {
+                _archs[i] = archs[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "archs",
+                string.joinv (",", _archs)
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageMisconflictPackages) yield jsoner.deserialize_object_async (typeof (PackageMisconflictPackages));
+        return yield jsoner.deserialize_object_async<PackageMisconflictPackages> ();
     }
 
     /**
@@ -5676,22 +7459,33 @@ public sealed class AltRepo.Client : Object {
         string? arch = "x86_64",
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/package/package_by_file_md5",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "md5", md5.to_string () },
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/package_by_file_md5");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "md5",
+            md5.to_string ()
+        );
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageByFileName) yield jsoner.deserialize_object_async (typeof (PackageByFileName));
+        return yield jsoner.deserialize_object_async<PackageByFileName> ();
     }
 
     /**
@@ -5710,22 +7504,33 @@ public sealed class AltRepo.Client : Object {
         string? arch = "x86_64",
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/package/package_by_file_name",
-            null,
-            {
-                { "file", file.to_string () },
-                { "branch", branch.to_string () },
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/package_by_file_name");
+
+        request.add_parameter_simple (
+            "file",
+            file.to_string ()
+        );
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageByFileName) yield jsoner.deserialize_object_async (typeof (PackageByFileName));
+        return yield jsoner.deserialize_object_async<PackageByFileName> ();
     }
 
     /**
@@ -5739,18 +7544,18 @@ public sealed class AltRepo.Client : Object {
         int64 pkghash,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/package/package_files/$pkghash",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/package_files/$pkghash");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageFiles) yield jsoner.deserialize_object_async (typeof (PackageFiles));
+        return yield jsoner.deserialize_object_async<PackageFiles> ();
     }
 
     /**
@@ -5784,30 +7589,85 @@ public sealed class AltRepo.Client : Object {
         bool? full = false,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/package/package_info",
-            null,
-            {
-                { "name", name != null ? name.to_string () : null },
-                { "version", version != null ? version.to_string () : null },
-                { "release", release != null ? release.to_string () : null },
-                { "arch", arch != null ? arch.to_string () : null },
-                { "source", source != null ? source.to_string () : null },
-                { "branch", branch != null ? branch.to_string () : null },
-                { "disttag", disttag != null ? disttag.to_string () : null },
-                { "sha1", sha1 != null ? sha1.to_string () : null },
-                { "packager", packager != null ? packager.to_string () : null },
-                { "packager_email", packager_email != null ? packager_email.to_string () : null },
-                { "full", full != null ? full.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/package_info");
+
+        if (name != null) {
+            request.add_parameter_simple (
+                "name",
+                name.to_string ()
+            );
+        }
+        if (version != null) {
+            request.add_parameter_simple (
+                "version",
+                version.to_string ()
+            );
+        }
+        if (release != null) {
+            request.add_parameter_simple (
+                "release",
+                release.to_string ()
+            );
+        }
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+        if (source != null) {
+            request.add_parameter_simple (
+                "source",
+                source.to_string ()
+            );
+        }
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (disttag != null) {
+            request.add_parameter_simple (
+                "disttag",
+                disttag.to_string ()
+            );
+        }
+        if (sha1 != null) {
+            request.add_parameter_simple (
+                "sha1",
+                sha1.to_string ()
+            );
+        }
+        if (packager != null) {
+            request.add_parameter_simple (
+                "packager",
+                packager.to_string ()
+            );
+        }
+        if (packager_email != null) {
+            request.add_parameter_simple (
+                "packager_email",
+                packager_email.to_string ()
+            );
+        }
+        if (full != null) {
+            request.add_parameter_simple (
+                "full",
+                full.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageInfo) yield jsoner.deserialize_object_async (typeof (PackageInfo));
+        return yield jsoner.deserialize_object_async<PackageInfo> ();
     }
 
     /**
@@ -5822,25 +7682,22 @@ public sealed class AltRepo.Client : Object {
         PackagesByFileNamesJson payload,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        PostContent post_content = {
-            PostContentType.JSON,
-            yield Jsoner.serialize_async (payload, Case.SNAKE)
-        };
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.POST (@"$API_BASE/package/packages_by_file_names");
 
-        var bytes = yield soup_wrapper.post_async (
-            @"$API_BASE/package/packages_by_file_names",
-            null,
-            post_content,
-            null,
-            null,
+        var post_content = new PostContent (PostContentType.JSON);
+        post_content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
+        request.add_post_content (post_content);
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
 
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageByFileName) yield jsoner.deserialize_object_async (typeof (PackageByFileName));
+        return yield jsoner.deserialize_object_async<PackageByFileName> ();
     }
 
     /**
@@ -5864,25 +7721,51 @@ public sealed class AltRepo.Client : Object {
         string? package_type = "source",
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/package/repocop",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "package_name", package_name.to_string () },
-                { "package_version", package_version != null ? package_version.to_string () : null },
-                { "package_release", package_release != null ? package_release.to_string () : null },
-                { "bin_package_arch", bin_package_arch != null ? bin_package_arch.to_string () : null },
-                { "package_type", package_type != null ? package_type.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/repocop");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "package_name",
+            package_name.to_string ()
+        );
+        if (package_version != null) {
+            request.add_parameter_simple (
+                "package_version",
+                package_version.to_string ()
+            );
+        }
+        if (package_release != null) {
+            request.add_parameter_simple (
+                "package_release",
+                package_release.to_string ()
+            );
+        }
+        if (bin_package_arch != null) {
+            request.add_parameter_simple (
+                "bin_package_arch",
+                bin_package_arch.to_string ()
+            );
+        }
+        if (package_type != null) {
+            request.add_parameter_simple (
+                "package_type",
+                package_type.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (RepocopJsonGetList) yield jsoner.deserialize_object_async (typeof (RepocopJsonGetList));
+        return yield jsoner.deserialize_object_async<RepocopJsonGetList> ();
     }
 
     /**
@@ -5896,18 +7779,18 @@ public sealed class AltRepo.Client : Object {
         int64 pkghash,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/package/specfile_by_hash/$pkghash",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/specfile_by_hash/$pkghash");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageSpecfile) yield jsoner.deserialize_object_async (typeof (PackageSpecfile));
+        return yield jsoner.deserialize_object_async<PackageSpecfile> ();
     }
 
     /**
@@ -5923,21 +7806,27 @@ public sealed class AltRepo.Client : Object {
         string name,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/package/specfile_by_name",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "name", name.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/specfile_by_name");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageSpecfile) yield jsoner.deserialize_object_async (typeof (PackageSpecfile));
+        return yield jsoner.deserialize_object_async<PackageSpecfile> ();
     }
 
     /**
@@ -5955,22 +7844,37 @@ public sealed class AltRepo.Client : Object {
         string[]? archs = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/package/unpackaged_dirs",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "packager", packager.to_string () },
-                { "archs", archs != null ? string.joinv (",", archs) : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/unpackaged_dirs");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "packager",
+            packager.to_string ()
+        );
+        if (archs != null) {
+            var _archs = new string[archs.length];
+            for (int i = 0; i < archs.length; i++) {
+                _archs[i] = archs[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "archs",
+                string.joinv (",", _archs)
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (UnpackagedDirs) yield jsoner.deserialize_object_async (typeof (UnpackagedDirs));
+        return yield jsoner.deserialize_object_async<UnpackagedDirs> ();
     }
 
     /**
@@ -6004,30 +7908,93 @@ public sealed class AltRepo.Client : Object {
         bool? use_last_tasks = false,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/package/what_depends_src",
-            null,
-            {
-                { "packages", string.joinv (",", packages) },
-                { "branch", branch.to_string () },
-                { "depth", depth != null ? depth.to_string () : null },
-                { "dptype", dptype != null ? dptype.to_string () : null },
-                { "archs", archs != null ? string.joinv (",", archs) : null },
-                { "leaf", leaf != null ? leaf.to_string () : null },
-                { "finite_package", finite_package != null ? finite_package.to_string () : null },
-                { "filter_by_package", filter_by_package != null ? string.joinv (",", filter_by_package) : null },
-                { "filter_by_source", filter_by_source != null ? filter_by_source.to_string () : null },
-                { "oneandhalf", oneandhalf != null ? oneandhalf.to_string () : null },
-                { "use_last_tasks", use_last_tasks != null ? use_last_tasks.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/what_depends_src");
+
+        var _packages = new string[packages.length];
+        for (int i = 0; i < packages.length; i++) {
+            _packages[i] = packages[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "packages",
+            string.joinv (",", _packages)
+        );
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (depth != null) {
+            request.add_parameter_simple (
+                "depth",
+                depth.to_string ()
+            );
+        }
+        if (dptype != null) {
+            request.add_parameter_simple (
+                "dptype",
+                dptype.to_string ()
+            );
+        }
+        if (archs != null) {
+            var _archs = new string[archs.length];
+            for (int i = 0; i < archs.length; i++) {
+                _archs[i] = archs[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "archs",
+                string.joinv (",", _archs)
+            );
+        }
+        if (leaf != null) {
+            request.add_parameter_simple (
+                "leaf",
+                leaf.to_string ()
+            );
+        }
+        if (finite_package != null) {
+            request.add_parameter_simple (
+                "finite_package",
+                finite_package.to_string ()
+            );
+        }
+        if (filter_by_package != null) {
+            var _filter_by_package = new string[filter_by_package.length];
+            for (int i = 0; i < filter_by_package.length; i++) {
+                _filter_by_package[i] = filter_by_package[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "filter_by_package",
+                string.joinv (",", _filter_by_package)
+            );
+        }
+        if (filter_by_source != null) {
+            request.add_parameter_simple (
+                "filter_by_source",
+                filter_by_source.to_string ()
+            );
+        }
+        if (oneandhalf != null) {
+            request.add_parameter_simple (
+                "oneandhalf",
+                oneandhalf.to_string ()
+            );
+        }
+        if (use_last_tasks != null) {
+            request.add_parameter_simple (
+                "use_last_tasks",
+                use_last_tasks.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageBuildDependency) yield jsoner.deserialize_object_async (typeof (PackageBuildDependency));
+        return yield jsoner.deserialize_object_async<PackageBuildDependency> ();
     }
 
     /**
@@ -6039,18 +8006,18 @@ public sealed class AltRepo.Client : Object {
     public async PackageSetActivePackageSets get_packageset_active_packagesets_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/packageset/active_packagesets",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/packageset/active_packagesets");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageSetActivePackageSets) yield jsoner.deserialize_object_async (typeof (PackageSetActivePackageSets));
+        return yield jsoner.deserialize_object_async<PackageSetActivePackageSets> ();
     }
 
     /**
@@ -6066,21 +8033,27 @@ public sealed class AltRepo.Client : Object {
         string pkgset2,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/packageset/compare_packagesets",
-            null,
-            {
-                { "pkgset1", pkgset1.to_string () },
-                { "pkgset2", pkgset2.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/packageset/compare_packagesets");
+
+        request.add_parameter_simple (
+            "pkgset1",
+            pkgset1.to_string ()
+        );
+        request.add_parameter_simple (
+            "pkgset2",
+            pkgset2.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackagesetCompare) yield jsoner.deserialize_object_async (typeof (PackagesetCompare));
+        return yield jsoner.deserialize_object_async<PackagesetCompare> ();
     }
 
     /**
@@ -6098,22 +8071,31 @@ public sealed class AltRepo.Client : Object {
         string component,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/packageset/packages_by_component",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "arch", arch.to_string () },
-                { "component", component.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/packageset/packages_by_component");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "arch",
+            arch.to_string ()
+        );
+        request.add_parameter_simple (
+            "component",
+            component.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackagesByUuid) yield jsoner.deserialize_object_async (typeof (PackagesByUuid));
+        return yield jsoner.deserialize_object_async<PackagesByUuid> ();
     }
 
     /**
@@ -6127,20 +8109,23 @@ public sealed class AltRepo.Client : Object {
         string uuid,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/packageset/packages_by_uuid",
-            null,
-            {
-                { "uuid", uuid.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/packageset/packages_by_uuid");
+
+        request.add_parameter_simple (
+            "uuid",
+            uuid.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackagesByUuid) yield jsoner.deserialize_object_async (typeof (PackagesByUuid));
+        return yield jsoner.deserialize_object_async<PackagesByUuid> ();
     }
 
     /**
@@ -6152,18 +8137,18 @@ public sealed class AltRepo.Client : Object {
     public async PackageSetStatusGet get_packageset_pkgset_status_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/packageset/pkgset_status",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/packageset/pkgset_status");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageSetStatusGet) yield jsoner.deserialize_object_async (typeof (PackageSetStatusGet));
+        return yield jsoner.deserialize_object_async<PackageSetStatusGet> ();
     }
 
     /**
@@ -6181,22 +8166,39 @@ public sealed class AltRepo.Client : Object {
         string[]? archs = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/packageset/repository_packages",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "package_type", package_type != null ? package_type.to_string () : null },
-                { "archs", archs != null ? string.joinv (",", archs) : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/packageset/repository_packages");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (package_type != null) {
+            request.add_parameter_simple (
+                "package_type",
+                package_type.to_string ()
+            );
+        }
+        if (archs != null) {
+            var _archs = new string[archs.length];
+            for (int i = 0; i < archs.length; i++) {
+                _archs[i] = archs[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "archs",
+                string.joinv (",", _archs)
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackagesetPackages) yield jsoner.deserialize_object_async (typeof (PackagesetPackages));
+        return yield jsoner.deserialize_object_async<PackagesetPackages> ();
     }
 
     /**
@@ -6210,20 +8212,25 @@ public sealed class AltRepo.Client : Object {
         string? branch = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/packageset/repository_statistics",
-            null,
-            {
-                { "branch", branch != null ? branch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/packageset/repository_statistics");
+
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (RepositoryStatistics) yield jsoner.deserialize_object_async (typeof (RepositoryStatistics));
+        return yield jsoner.deserialize_object_async<RepositoryStatistics> ();
     }
 
     /**
@@ -6237,23 +8244,23 @@ public sealed class AltRepo.Client : Object {
         string branch,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/all_maintainers",
-            null,
-            {
-                { "branch", branch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/all_maintainers");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<AllMaintainers> ();
-        yield jsoner.deserialize_array_into_async (array);
-
-        return array;
+        return yield jsoner.deserialize_array_async<AllMaintainers> ();
     }
 
     /**
@@ -6267,23 +8274,23 @@ public sealed class AltRepo.Client : Object {
         string branch,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/all_maintainers_with_nicknames",
-            null,
-            {
-                { "branch", branch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/all_maintainers_with_nicknames");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<AllMaintainers> ();
-        yield jsoner.deserialize_array_into_async (array);
-
-        return array;
+        return yield jsoner.deserialize_array_async<AllMaintainers> ();
     }
 
     /**
@@ -6297,20 +8304,23 @@ public sealed class AltRepo.Client : Object {
         string branch,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/all_pkgset_archs",
-            null,
-            {
-                { "branch", branch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/all_pkgset_archs");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteAllArchs) yield jsoner.deserialize_object_async (typeof (SiteAllArchs));
+        return yield jsoner.deserialize_object_async<SiteAllArchs> ();
     }
 
     /**
@@ -6324,20 +8334,23 @@ public sealed class AltRepo.Client : Object {
         string branch,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/all_pkgset_archs_with_src_count",
-            null,
-            {
-                { "branch", branch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/all_pkgset_archs_with_src_count");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteAllArchs) yield jsoner.deserialize_object_async (typeof (SiteAllArchs));
+        return yield jsoner.deserialize_object_async<SiteAllArchs> ();
     }
 
     /**
@@ -6349,18 +8362,18 @@ public sealed class AltRepo.Client : Object {
     public async SiteAllPackagasets get_site_all_pkgsets_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/all_pkgsets",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/all_pkgsets");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteAllPackagasets) yield jsoner.deserialize_object_async (typeof (SiteAllPackagasets));
+        return yield jsoner.deserialize_object_async<SiteAllPackagasets> ();
     }
 
     /**
@@ -6372,18 +8385,18 @@ public sealed class AltRepo.Client : Object {
     public async SiteAllPackagesetsSummary get_site_all_pkgsets_summary_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/all_pkgsets_summary",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/all_pkgsets_summary");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteAllPackagesetsSummary) yield jsoner.deserialize_object_async (typeof (SiteAllPackagesetsSummary));
+        return yield jsoner.deserialize_object_async<SiteAllPackagesetsSummary> ();
     }
 
     /**
@@ -6395,18 +8408,18 @@ public sealed class AltRepo.Client : Object {
     public async SiteAllPackagasets get_site_all_pkgsets_with_src_count_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/all_pkgsets_with_src_count",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/all_pkgsets_with_src_count");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteAllPackagasets) yield jsoner.deserialize_object_async (typeof (SiteAllPackagasets));
+        return yield jsoner.deserialize_object_async<SiteAllPackagasets> ();
     }
 
     /**
@@ -6424,25 +8437,33 @@ public sealed class AltRepo.Client : Object {
         string? by_acl = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/beehive_errors_by_maintainer",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "maintainer_nickname", maintainer_nickname.to_string () },
-                { "by_acl", by_acl != null ? by_acl.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/beehive_errors_by_maintainer");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "maintainer_nickname",
+            maintainer_nickname.to_string ()
+        );
+        if (by_acl != null) {
+            request.add_parameter_simple (
+                "by_acl",
+                by_acl.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<SiteBeehiveByMaintainer> ();
-        yield jsoner.deserialize_array_into_async (array);
-
-        return array;
+        return yield jsoner.deserialize_array_async<SiteBeehiveByMaintainer> ();
     }
 
     /**
@@ -6458,21 +8479,27 @@ public sealed class AltRepo.Client : Object {
         string name,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/binary_package_archs_and_versions",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "name", name.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/binary_package_archs_and_versions");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesBinaryList) yield jsoner.deserialize_object_async (typeof (SitePackagesBinaryList));
+        return yield jsoner.deserialize_object_async<SitePackagesBinaryList> ();
     }
 
     /**
@@ -6486,18 +8513,18 @@ public sealed class AltRepo.Client : Object {
         int64 pkghash,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/binary_package_scripts/$pkghash",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/binary_package_scripts/$pkghash");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteBinPackageScripts) yield jsoner.deserialize_object_async (typeof (SiteBinPackageScripts));
+        return yield jsoner.deserialize_object_async<SiteBinPackageScripts> ();
     }
 
     /**
@@ -6517,23 +8544,39 @@ public sealed class AltRepo.Client : Object {
         string? arch = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/deleted_package_info",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "name", name.to_string () },
-                { "package_type", package_type != null ? package_type.to_string () : null },
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/deleted_package_info");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+        if (package_type != null) {
+            request.add_parameter_simple (
+                "package_type",
+                package_type.to_string ()
+            );
+        }
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteDeletedPackage) yield jsoner.deserialize_object_async (typeof (SiteDeletedPackage));
+        return yield jsoner.deserialize_object_async<SiteDeletedPackage> ();
     }
 
     /**
@@ -6549,21 +8592,33 @@ public sealed class AltRepo.Client : Object {
         string? branch = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/fast_packages_search_lookup",
-            null,
-            {
-                { "name", string.joinv (",", name) },
-                { "branch", branch != null ? branch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/fast_packages_search_lookup");
+
+        var _name = new string[name.length];
+        for (int i = 0; i < name.length; i++) {
+            _name[i] = name[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "name",
+            string.joinv (",", _name)
+        );
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteFastPackagesSearch) yield jsoner.deserialize_object_async (typeof (SiteFastPackagesSearch));
+        return yield jsoner.deserialize_object_async<SiteFastPackagesSearch> ();
     }
 
     /**
@@ -6581,22 +8636,39 @@ public sealed class AltRepo.Client : Object {
         string? arch = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/find_packages",
-            null,
-            {
-                { "name", string.joinv (",", name) },
-                { "branch", branch != null ? branch.to_string () : null },
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/find_packages");
+
+        var _name = new string[name.length];
+        for (int i = 0; i < name.length; i++) {
+            _name[i] = name[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "name",
+            string.joinv (",", _name)
+        );
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteFingPackages) yield jsoner.deserialize_object_async (typeof (SiteFingPackages));
+        return yield jsoner.deserialize_object_async<SiteFingPackages> ();
     }
 
     /**
@@ -6612,21 +8684,27 @@ public sealed class AltRepo.Client : Object {
         string name,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/find_source_package",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "name", name.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/find_source_package");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (FindSourcePackageInBranch) yield jsoner.deserialize_object_async (typeof (FindSourcePackageInBranch));
+        return yield jsoner.deserialize_object_async<FindSourcePackageInBranch> ();
     }
 
     /**
@@ -6644,22 +8722,33 @@ public sealed class AltRepo.Client : Object {
         string? task_owner = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/last_packages",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "tasks_limit", tasks_limit.to_string () },
-                { "task_owner", task_owner != null ? task_owner.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/last_packages");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "tasks_limit",
+            tasks_limit.to_string ()
+        );
+        if (task_owner != null) {
+            request.add_parameter_simple (
+                "task_owner",
+                task_owner.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteLastPackages) yield jsoner.deserialize_object_async (typeof (SiteLastPackages));
+        return yield jsoner.deserialize_object_async<SiteLastPackages> ();
     }
 
     /**
@@ -6677,22 +8766,33 @@ public sealed class AltRepo.Client : Object {
         string? packager = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/last_packages_by_branch",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "packages_limit", packages_limit.to_string () },
-                { "packager", packager != null ? packager.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/last_packages_by_branch");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "packages_limit",
+            packages_limit.to_string ()
+        );
+        if (packager != null) {
+            request.add_parameter_simple (
+                "packager",
+                packager.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteLastBranchPackages) yield jsoner.deserialize_object_async (typeof (SiteLastBranchPackages));
+        return yield jsoner.deserialize_object_async<SiteLastBranchPackages> ();
     }
 
     /**
@@ -6710,22 +8810,33 @@ public sealed class AltRepo.Client : Object {
         string? task_owner = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/last_packages_by_tasks",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "tasks_limit", tasks_limit.to_string () },
-                { "task_owner", task_owner != null ? task_owner.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/last_packages_by_tasks");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "tasks_limit",
+            tasks_limit.to_string ()
+        );
+        if (task_owner != null) {
+            request.add_parameter_simple (
+                "task_owner",
+                task_owner.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteLastPackages) yield jsoner.deserialize_object_async (typeof (SiteLastPackages));
+        return yield jsoner.deserialize_object_async<SiteLastPackages> ();
     }
 
     /**
@@ -6739,20 +8850,23 @@ public sealed class AltRepo.Client : Object {
         string branch,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/last_packages_with_cve_fixed",
-            null,
-            {
-                { "branch", branch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/last_packages_with_cve_fixed");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteLastPackagesWithCVEFixes) yield jsoner.deserialize_object_async (typeof (SiteLastPackagesWithCVEFixes));
+        return yield jsoner.deserialize_object_async<SiteLastPackagesWithCVEFixes> ();
     }
 
     /**
@@ -6766,23 +8880,23 @@ public sealed class AltRepo.Client : Object {
         string maintainer_nickname,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/maintainer_branches",
-            null,
-            {
-                { "maintainer_nickname", maintainer_nickname.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/maintainer_branches");
+
+        request.add_parameter_simple (
+            "maintainer_nickname",
+            maintainer_nickname.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<MaintainerBranches> ();
-        yield jsoner.deserialize_array_into_async (array);
-
-        return array;
+        return yield jsoner.deserialize_array_async<MaintainerBranches> ();
     }
 
     /**
@@ -6798,24 +8912,27 @@ public sealed class AltRepo.Client : Object {
         string maintainer_nickname,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/maintainer_info",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "maintainer_nickname", maintainer_nickname.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/maintainer_info");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "maintainer_nickname",
+            maintainer_nickname.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<MaintainerInfo> ();
-        yield jsoner.deserialize_array_into_async (array);
-
-        return array;
+        return yield jsoner.deserialize_array_async<MaintainerInfo> ();
     }
 
     /**
@@ -6833,25 +8950,33 @@ public sealed class AltRepo.Client : Object {
         string? by_acl = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/maintainer_packages",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "maintainer_nickname", maintainer_nickname.to_string () },
-                { "by_acl", by_acl != null ? by_acl.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/maintainer_packages");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "maintainer_nickname",
+            maintainer_nickname.to_string ()
+        );
+        if (by_acl != null) {
+            request.add_parameter_simple (
+                "by_acl",
+                by_acl.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<MaintainerPackages> ();
-        yield jsoner.deserialize_array_into_async (array);
-
-        return array;
+        return yield jsoner.deserialize_array_async<MaintainerPackages> ();
     }
 
     /**
@@ -6867,20 +8992,25 @@ public sealed class AltRepo.Client : Object {
         int64? changelog_last = 3,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/package_changelog/$pkghash",
-            null,
-            {
-                { "changelog_last", changelog_last != null ? changelog_last.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_changelog/$pkghash");
+
+        if (changelog_last != null) {
+            request.add_parameter_simple (
+                "changelog_last",
+                changelog_last.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteChangelog) yield jsoner.deserialize_object_async (typeof (SiteChangelog));
+        return yield jsoner.deserialize_object_async<SiteChangelog> ();
     }
 
     /**
@@ -6896,20 +9026,23 @@ public sealed class AltRepo.Client : Object {
         int64 pkghash,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/package_downloads/$pkghash",
-            null,
-            {
-                { "branch", branch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_downloads/$pkghash");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesDownloads) yield jsoner.deserialize_object_async (typeof (SitePackagesDownloads));
+        return yield jsoner.deserialize_object_async<SitePackagesDownloads> ();
     }
 
     /**
@@ -6927,21 +9060,27 @@ public sealed class AltRepo.Client : Object {
         int64 pkghash,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/package_downloads_bin/$pkghash",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "arch", arch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_downloads_bin/$pkghash");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "arch",
+            arch.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesDownloads) yield jsoner.deserialize_object_async (typeof (SitePackagesDownloads));
+        return yield jsoner.deserialize_object_async<SitePackagesDownloads> ();
     }
 
     /**
@@ -6957,20 +9096,23 @@ public sealed class AltRepo.Client : Object {
         int64 pkghash,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/package_downloads_src/$pkghash",
-            null,
-            {
-                { "branch", branch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_downloads_src/$pkghash");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesDownloads) yield jsoner.deserialize_object_async (typeof (SitePackagesDownloads));
+        return yield jsoner.deserialize_object_async<SitePackagesDownloads> ();
     }
 
     /**
@@ -6990,22 +9132,35 @@ public sealed class AltRepo.Client : Object {
         string? package_type = "source",
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/package_info/$pkghash",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "changelog_last", changelog_last != null ? changelog_last.to_string () : null },
-                { "package_type", package_type != null ? package_type.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_info/$pkghash");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (changelog_last != null) {
+            request.add_parameter_simple (
+                "changelog_last",
+                changelog_last.to_string ()
+            );
+        }
+        if (package_type != null) {
+            request.add_parameter_simple (
+                "package_type",
+                package_type.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackageInfo) yield jsoner.deserialize_object_async (typeof (SitePackageInfo));
+        return yield jsoner.deserialize_object_async<SitePackageInfo> ();
     }
 
     /**
@@ -7019,18 +9174,18 @@ public sealed class AltRepo.Client : Object {
         int64 pkghash,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/package_info_brief/$pkghash",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_info_brief/$pkghash");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteBriefPackageInfo) yield jsoner.deserialize_object_async (typeof (SiteBriefPackageInfo));
+        return yield jsoner.deserialize_object_async<SiteBriefPackageInfo> ();
     }
 
     /**
@@ -7044,18 +9199,18 @@ public sealed class AltRepo.Client : Object {
         int64 pkghash,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/package_log_bin/$pkghash",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_log_bin/$pkghash");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (BinPackageLogElement) yield jsoner.deserialize_object_async (typeof (BinPackageLogElement));
+        return yield jsoner.deserialize_object_async<BinPackageLogElement> ();
     }
 
     /**
@@ -7071,20 +9226,23 @@ public sealed class AltRepo.Client : Object {
         int64 pkghash,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/package_misconflict/$pkghash",
-            null,
-            {
-                { "branch", branch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_misconflict/$pkghash");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageMisconflictBySrc) yield jsoner.deserialize_object_async (typeof (PackageMisconflictBySrc));
+        return yield jsoner.deserialize_object_async<PackageMisconflictBySrc> ();
     }
 
     /**
@@ -7100,21 +9258,27 @@ public sealed class AltRepo.Client : Object {
         string name,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/package_name_from_repology",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "name", name.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_name_from_repology");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageNameFromRepology) yield jsoner.deserialize_object_async (typeof (PackageNameFromRepology));
+        return yield jsoner.deserialize_object_async<PackageNameFromRepology> ();
     }
 
     /**
@@ -7130,20 +9294,25 @@ public sealed class AltRepo.Client : Object {
         string? name = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/package_nvr_by_hash/$pkghash",
-            null,
-            {
-                { "name", name != null ? name.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_nvr_by_hash/$pkghash");
+
+        if (name != null) {
+            request.add_parameter_simple (
+                "name",
+                name.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (PackageNVRByHash) yield jsoner.deserialize_object_async (typeof (PackageNVRByHash));
+        return yield jsoner.deserialize_object_async<PackageNVRByHash> ();
     }
 
     /**
@@ -7161,22 +9330,35 @@ public sealed class AltRepo.Client : Object {
         string? arch = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/package_versions",
-            null,
-            {
-                { "name", name.to_string () },
-                { "package_type", package_type != null ? package_type.to_string () : null },
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_versions");
+
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+        if (package_type != null) {
+            request.add_parameter_simple (
+                "package_type",
+                package_type.to_string ()
+            );
+        }
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteSourcePackagesVersions) yield jsoner.deserialize_object_async (typeof (SiteSourcePackagesVersions));
+        return yield jsoner.deserialize_object_async<SiteSourcePackagesVersions> ();
     }
 
     /**
@@ -7196,23 +9378,35 @@ public sealed class AltRepo.Client : Object {
         string type,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/package_versions_from_images",
-            null,
-            {
-                { "name", name.to_string () },
-                { "branch", branch.to_string () },
-                { "edition", edition.to_string () },
-                { "type", type.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_versions_from_images");
+
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "edition",
+            edition.to_string ()
+        );
+        request.add_parameter_simple (
+            "type",
+            type.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteImagePackageVersions) yield jsoner.deserialize_object_async (typeof (SiteImagePackageVersions));
+        return yield jsoner.deserialize_object_async<SiteImagePackageVersions> ();
     }
 
     /**
@@ -7228,21 +9422,29 @@ public sealed class AltRepo.Client : Object {
         string? branch = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/package_versions_from_tasks",
-            null,
-            {
-                { "name", name.to_string () },
-                { "branch", branch != null ? branch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/package_versions_from_tasks");
+
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SItePackagesVersionsFromTasks) yield jsoner.deserialize_object_async (typeof (SItePackagesVersionsFromTasks));
+        return yield jsoner.deserialize_object_async<SItePackagesVersionsFromTasks> ();
     }
 
     /**
@@ -7256,18 +9458,18 @@ public sealed class AltRepo.Client : Object {
         int64 pkghash,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/packagesets_by_hash/$pkghash",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/packagesets_by_hash/$pkghash");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesetsByHash) yield jsoner.deserialize_object_async (typeof (SitePackagesetsByHash));
+        return yield jsoner.deserialize_object_async<SitePackagesetsByHash> ();
     }
 
     /**
@@ -7285,22 +9487,31 @@ public sealed class AltRepo.Client : Object {
         string arch,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/pkghash_by_binary_name",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "name", name.to_string () },
-                { "arch", arch.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/pkghash_by_binary_name");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+        request.add_parameter_simple (
+            "arch",
+            arch.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesetPackageHash) yield jsoner.deserialize_object_async (typeof (SitePackagesetPackageHash));
+        return yield jsoner.deserialize_object_async<SitePackagesetPackageHash> ();
     }
 
     /**
@@ -7316,21 +9527,27 @@ public sealed class AltRepo.Client : Object {
         string name,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/pkghash_by_name",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "name", name.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/pkghash_by_name");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesetPackageHash) yield jsoner.deserialize_object_async (typeof (SitePackagesetPackageHash));
+        return yield jsoner.deserialize_object_async<SitePackagesetPackageHash> ();
     }
 
     /**
@@ -7350,23 +9567,35 @@ public sealed class AltRepo.Client : Object {
         string release,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/pkghash_by_nvr",
-            null,
-            {
-                { "name", name.to_string () },
-                { "branch", branch.to_string () },
-                { "version", version.to_string () },
-                { "release", release.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/pkghash_by_nvr");
+
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "version",
+            version.to_string ()
+        );
+        request.add_parameter_simple (
+            "release",
+            release.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesetPackageHashByNameVersionRelease) yield jsoner.deserialize_object_async (typeof (SitePackagesetPackageHashByNameVersionRelease));
+        return yield jsoner.deserialize_object_async<SitePackagesetPackageHashByNameVersionRelease> ();
     }
 
     /**
@@ -7382,21 +9611,29 @@ public sealed class AltRepo.Client : Object {
         string? package_type = "source",
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/pkgset_categories_count",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "package_type", package_type != null ? package_type.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/pkgset_categories_count");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (package_type != null) {
+            request.add_parameter_simple (
+                "package_type",
+                package_type.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesetCategories) yield jsoner.deserialize_object_async (typeof (SitePackagesetCategories));
+        return yield jsoner.deserialize_object_async<SitePackagesetCategories> ();
     }
 
     /**
@@ -7408,18 +9645,18 @@ public sealed class AltRepo.Client : Object {
     public async SitePackagesetsSummaryStatus get_site_pkgsets_summary_status_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/pkgsets_summary_status",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/pkgsets_summary_status");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackagesetsSummaryStatus) yield jsoner.deserialize_object_async (typeof (SitePackagesetsSummaryStatus));
+        return yield jsoner.deserialize_object_async<SitePackagesetsSummaryStatus> ();
     }
 
     /**
@@ -7437,25 +9674,33 @@ public sealed class AltRepo.Client : Object {
         string? by_acl = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/repocop_by_maintainer",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "maintainer_nickname", maintainer_nickname.to_string () },
-                { "by_acl", by_acl != null ? by_acl.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/repocop_by_maintainer");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "maintainer_nickname",
+            maintainer_nickname.to_string ()
+        );
+        if (by_acl != null) {
+            request.add_parameter_simple (
+                "by_acl",
+                by_acl.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<RepocopByMaintainer> ();
-        yield jsoner.deserialize_array_into_async (array);
-
-        return array;
+        return yield jsoner.deserialize_array_async<RepocopByMaintainer> ();
     }
 
     /**
@@ -7475,23 +9720,41 @@ public sealed class AltRepo.Client : Object {
         int64? buildtime = 0,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/repository_packages",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "package_type", package_type != null ? package_type.to_string () : null },
-                { "group", group != null ? group.to_string () : null },
-                { "buildtime", buildtime != null ? buildtime.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/repository_packages");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (package_type != null) {
+            request.add_parameter_simple (
+                "package_type",
+                package_type.to_string ()
+            );
+        }
+        if (group != null) {
+            request.add_parameter_simple (
+                "group",
+                group.to_string ()
+            );
+        }
+        if (buildtime != null) {
+            request.add_parameter_simple (
+                "buildtime",
+                buildtime.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SitePackages) yield jsoner.deserialize_object_async (typeof (SitePackages));
+        return yield jsoner.deserialize_object_async<SitePackages> ();
     }
 
     /**
@@ -7505,20 +9768,23 @@ public sealed class AltRepo.Client : Object {
         string name,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/source_package_versions",
-            null,
-            {
-                { "name", name.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/source_package_versions");
+
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteSourcePackagesVersions) yield jsoner.deserialize_object_async (typeof (SiteSourcePackagesVersions));
+        return yield jsoner.deserialize_object_async<SiteSourcePackagesVersions> ();
     }
 
     /**
@@ -7535,24 +9801,27 @@ public sealed class AltRepo.Client : Object {
         string maintainer_nickname,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/tasks_by_maintainer",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "maintainer_nickname", maintainer_nickname.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/tasks_by_maintainer");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        request.add_parameter_simple (
+            "maintainer_nickname",
+            maintainer_nickname.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<SiteTaskByName> ();
-        yield jsoner.deserialize_array_into_async (array);
-
-        return array;
+        return yield jsoner.deserialize_array_async<SiteTaskByName> ();
     }
 
     /**
@@ -7567,20 +9836,23 @@ public sealed class AltRepo.Client : Object {
         string name,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/tasks_by_package",
-            null,
-            {
-                { "name", name.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/tasks_by_package");
+
+        request.add_parameter_simple (
+            "name",
+            name.to_string ()
+        );
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteTaskByName) yield jsoner.deserialize_object_async (typeof (SiteTaskByName));
+        return yield jsoner.deserialize_object_async<SiteTaskByName> ();
     }
 
     /**
@@ -7594,20 +9866,25 @@ public sealed class AltRepo.Client : Object {
         int64? task_id = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/tasks_history",
-            null,
-            {
-                { "task_id", task_id != null ? task_id.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/tasks_history");
+
+        if (task_id != null) {
+            request.add_parameter_simple (
+                "task_id",
+                task_id.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (SiteTasksHistory) yield jsoner.deserialize_object_async (typeof (SiteTasksHistory));
+        return yield jsoner.deserialize_object_async<SiteTasksHistory> ();
     }
 
     /**
@@ -7623,24 +9900,29 @@ public sealed class AltRepo.Client : Object {
         string? by_acl = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/site/watch_by_maintainer",
-            null,
-            {
-                { "maintainer_nickname", maintainer_nickname.to_string () },
-                { "by_acl", by_acl != null ? by_acl.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/site/watch_by_maintainer");
+
+        request.add_parameter_simple (
+            "maintainer_nickname",
+            maintainer_nickname.to_string ()
+        );
+        if (by_acl != null) {
+            request.add_parameter_simple (
+                "by_acl",
+                by_acl.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        var array = new Gee.ArrayList<SiteWatchByMaintainer> ();
-        yield jsoner.deserialize_array_into_async (array);
-
-        return array;
+        return yield jsoner.deserialize_array_async<SiteWatchByMaintainer> ();
     }
 
     /**
@@ -7656,20 +9938,25 @@ public sealed class AltRepo.Client : Object {
         string? arch = "x86_64",
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/build_dependency_set/$id",
-            null,
-            {
-                { "arch", arch != null ? arch.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/build_dependency_set/$id");
+
+        if (arch != null) {
+            request.add_parameter_simple (
+                "arch",
+                arch.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (BuildDependencySet) yield jsoner.deserialize_object_async (typeof (BuildDependencySet));
+        return yield jsoner.deserialize_object_async<BuildDependencySet> ();
     }
 
     /**
@@ -7731,25 +10018,22 @@ public sealed class AltRepo.Client : Object {
         CheckImagesInput payload,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        PostContent post_content = {
-            PostContentType.JSON,
-            yield Jsoner.serialize_async (payload, Case.SNAKE)
-        };
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.POST (@"$API_BASE/task/check_images");
 
-        var bytes = yield soup_wrapper.post_async (
-            @"$API_BASE/task/check_images",
-            null,
-            post_content,
-            null,
-            null,
+        var post_content = new PostContent (PostContentType.JSON);
+        post_content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
+        request.add_post_content (post_content);
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
 
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (CheckImagesOutput) yield jsoner.deserialize_object_async (typeof (CheckImagesOutput));
+        return yield jsoner.deserialize_object_async<CheckImagesOutput> ();
     }
 
     /**
@@ -7763,18 +10047,18 @@ public sealed class AltRepo.Client : Object {
         int64 id,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/find_images/$id",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/find_images/$id");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (FindImagesByTask) yield jsoner.deserialize_object_async (typeof (FindImagesByTask));
+        return yield jsoner.deserialize_object_async<FindImagesByTask> ();
     }
 
     /**
@@ -7790,20 +10074,29 @@ public sealed class AltRepo.Client : Object {
         string[]? branches = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/find_packageset/$id",
-            null,
-            {
-                { "branches", branches != null ? string.joinv (",", branches) : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/find_packageset/$id");
+
+        if (branches != null) {
+            var _branches = new string[branches.length];
+            for (int i = 0; i < branches.length; i++) {
+                _branches[i] = branches[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "branches",
+                string.joinv (",", _branches)
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskFindPackageset) yield jsoner.deserialize_object_async (typeof (TaskFindPackageset));
+        return yield jsoner.deserialize_object_async<TaskFindPackageset> ();
     }
 
     /**
@@ -7821,21 +10114,35 @@ public sealed class AltRepo.Client : Object {
         string? no_cache = "",
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/misconflict/$id",
-            null,
-            {
-                { "archs", archs != null ? string.joinv (",", archs) : null },
-                { "no_cache", no_cache != null ? no_cache.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/misconflict/$id");
+
+        if (archs != null) {
+            var _archs = new string[archs.length];
+            for (int i = 0; i < archs.length; i++) {
+                _archs[i] = archs[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "archs",
+                string.joinv (",", _archs)
+            );
+        }
+        if (no_cache != null) {
+            request.add_parameter_simple (
+                "no_cache",
+                no_cache.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskMisconflictPackages) yield jsoner.deserialize_object_async (typeof (TaskMisconflictPackages));
+        return yield jsoner.deserialize_object_async<TaskMisconflictPackages> ();
     }
 
     /**
@@ -7853,22 +10160,39 @@ public sealed class AltRepo.Client : Object {
         string? before = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/needs_approval",
-            null,
-            {
-                { "acl_group", acl_group.to_string () },
-                { "branches", branches != null ? string.joinv (",", branches) : null },
-                { "before", before != null ? before.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/needs_approval");
+
+        request.add_parameter_simple (
+            "acl_group",
+            acl_group.to_string ()
+        );
+        if (branches != null) {
+            var _branches = new string[branches.length];
+            for (int i = 0; i < branches.length; i++) {
+                _branches[i] = branches[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "branches",
+                string.joinv (",", _branches)
+            );
+        }
+        if (before != null) {
+            request.add_parameter_simple (
+                "before",
+                before.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (NeedsApproval) yield jsoner.deserialize_object_async (typeof (NeedsApproval));
+        return yield jsoner.deserialize_object_async<NeedsApproval> ();
     }
 
     /**
@@ -7882,18 +10206,18 @@ public sealed class AltRepo.Client : Object {
         int64 id,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/packages/$id",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/packages/$id");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskPackages) yield jsoner.deserialize_object_async (typeof (TaskPackages));
+        return yield jsoner.deserialize_object_async<TaskPackages> ();
     }
 
     /**
@@ -7906,18 +10230,18 @@ public sealed class AltRepo.Client : Object {
     public async AllTasksBranches get_task_progress_all_packagesets_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/progress/all_packagesets",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/progress/all_packagesets");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (AllTasksBranches) yield jsoner.deserialize_object_async (typeof (AllTasksBranches));
+        return yield jsoner.deserialize_object_async<AllTasksBranches> ();
     }
 
     /**
@@ -7929,18 +10253,18 @@ public sealed class AltRepo.Client : Object {
     public async AllTasksBranches get_task_progress_all_tasks_branches_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/progress/all_tasks_branches",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/progress/all_tasks_branches");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (AllTasksBranches) yield jsoner.deserialize_object_async (typeof (AllTasksBranches));
+        return yield jsoner.deserialize_object_async<AllTasksBranches> ();
     }
 
     /**
@@ -7964,25 +10288,61 @@ public sealed class AltRepo.Client : Object {
         bool? by_package = false,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/progress/find_tasks",
-            null,
-            {
-                { "input", string.joinv (",", input) },
-                { "owner", owner != null ? owner.to_string () : null },
-                { "branch", branch != null ? branch.to_string () : null },
-                { "state", state != null ? string.joinv (",", state) : null },
-                { "tasks_limit", tasks_limit != null ? tasks_limit.to_string () : null },
-                { "by_package", by_package != null ? by_package.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/progress/find_tasks");
+
+        var _input = new string[input.length];
+        for (int i = 0; i < input.length; i++) {
+            _input[i] = input[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "input",
+            string.joinv (",", _input)
+        );
+        if (owner != null) {
+            request.add_parameter_simple (
+                "owner",
+                owner.to_string ()
+            );
+        }
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (state != null) {
+            var _state = new string[state.length];
+            for (int i = 0; i < state.length; i++) {
+                _state[i] = state[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "state",
+                string.joinv (",", _state)
+            );
+        }
+        if (tasks_limit != null) {
+            request.add_parameter_simple (
+                "tasks_limit",
+                tasks_limit.to_string ()
+            );
+        }
+        if (by_package != null) {
+            request.add_parameter_simple (
+                "by_package",
+                by_package.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TasksList) yield jsoner.deserialize_object_async (typeof (TasksList));
+        return yield jsoner.deserialize_object_async<TasksList> ();
     }
 
     /**
@@ -8000,22 +10360,39 @@ public sealed class AltRepo.Client : Object {
         int64? tasks_limit = 10,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/progress/find_tasks_lookup",
-            null,
-            {
-                { "input", string.joinv (",", input) },
-                { "branch", branch != null ? branch.to_string () : null },
-                { "tasks_limit", tasks_limit != null ? tasks_limit.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/progress/find_tasks_lookup");
+
+        var _input = new string[input.length];
+        for (int i = 0; i < input.length; i++) {
+            _input[i] = input[i].to_string ();
+        }
+        request.add_parameter_simple (
+            "input",
+            string.joinv (",", _input)
+        );
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (tasks_limit != null) {
+            request.add_parameter_simple (
+                "tasks_limit",
+                tasks_limit.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (FindTasks) yield jsoner.deserialize_object_async (typeof (FindTasks));
+        return yield jsoner.deserialize_object_async<FindTasks> ();
     }
 
     /**
@@ -8031,21 +10408,31 @@ public sealed class AltRepo.Client : Object {
         int64? tasks_limit = 10,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/progress/last_tasks",
-            null,
-            {
-                { "branch", branch != null ? branch.to_string () : null },
-                { "tasks_limit", tasks_limit != null ? tasks_limit.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/progress/last_tasks");
+
+        if (branch != null) {
+            request.add_parameter_simple (
+                "branch",
+                branch.to_string ()
+            );
+        }
+        if (tasks_limit != null) {
+            request.add_parameter_simple (
+                "tasks_limit",
+                tasks_limit.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TasksList) yield jsoner.deserialize_object_async (typeof (TasksList));
+        return yield jsoner.deserialize_object_async<TasksList> ();
     }
 
     /**
@@ -8059,18 +10446,18 @@ public sealed class AltRepo.Client : Object {
         int64 id,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/progress/task_info/$id",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/progress/task_info/$id");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskProgressTaskInfo) yield jsoner.deserialize_object_async (typeof (TaskProgressTaskInfo));
+        return yield jsoner.deserialize_object_async<TaskProgressTaskInfo> ();
     }
 
     /**
@@ -8084,18 +10471,18 @@ public sealed class AltRepo.Client : Object {
         int64 id,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/task_diff/$id",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/task_diff/$id");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskDiff) yield jsoner.deserialize_object_async (typeof (TaskDiff));
+        return yield jsoner.deserialize_object_async<TaskDiff> ();
     }
 
     /**
@@ -8117,24 +10504,47 @@ public sealed class AltRepo.Client : Object {
         string? end_date = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/task_history",
-            null,
-            {
-                { "branch", branch.to_string () },
-                { "start_task", start_task != null ? start_task.to_string () : null },
-                { "end_task", end_task != null ? end_task.to_string () : null },
-                { "start_date", start_date != null ? start_date.to_string () : null },
-                { "end_date", end_date != null ? end_date.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/task_history");
+
+        request.add_parameter_simple (
+            "branch",
+            branch.to_string ()
+        );
+        if (start_task != null) {
+            request.add_parameter_simple (
+                "start_task",
+                start_task.to_string ()
+            );
+        }
+        if (end_task != null) {
+            request.add_parameter_simple (
+                "end_task",
+                end_task.to_string ()
+            );
+        }
+        if (start_date != null) {
+            request.add_parameter_simple (
+                "start_date",
+                start_date.to_string ()
+            );
+        }
+        if (end_date != null) {
+            request.add_parameter_simple (
+                "end_date",
+                end_date.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskHistory) yield jsoner.deserialize_object_async (typeof (TaskHistory));
+        return yield jsoner.deserialize_object_async<TaskHistory> ();
     }
 
     /**
@@ -8156,23 +10566,47 @@ public sealed class AltRepo.Client : Object {
         string[]? states = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/task_info/$id",
-            null,
-            {
-                { "try", try != null ? try.to_string () : null },
-                { "iteration", iteration != null ? iteration.to_string () : null },
-                { "no_cache", no_cache != null ? no_cache.to_string () : null },
-                { "states", states != null ? string.joinv (",", states) : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/task_info/$id");
+
+        if (try != null) {
+            request.add_parameter_simple (
+                "try",
+                try.to_string ()
+            );
+        }
+        if (iteration != null) {
+            request.add_parameter_simple (
+                "iteration",
+                iteration.to_string ()
+            );
+        }
+        if (no_cache != null) {
+            request.add_parameter_simple (
+                "no_cache",
+                no_cache.to_string ()
+            );
+        }
+        if (states != null) {
+            var _states = new string[states.length];
+            for (int i = 0; i < states.length; i++) {
+                _states[i] = states[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "states",
+                string.joinv (",", _states)
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskInfo) yield jsoner.deserialize_object_async (typeof (TaskInfo));
+        return yield jsoner.deserialize_object_async<TaskInfo> ();
     }
 
     /**
@@ -8188,20 +10622,25 @@ public sealed class AltRepo.Client : Object {
         bool? include_task_packages = false,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/task_repo/$id",
-            null,
-            {
-                { "include_task_packages", include_task_packages != null ? include_task_packages.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/task_repo/$id");
+
+        if (include_task_packages != null) {
+            request.add_parameter_simple (
+                "include_task_packages",
+                include_task_packages.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskRepo) yield jsoner.deserialize_object_async (typeof (TaskRepo));
+        return yield jsoner.deserialize_object_async<TaskRepo> ();
     }
 
     /**
@@ -8233,28 +10672,81 @@ public sealed class AltRepo.Client : Object {
         string? no_cache = "",
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/task/what_depends_src/$id",
-            null,
-            {
-                { "depth", depth != null ? depth.to_string () : null },
-                { "dptype", dptype != null ? dptype.to_string () : null },
-                { "archs", archs != null ? string.joinv (",", archs) : null },
-                { "leaf", leaf != null ? leaf.to_string () : null },
-                { "finite_package", finite_package != null ? finite_package.to_string () : null },
-                { "filter_by_package", filter_by_package != null ? string.joinv (",", filter_by_package) : null },
-                { "filter_by_source", filter_by_source != null ? filter_by_source.to_string () : null },
-                { "oneandhalf", oneandhalf != null ? oneandhalf.to_string () : null },
-                { "no_cache", no_cache != null ? no_cache.to_string () : null },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/task/what_depends_src/$id");
+
+        if (depth != null) {
+            request.add_parameter_simple (
+                "depth",
+                depth.to_string ()
+            );
+        }
+        if (dptype != null) {
+            request.add_parameter_simple (
+                "dptype",
+                dptype.to_string ()
+            );
+        }
+        if (archs != null) {
+            var _archs = new string[archs.length];
+            for (int i = 0; i < archs.length; i++) {
+                _archs[i] = archs[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "archs",
+                string.joinv (",", _archs)
+            );
+        }
+        if (leaf != null) {
+            request.add_parameter_simple (
+                "leaf",
+                leaf.to_string ()
+            );
+        }
+        if (finite_package != null) {
+            request.add_parameter_simple (
+                "finite_package",
+                finite_package.to_string ()
+            );
+        }
+        if (filter_by_package != null) {
+            var _filter_by_package = new string[filter_by_package.length];
+            for (int i = 0; i < filter_by_package.length; i++) {
+                _filter_by_package[i] = filter_by_package[i].to_string ();
+            }
+            request.add_parameter_simple (
+                "filter_by_package",
+                string.joinv (",", _filter_by_package)
+            );
+        }
+        if (filter_by_source != null) {
+            request.add_parameter_simple (
+                "filter_by_source",
+                filter_by_source.to_string ()
+            );
+        }
+        if (oneandhalf != null) {
+            request.add_parameter_simple (
+                "oneandhalf",
+                oneandhalf.to_string ()
+            );
+        }
+        if (no_cache != null) {
+            request.add_parameter_simple (
+                "no_cache",
+                no_cache.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (TaskBuildDependency) yield jsoner.deserialize_object_async (typeof (TaskBuildDependency));
+        return yield jsoner.deserialize_object_async<TaskBuildDependency> ();
     }
 
     /**
@@ -8266,126 +10758,206 @@ public sealed class AltRepo.Client : Object {
     public async APIVersion get_version_async (
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/version",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/version");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (APIVersion) yield jsoner.deserialize_object_async (typeof (APIVersion));
+        return yield jsoner.deserialize_object_async<APIVersion> ();
     }
 
     /**
      * Get BDU information
      * 
      * @param vuln_id BDU id
+     * @param exclude_json exclude vulnerability raw JSON from results
      * 
      * @return {@link VulnerabilityInfo}
      */
     public async VulnerabilityInfo get_vuln_bdu_async (
         string vuln_id,
+        bool? exclude_json = false,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/vuln/bdu",
-            null,
-            {
-                { "vuln_id", vuln_id.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/bdu");
+
+        request.add_parameter_simple (
+            "vuln_id",
+            vuln_id.to_string ()
+        );
+        if (exclude_json != null) {
+            request.add_parameter_simple (
+                "exclude_json",
+                exclude_json.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (VulnerabilityInfo) yield jsoner.deserialize_object_async (typeof (VulnerabilityInfo));
+        return yield jsoner.deserialize_object_async<VulnerabilityInfo> ();
     }
 
     /**
      * Get a list of packages in which the specified BDU vulnerability is closed.
      * 
      * @param vuln_id BDU id
+     * @param exclude_json exclude vulnerability raw JSON from results
      * 
      * @return {@link VulnFixesPackages}
      */
     public async VulnFixesPackages get_vuln_bdu_fixes_async (
         string vuln_id,
+        bool? exclude_json = false,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/vuln/bdu/fixes",
-            null,
-            {
-                { "vuln_id", vuln_id.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/bdu/fixes");
+
+        request.add_parameter_simple (
+            "vuln_id",
+            vuln_id.to_string ()
+        );
+        if (exclude_json != null) {
+            request.add_parameter_simple (
+                "exclude_json",
+                exclude_json.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (VulnFixesPackages) yield jsoner.deserialize_object_async (typeof (VulnFixesPackages));
+        return yield jsoner.deserialize_object_async<VulnFixesPackages> ();
     }
 
     /**
      * Get CVE information
      * 
      * @param vuln_id CVE id
+     * @param exclude_json exclude vulnerability raw JSON from results
      * 
      * @return {@link VulnerabilityInfo}
      */
     public async VulnerabilityInfo get_vuln_cve_async (
         string vuln_id,
+        bool? exclude_json = false,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/vuln/cve",
-            null,
-            {
-                { "vuln_id", vuln_id.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/cve");
+
+        request.add_parameter_simple (
+            "vuln_id",
+            vuln_id.to_string ()
+        );
+        if (exclude_json != null) {
+            request.add_parameter_simple (
+                "exclude_json",
+                exclude_json.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (VulnerabilityInfo) yield jsoner.deserialize_object_async (typeof (VulnerabilityInfo));
+        return yield jsoner.deserialize_object_async<VulnerabilityInfo> ();
     }
 
     /**
      * Get a list of packages in which the specified CVE vulnerability is closed.
      * 
      * @param vuln_id CVE id
+     * @param exclude_json exclude vulnerability raw JSON from results
      * 
      * @return {@link VulnFixesPackages}
      */
     public async VulnFixesPackages get_vuln_cve_fixes_async (
         string vuln_id,
+        bool? exclude_json = false,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/vuln/cve/fixes",
-            null,
-            {
-                { "vuln_id", vuln_id.to_string () },
-            },
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/cve/fixes");
+
+        request.add_parameter_simple (
+            "vuln_id",
+            vuln_id.to_string ()
+        );
+        if (exclude_json != null) {
+            request.add_parameter_simple (
+                "exclude_json",
+                exclude_json.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (VulnFixesPackages) yield jsoner.deserialize_object_async (typeof (VulnFixesPackages));
+        return yield jsoner.deserialize_object_async<VulnFixesPackages> ();
+    }
+
+    /**
+     * Get GHSA information
+     * 
+     * @param vuln_id GHSA id
+     * @param exclude_json exclude vulnerability raw JSON from results
+     * 
+     * @return {@link string}
+     */
+    public async string get_vuln_ghsa_async (
+        string vuln_id,
+        bool? exclude_json = false,
+        int priority = Priority.DEFAULT,
+        Cancellable? cancellable = null
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/ghsa");
+
+        request.add_parameter_simple (
+            "vuln_id",
+            vuln_id.to_string ()
+        );
+        if (exclude_json != null) {
+            request.add_parameter_simple (
+                "exclude_json",
+                exclude_json.to_string ()
+            );
+        }
+
+        var bytes = yield session.exec_async (
+            request,
+            priority,
+            cancellable
+        );
+
+        return (string) bytes.get_data ();
     }
 
     /**
@@ -8399,17 +10971,17 @@ public sealed class AltRepo.Client : Object {
         int64 id,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
-    ) throws CommonError, BadStatusCodeError {
-        var bytes = yield soup_wrapper.get_async (
-            @"$API_BASE/vuln/task/$id",
-            null,
-            null,
-            null,
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/task/$id");
+
+        var bytes = yield session.exec_async (
+            request,
             priority,
             cancellable
         );
+
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return (CveVulnerableTask) yield jsoner.deserialize_object_async (typeof (CveVulnerableTask));
+        return yield jsoner.deserialize_object_async<CveVulnerableTask> ();
     }
 }

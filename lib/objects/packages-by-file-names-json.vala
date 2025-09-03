@@ -21,7 +21,10 @@
 
 public class AltRepo.PackagesByFileNamesJson : Object {
 
-    public Gee.ArrayList<string> files { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> files {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * name of packageset

@@ -31,5 +31,8 @@ public class AltRepo.LicenseTokens : Object {
     /**
      * list of found valid license tokens
      */
-    public Gee.ArrayList<LicenseTokensElement> tokens { get; set; default = new Gee.ArrayList<LicenseTokensElement> (); }
+    public Gee.ArrayList<LicenseTokensElement> tokens {
+        get; set;
+        default = new Gee.ArrayList<LicenseTokensElement> ()
+    }
 }

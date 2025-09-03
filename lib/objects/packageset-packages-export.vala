@@ -34,5 +34,8 @@ public class AltRepo.PackagesetPackagesExport : Object {
     /**
      * binary packages information
      */
-    public Gee.ArrayList<PackagesetPackagesExportElement> packages { get; set; default = new Gee.ArrayList<PackagesetPackagesExportElement> (); }
+    public Gee.ArrayList<PackagesetPackagesExportElement> packages {
+        get; set;
+        default = new Gee.ArrayList<PackagesetPackagesExportElement> ()
+    }
 }

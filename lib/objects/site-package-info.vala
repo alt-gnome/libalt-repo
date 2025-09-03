@@ -114,45 +114,72 @@ public class AltRepo.SitePackageInfo : Object {
     /**
      * binary packages
      */
-    public Gee.ArrayList<string> acl { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> acl {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * all maintainer's nicknames
      */
-    public Gee.ArrayList<string> maintainers { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> maintainers {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * List of source or binary packages by archs
      */
-    public Gee.ArrayList<SitePackageInfoArchs> package_archs { get; set; default = new Gee.ArrayList<SitePackageInfoArchs> (); }
+    public Gee.ArrayList<SitePackageInfoArchs> package_archs {
+        get; set;
+        default = new Gee.ArrayList<SitePackageInfoArchs> ()
+    }
 
     /**
      * package tasks
      */
-    public Gee.ArrayList<SitePackageTasksElement> tasks { get; set; default = new Gee.ArrayList<SitePackageTasksElement> (); }
+    public Gee.ArrayList<SitePackageTasksElement> tasks {
+        get; set;
+        default = new Gee.ArrayList<SitePackageTasksElement> ()
+    }
 
     /**
      * package changelog
      */
-    public Gee.ArrayList<SitePackageInfoChangelogElement> changelog { get; set; default = new Gee.ArrayList<SitePackageInfoChangelogElement> (); }
+    public Gee.ArrayList<SitePackageInfoChangelogElement> changelog {
+        get; set;
+        default = new Gee.ArrayList<SitePackageInfoChangelogElement> ()
+    }
 
     /**
      * new package version
      */
-    public Gee.ArrayList<SitePackageNewVersion> new_version { get; set; default = new Gee.ArrayList<SitePackageNewVersion> (); }
+    public Gee.ArrayList<SitePackageNewVersion> new_version {
+        get; set;
+        default = new Gee.ArrayList<SitePackageNewVersion> ()
+    }
 
     /**
      * Beehive rebuild status
      */
-    public Gee.ArrayList<SitePackageBeehiveElement> beehive { get; set; default = new Gee.ArrayList<SitePackageBeehiveElement> (); }
+    public Gee.ArrayList<SitePackageBeehiveElement> beehive {
+        get; set;
+        default = new Gee.ArrayList<SitePackageBeehiveElement> ()
+    }
 
     /**
      * all the dependence of the package
      */
-    public Gee.ArrayList<SitePackageDependenciesElement> dependencies { get; set; default = new Gee.ArrayList<SitePackageDependenciesElement> (); }
+    public Gee.ArrayList<SitePackageDependenciesElement> dependencies {
+        get; set;
+        default = new Gee.ArrayList<SitePackageDependenciesElement> ()
+    }
 
     /**
      * list of found valid license tokens
      */
-    public Gee.ArrayList<SitePackageLicenseTokensElement> license_tokens { get; set; default = new Gee.ArrayList<SitePackageLicenseTokensElement> (); }
+    public Gee.ArrayList<SitePackageLicenseTokensElement> license_tokens {
+        get; set;
+        default = new Gee.ArrayList<SitePackageLicenseTokensElement> ()
+    }
 }

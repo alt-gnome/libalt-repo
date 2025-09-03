@@ -24,5 +24,8 @@ public class AltRepo.ErrataBranchesUpdates : Object {
     /**
      * list of branch updates
      */
-    public Gee.ArrayList<ErrataBranchUpdate> branches_updates { get; set; default = new Gee.ArrayList<ErrataBranchUpdate> (); }
+    public Gee.ArrayList<ErrataBranchUpdate> branches_updates {
+        get; set;
+        default = new Gee.ArrayList<ErrataBranchUpdate> ()
+    }
 }

@@ -24,5 +24,8 @@ public class AltRepo.ErrataJsonPostList : Object {
     /**
      * errata ids list
      */
-    public Gee.ArrayList<string> errata_ids { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> errata_ids {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

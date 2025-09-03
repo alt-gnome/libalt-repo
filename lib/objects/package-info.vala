@@ -22,27 +22,20 @@
 public class AltRepo.PackageInfo : Object {
 
     /**
-     * package name
+     * request arguments
      */
-    public string name { get; set; }
+    public Object request_args { get; set; }
 
     /**
-     * package epoch
+     * number of packages found
      */
-    public int64 epoch { get; set; }
+    public int64 length { get; set; }
 
     /**
-     * package version
+     * packages info
      */
-    public string version { get; set; }
-
-    /**
-     * package release
-     */
-    public string release { get; set; }
-
-    /**
-     * package buildtime
-     */
-    public int64 buildtime { get; set; }
+    public Gee.ArrayList<PackageInfoPackage> packages {
+        get; set;
+        default = new Gee.ArrayList<PackageInfoPackage> ()
+    }
 }

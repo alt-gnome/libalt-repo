@@ -59,7 +59,7 @@ public class AltRepo.SiteBeehiveByMaintainerElement : Object {
     /**
      * Beehive package build elapsed (seconds)
      */
-    public int64 build_time { get; set; }
+    public double build_time { get; set; }
 
     /**
      * Beehive package build error log URL

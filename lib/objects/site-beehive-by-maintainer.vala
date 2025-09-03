@@ -34,5 +34,8 @@ public class AltRepo.SiteBeehiveByMaintainer : Object {
     /**
      * Beehive packages rebuild errors
      */
-    public Gee.ArrayList<SiteBeehiveByMaintainerElement> beehive { get; set; default = new Gee.ArrayList<SiteBeehiveByMaintainerElement> (); }
+    public Gee.ArrayList<SiteBeehiveByMaintainerElement> beehive {
+        get; set;
+        default = new Gee.ArrayList<SiteBeehiveByMaintainerElement> ()
+    }
 }

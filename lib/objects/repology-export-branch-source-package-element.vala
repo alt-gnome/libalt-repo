@@ -86,10 +86,16 @@ public class AltRepo.RepologyExportBranchSourcePackageElement : Object {
      */
     public string bugzilla { get; set; }
 
-    public Gee.ArrayList<string> cpe { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> c_p_e {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * binary packages info
      */
-    public Gee.ArrayList<RepologyExportBranchBinaryPackageElement> binaries { get; set; default = new Gee.ArrayList<RepologyExportBranchBinaryPackageElement> (); }
+    public Gee.ArrayList<RepologyExportBranchBinaryPackageElement> binaries {
+        get; set;
+        default = new Gee.ArrayList<RepologyExportBranchBinaryPackageElement> ()
+    }
 }

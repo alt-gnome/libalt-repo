@@ -34,5 +34,8 @@ public class AltRepo.FindTasks : Object {
     /**
      * list of found tasks
      */
-    public Gee.ArrayList<FindTasksElement> tasks { get; set; default = new Gee.ArrayList<FindTasksElement> (); }
+    public Gee.ArrayList<FindTasksElement> tasks {
+        get; set;
+        default = new Gee.ArrayList<FindTasksElement> ()
+    }
 }

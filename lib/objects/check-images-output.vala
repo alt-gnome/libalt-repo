@@ -29,10 +29,16 @@ public class AltRepo.CheckImagesOutput : Object {
     /**
      * list of images with binary packages
      */
-    public Gee.ArrayList<CheckImagesOutputImage> in_images { get; set; default = new Gee.ArrayList<CheckImagesOutputImage> (); }
+    public Gee.ArrayList<CheckImagesOutputImage> in_images {
+        get; set;
+        default = new Gee.ArrayList<CheckImagesOutputImage> ()
+    }
 
     /**
      * list of binary packages which doesn't belong to any image
      */
-    public Gee.ArrayList<CheckImagesOutputPackage> not_in_images { get; set; default = new Gee.ArrayList<CheckImagesOutputPackage> (); }
+    public Gee.ArrayList<CheckImagesOutputPackage> not_in_images {
+        get; set;
+        default = new Gee.ArrayList<CheckImagesOutputPackage> ()
+    }
 }

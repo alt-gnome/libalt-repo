@@ -34,5 +34,8 @@ public class AltRepo.PackagesetPackages : Object {
     /**
      * packages information
      */
-    public Gee.ArrayList<PackagesetPackagesElement> packages { get; set; default = new Gee.ArrayList<PackagesetPackagesElement> (); }
+    public Gee.ArrayList<PackagesetPackagesElement> packages {
+        get; set;
+        default = new Gee.ArrayList<PackagesetPackagesElement> ()
+    }
 }

@@ -44,5 +44,8 @@ public class AltRepo.SitePackageDependenciesElement : Object {
     /**
      * decoded dependency flag
      */
-    public Gee.ArrayList<string> flag_decoded { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> flag_decoded {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 }

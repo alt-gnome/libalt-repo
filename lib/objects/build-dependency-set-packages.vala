@@ -34,5 +34,8 @@ public class AltRepo.BuildDependencySetPackages : Object {
     /**
      * build requirements packages information
      */
-    public Gee.ArrayList<BuildDependencySetPackage> depends { get; set; default = new Gee.ArrayList<BuildDependencySetPackage> (); }
+    public Gee.ArrayList<BuildDependencySetPackage> depends {
+        get; set;
+        default = new Gee.ArrayList<BuildDependencySetPackage> ()
+    }
 }

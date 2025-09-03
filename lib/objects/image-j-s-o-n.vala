@@ -39,5 +39,8 @@ public class AltRepo.ImageJSON : Object {
     /**
      * image info
      */
-    public Gee.ArrayList<ImageJSONElement> images { get; set; default = new Gee.ArrayList<ImageJSONElement> (); }
+    public Gee.ArrayList<ImageJSONElement> images {
+        get; set;
+        default = new Gee.ArrayList<ImageJSONElement> ()
+    }
 }

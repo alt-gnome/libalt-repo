@@ -44,7 +44,10 @@ public class AltRepo.TaskInfo : Object {
     /**
      * all task rebuilds
      */
-    public Gee.ArrayList<string> rebuilds { get; set; default = new Gee.ArrayList<string> (); }
+    public Gee.ArrayList<string> rebuilds {
+        get; set;
+        default = new Gee.ArrayList<string> ()
+    }
 
     /**
      * task state
@@ -84,7 +87,10 @@ public class AltRepo.TaskInfo : Object {
     /**
      * task depends on
      */
-    public Gee.ArrayList<int64?> depends { get; set; default = new Gee.ArrayList<int64?> (); }
+    public Gee.ArrayList<int64?> depends {
+        get; set;
+        default = new Gee.ArrayList<int64?> ()
+    }
 
     /**
      * task message
@@ -104,7 +110,10 @@ public class AltRepo.TaskInfo : Object {
     /**
      * task subtasks
      */
-    public Gee.ArrayList<TaskInfoSubtask> subtasks { get; set; default = new Gee.ArrayList<TaskInfoSubtask> (); }
+    public Gee.ArrayList<TaskInfoSubtask> subtasks {
+        get; set;
+        default = new Gee.ArrayList<TaskInfoSubtask> ()
+    }
 
     /**
      * task packages add/delete

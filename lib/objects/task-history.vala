@@ -34,5 +34,8 @@ public class AltRepo.TaskHistory : Object {
     /**
      * build requirements packages information
      */
-    public Gee.ArrayList<TaskHistoryElement> tasks { get; set; default = new Gee.ArrayList<TaskHistoryElement> (); }
+    public Gee.ArrayList<TaskHistoryElement> tasks {
+        get; set;
+        default = new Gee.ArrayList<TaskHistoryElement> ()
+    }
 }

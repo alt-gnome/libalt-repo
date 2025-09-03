@@ -54,10 +54,16 @@ public class AltRepo.ErrataLastChangedElement : Object {
     /**
      * affected packages
      */
-    public Gee.ArrayList<PackagesElement> packages { get; set; default = new Gee.ArrayList<PackagesElement> (); }
+    public Gee.ArrayList<PackagesElement> packages {
+        get; set;
+        default = new Gee.ArrayList<PackagesElement> ()
+    }
 
     /**
      * fixed vulnerabilities list
      */
-    public Gee.ArrayList<VulnerabilitiesElement> vulnerabilities { get; set; default = new Gee.ArrayList<VulnerabilitiesElement> (); }
+    public Gee.ArrayList<VulnerabilitiesElement> vulnerabilities {
+        get; set;
+        default = new Gee.ArrayList<VulnerabilitiesElement> ()
+    }
 }

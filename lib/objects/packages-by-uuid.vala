@@ -34,5 +34,8 @@ public class AltRepo.PackagesByUuid : Object {
     /**
      * packages list by packageset component UUID
      */
-    public Gee.ArrayList<PackagesByUuidElement> packages { get; set; default = new Gee.ArrayList<PackagesByUuidElement> (); }
+    public Gee.ArrayList<PackagesByUuidElement> packages {
+        get; set;
+        default = new Gee.ArrayList<PackagesByUuidElement> ()
+    }
 }

@@ -34,5 +34,8 @@ public class AltRepo.MaintainerBranches : Object {
     /**
      * all branches of the maintainer
      */
-    public Gee.ArrayList<SiteAllPackagasetsElement> branches { get; set; default = new Gee.ArrayList<SiteAllPackagasetsElement> (); }
+    public Gee.ArrayList<SiteAllPackagasetsElement> branches {
+        get; set;
+        default = new Gee.ArrayList<SiteAllPackagasetsElement> ()
+    }
 }
