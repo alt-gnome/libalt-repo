@@ -26,6 +26,6 @@ public class AltRepo.ImageTagJSON : Object {
      */
     public Gee.ArrayList<ImageTagJSONElement> tags {
         get; set;
-        default = new Gee.ArrayList<ImageTagJSONElement> ()
+        default = new Gee.ArrayList<ImageTagJSONElement> ();
     }
 }

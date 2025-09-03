@@ -41,7 +41,7 @@ public class AltRepo.PackageFindPackagesetElement : Object {
      */
     public Gee.ArrayList<string> packages {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -74,6 +74,6 @@ public class AltRepo.PackageFindPackagesetElement : Object {
      */
     public Gee.ArrayList<string> archs {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

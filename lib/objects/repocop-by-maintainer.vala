@@ -36,6 +36,6 @@ public class AltRepo.RepocopByMaintainer : Object {
      */
     public Gee.ArrayList<RepocopByMaintainerElement> packages {
         get; set;
-        default = new Gee.ArrayList<RepocopByMaintainerElement> ()
+        default = new Gee.ArrayList<RepocopByMaintainerElement> ();
     }
 }

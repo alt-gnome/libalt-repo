@@ -31,6 +31,6 @@ public class AltRepo.TaskRepoArchs : Object {
      */
     public Gee.ArrayList<TaskRepoPackage> packages {
         get; set;
-        default = new Gee.ArrayList<TaskRepoPackage> ()
+        default = new Gee.ArrayList<TaskRepoPackage> ();
     }
 }

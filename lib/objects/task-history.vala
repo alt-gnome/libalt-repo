@@ -36,6 +36,6 @@ public class AltRepo.TaskHistory : Object {
      */
     public Gee.ArrayList<TaskHistoryElement> tasks {
         get; set;
-        default = new Gee.ArrayList<TaskHistoryElement> ()
+        default = new Gee.ArrayList<TaskHistoryElement> ();
     }
 }

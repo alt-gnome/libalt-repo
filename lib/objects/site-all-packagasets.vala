@@ -31,6 +31,6 @@ public class AltRepo.SiteAllPackagasets : Object {
      */
     public Gee.ArrayList<SiteAllPackagasetsElement> branches {
         get; set;
-        default = new Gee.ArrayList<SiteAllPackagasetsElement> ()
+        default = new Gee.ArrayList<SiteAllPackagasetsElement> ();
     }
 }

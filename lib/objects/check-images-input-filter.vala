@@ -23,31 +23,31 @@ public class AltRepo.CheckImagesInputFilter : Object {
 
     public Gee.ArrayList<string> editions {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     public Gee.ArrayList<string> releases {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     public Gee.ArrayList<string> versions {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     public Gee.ArrayList<string> archs {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     public Gee.ArrayList<string> variants {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     public Gee.ArrayList<string> types {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

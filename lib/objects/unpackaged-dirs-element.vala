@@ -61,6 +61,6 @@ public class AltRepo.UnpackagedDirsElement : Object {
      */
     public Gee.ArrayList<string> archs {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

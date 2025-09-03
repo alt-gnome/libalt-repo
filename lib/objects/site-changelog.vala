@@ -41,6 +41,6 @@ public class AltRepo.SiteChangelog : Object {
      */
     public Gee.ArrayList<SiteChangelogElement> changelog {
         get; set;
-        default = new Gee.ArrayList<SiteChangelogElement> ()
+        default = new Gee.ArrayList<SiteChangelogElement> ();
     }
 }

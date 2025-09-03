@@ -91,6 +91,6 @@ public class AltRepo.SubTasksElement : Object {
      */
     public Gee.ArrayList<SubTaskArchitecture> archs {
         get; set;
-        default = new Gee.ArrayList<SubTaskArchitecture> ()
+        default = new Gee.ArrayList<SubTaskArchitecture> ();
     }
 }

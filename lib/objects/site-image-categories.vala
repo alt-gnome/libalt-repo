@@ -36,6 +36,6 @@ public class AltRepo.SiteImageCategories : Object {
      */
     public Gee.ArrayList<SiteImageCategoryElement> categories {
         get; set;
-        default = new Gee.ArrayList<SiteImageCategoryElement> ()
+        default = new Gee.ArrayList<SiteImageCategoryElement> ();
     }
 }

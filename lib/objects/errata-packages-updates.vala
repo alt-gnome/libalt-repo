@@ -26,6 +26,6 @@ public class AltRepo.ErrataPackagesUpdates : Object {
      */
     public Gee.ArrayList<ErrataPackageUpdate> packages_updates {
         get; set;
-        default = new Gee.ArrayList<ErrataPackageUpdate> ()
+        default = new Gee.ArrayList<ErrataPackageUpdate> ();
     }
 }

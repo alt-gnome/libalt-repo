@@ -26,6 +26,6 @@ public class AltRepo.PackageSetStatusGet : Object {
      */
     public Gee.ArrayList<PackageSetStatusGetElement> branches {
         get; set;
-        default = new Gee.ArrayList<PackageSetStatusGetElement> ()
+        default = new Gee.ArrayList<PackageSetStatusGetElement> ();
     }
 }

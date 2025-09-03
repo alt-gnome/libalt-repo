@@ -36,6 +36,6 @@ public class AltRepo.ImageInfo : Object {
      */
     public Gee.ArrayList<ImageInfoElement> images {
         get; set;
-        default = new Gee.ArrayList<ImageInfoElement> ()
+        default = new Gee.ArrayList<ImageInfoElement> ();
     }
 }

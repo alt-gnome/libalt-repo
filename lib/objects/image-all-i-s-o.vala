@@ -31,6 +31,6 @@ public class AltRepo.ImageAllISO : Object {
      */
     public Gee.ArrayList<ImageAllISOElement> images {
         get; set;
-        default = new Gee.ArrayList<ImageAllISOElement> ()
+        default = new Gee.ArrayList<ImageAllISOElement> ();
     }
 }

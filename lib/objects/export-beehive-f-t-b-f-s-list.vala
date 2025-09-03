@@ -36,6 +36,6 @@ public class AltRepo.ExportBeehiveFTBFSList : Object {
      */
     public Gee.ArrayList<ExportBeehiveFTBFSElement> ftbfs {
         get; set;
-        default = new Gee.ArrayList<ExportBeehiveFTBFSElement> ()
+        default = new Gee.ArrayList<ExportBeehiveFTBFSElement> ();
     }
 }

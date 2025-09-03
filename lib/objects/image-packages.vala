@@ -36,7 +36,7 @@ public class AltRepo.ImagePackages : Object {
      */
     public Gee.ArrayList<string> subcategories {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -44,6 +44,6 @@ public class AltRepo.ImagePackages : Object {
      */
     public Gee.ArrayList<ImagePackagesElement> packages {
         get; set;
-        default = new Gee.ArrayList<ImagePackagesElement> ()
+        default = new Gee.ArrayList<ImagePackagesElement> ();
     }
 }

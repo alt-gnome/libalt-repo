@@ -36,6 +36,6 @@ public class AltRepo.SiteLastPackagesWithCVEFixes : Object {
      */
     public Gee.ArrayList<SiteLastPackagesWithCVEFixesElement> packages {
         get; set;
-        default = new Gee.ArrayList<SiteLastPackagesWithCVEFixesElement> ()
+        default = new Gee.ArrayList<SiteLastPackagesWithCVEFixesElement> ();
     }
 }

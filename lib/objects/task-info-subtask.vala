@@ -98,7 +98,7 @@ public class AltRepo.TaskInfoSubtask : Object {
      */
     public Gee.ArrayList<TaskInfoApprovals> approvals {
         get; set;
-        default = new Gee.ArrayList<TaskInfoApprovals> ()
+        default = new Gee.ArrayList<TaskInfoApprovals> ();
     }
 
     /**
@@ -106,6 +106,6 @@ public class AltRepo.TaskInfoSubtask : Object {
      */
     public Gee.ArrayList<TaskInfoArchs> archs {
         get; set;
-        default = new Gee.ArrayList<TaskInfoArchs> ()
+        default = new Gee.ArrayList<TaskInfoArchs> ();
     }
 }

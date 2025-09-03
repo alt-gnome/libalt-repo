@@ -46,7 +46,7 @@ public class AltRepo.TaskInfo : Object {
      */
     public Gee.ArrayList<string> rebuilds {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -89,7 +89,7 @@ public class AltRepo.TaskInfo : Object {
      */
     public Gee.ArrayList<int64?> depends {
         get; set;
-        default = new Gee.ArrayList<int64?> ()
+        default = new Gee.ArrayList<int64?> ();
     }
 
     /**
@@ -112,7 +112,7 @@ public class AltRepo.TaskInfo : Object {
      */
     public Gee.ArrayList<TaskInfoSubtask> subtasks {
         get; set;
-        default = new Gee.ArrayList<TaskInfoSubtask> ()
+        default = new Gee.ArrayList<TaskInfoSubtask> ();
     }
 
     /**

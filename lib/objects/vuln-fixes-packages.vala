@@ -36,6 +36,6 @@ public class AltRepo.VulnFixesPackages : Object {
      */
     public Gee.ArrayList<VulnFixesPackagesElement> packages {
         get; set;
-        default = new Gee.ArrayList<VulnFixesPackagesElement> ()
+        default = new Gee.ArrayList<VulnFixesPackagesElement> ();
     }
 }

@@ -36,6 +36,6 @@ public class AltRepo.SItePackagesVersionsFromTasks : Object {
      */
     public Gee.ArrayList<SItePackagesVersionsFromTasksElement> versions {
         get; set;
-        default = new Gee.ArrayList<SItePackagesVersionsFromTasksElement> ()
+        default = new Gee.ArrayList<SItePackagesVersionsFromTasksElement> ();
     }
 }

@@ -36,6 +36,6 @@ public class AltRepo.SiteWatchByMaintainer : Object {
      */
     public Gee.ArrayList<SiteWatchByMaintainerElement> packages {
         get; set;
-        default = new Gee.ArrayList<SiteWatchByMaintainerElement> ()
+        default = new Gee.ArrayList<SiteWatchByMaintainerElement> ();
     }
 }

@@ -28,7 +28,7 @@ public class AltRepo.CheckImagesInput : Object {
 
     public Gee.ArrayList<string> binpkgs_names {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -36,6 +36,6 @@ public class AltRepo.CheckImagesInput : Object {
      */
     public Gee.ArrayList<CheckImagesInputFilter> filters {
         get; set;
-        default = new Gee.ArrayList<CheckImagesInputFilter> ()
+        default = new Gee.ArrayList<CheckImagesInputFilter> ();
     }
 }

@@ -31,7 +31,7 @@ public class AltRepo.SitePackageInfoArchs : Object {
      */
     public Gee.ArrayList<string> archs {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -39,6 +39,6 @@ public class AltRepo.SitePackageInfoArchs : Object {
      */
     public Gee.ArrayList<string> pkghash {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

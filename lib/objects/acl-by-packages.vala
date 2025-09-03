@@ -31,6 +31,6 @@ public class AltRepo.AclByPackages : Object {
      */
     public Gee.ArrayList<AclByPackagesElement> packages {
         get; set;
-        default = new Gee.ArrayList<AclByPackagesElement> ()
+        default = new Gee.ArrayList<AclByPackagesElement> ();
     }
 }

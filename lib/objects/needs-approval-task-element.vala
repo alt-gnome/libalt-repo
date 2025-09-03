@@ -58,7 +58,7 @@ public class AltRepo.NeedsApprovalTaskElement : Object {
 
     public Gee.ArrayList<int64?> depends {
         get; set;
-        default = new Gee.ArrayList<int64?> ()
+        default = new Gee.ArrayList<int64?> ();
     }
 
     /**
@@ -101,6 +101,6 @@ public class AltRepo.NeedsApprovalTaskElement : Object {
      */
     public Gee.ArrayList<NeedsApprovalSubtaskElement> subtasks {
         get; set;
-        default = new Gee.ArrayList<NeedsApprovalSubtaskElement> ()
+        default = new Gee.ArrayList<NeedsApprovalSubtaskElement> ();
     }
 }

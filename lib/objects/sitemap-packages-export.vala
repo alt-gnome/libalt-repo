@@ -31,6 +31,6 @@ public class AltRepo.SitemapPackagesExport : Object {
      */
     public Gee.ArrayList<SitemapPackagesElement> packages {
         get; set;
-        default = new Gee.ArrayList<SitemapPackagesElement> ()
+        default = new Gee.ArrayList<SitemapPackagesElement> ();
     }
 }

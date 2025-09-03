@@ -31,6 +31,6 @@ public class AltRepo.RepositoryStatistics : Object {
      */
     public Gee.ArrayList<RepositoryStatisticsBranches> branches {
         get; set;
-        default = new Gee.ArrayList<RepositoryStatisticsBranches> ()
+        default = new Gee.ArrayList<RepositoryStatisticsBranches> ();
     }
 }

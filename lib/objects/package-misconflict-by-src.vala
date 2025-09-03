@@ -36,6 +36,6 @@ public class AltRepo.PackageMisconflictBySrc : Object {
      */
     public Gee.ArrayList<PackageMisconflictBySrcElement> conflicts {
         get; set;
-        default = new Gee.ArrayList<PackageMisconflictBySrcElement> ()
+        default = new Gee.ArrayList<PackageMisconflictBySrcElement> ();
     }
 }

@@ -41,6 +41,6 @@ public class AltRepo.TaskMisconflictPackages : Object {
      */
     public Gee.ArrayList<TaskMisconflictPackage> conflicts {
         get; set;
-        default = new Gee.ArrayList<TaskMisconflictPackage> ()
+        default = new Gee.ArrayList<TaskMisconflictPackage> ();
     }
 }

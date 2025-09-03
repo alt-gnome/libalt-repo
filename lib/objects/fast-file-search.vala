@@ -36,6 +36,6 @@ public class AltRepo.FastFileSearch : Object {
      */
     public Gee.ArrayList<FastFileSearchElement> files {
         get; set;
-        default = new Gee.ArrayList<FastFileSearchElement> ()
+        default = new Gee.ArrayList<FastFileSearchElement> ();
     }
 }

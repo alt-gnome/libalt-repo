@@ -31,6 +31,6 @@ public class AltRepo.BuildDependencySetAmbiguousProvides : Object {
      */
     public Gee.ArrayList<BuildDependencySetAmbiguousProvidesElement> ambiguous_provides {
         get; set;
-        default = new Gee.ArrayList<BuildDependencySetAmbiguousProvidesElement> ()
+        default = new Gee.ArrayList<BuildDependencySetAmbiguousProvidesElement> ();
     }
 }

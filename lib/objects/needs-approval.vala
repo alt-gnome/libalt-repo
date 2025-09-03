@@ -31,6 +31,6 @@ public class AltRepo.NeedsApproval : Object {
      */
     public Gee.ArrayList<NeedsApprovalTaskElement> tasks {
         get; set;
-        default = new Gee.ArrayList<NeedsApprovalTaskElement> ()
+        default = new Gee.ArrayList<NeedsApprovalTaskElement> ();
     }
 }

@@ -36,6 +36,6 @@ public class AltRepo.SiteImagePackageVersions : Object {
      */
     public Gee.ArrayList<SiteImagePackageVersionsElement> versions {
         get; set;
-        default = new Gee.ArrayList<SiteImagePackageVersionsElement> ()
+        default = new Gee.ArrayList<SiteImagePackageVersionsElement> ();
     }
 }

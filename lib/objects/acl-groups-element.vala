@@ -33,6 +33,6 @@ public class AltRepo.AclGroupsElement : Object {
 
     public Gee.ArrayList<string> maintainers {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

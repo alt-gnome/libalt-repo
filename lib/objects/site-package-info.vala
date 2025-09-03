@@ -116,7 +116,7 @@ public class AltRepo.SitePackageInfo : Object {
      */
     public Gee.ArrayList<string> acl {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -124,7 +124,7 @@ public class AltRepo.SitePackageInfo : Object {
      */
     public Gee.ArrayList<string> maintainers {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -132,7 +132,7 @@ public class AltRepo.SitePackageInfo : Object {
      */
     public Gee.ArrayList<SitePackageInfoArchs> package_archs {
         get; set;
-        default = new Gee.ArrayList<SitePackageInfoArchs> ()
+        default = new Gee.ArrayList<SitePackageInfoArchs> ();
     }
 
     /**
@@ -140,7 +140,7 @@ public class AltRepo.SitePackageInfo : Object {
      */
     public Gee.ArrayList<SitePackageTasksElement> tasks {
         get; set;
-        default = new Gee.ArrayList<SitePackageTasksElement> ()
+        default = new Gee.ArrayList<SitePackageTasksElement> ();
     }
 
     /**
@@ -148,7 +148,7 @@ public class AltRepo.SitePackageInfo : Object {
      */
     public Gee.ArrayList<SitePackageInfoChangelogElement> changelog {
         get; set;
-        default = new Gee.ArrayList<SitePackageInfoChangelogElement> ()
+        default = new Gee.ArrayList<SitePackageInfoChangelogElement> ();
     }
 
     /**
@@ -156,7 +156,7 @@ public class AltRepo.SitePackageInfo : Object {
      */
     public Gee.ArrayList<SitePackageNewVersion> new_version {
         get; set;
-        default = new Gee.ArrayList<SitePackageNewVersion> ()
+        default = new Gee.ArrayList<SitePackageNewVersion> ();
     }
 
     /**
@@ -164,7 +164,7 @@ public class AltRepo.SitePackageInfo : Object {
      */
     public Gee.ArrayList<SitePackageBeehiveElement> beehive {
         get; set;
-        default = new Gee.ArrayList<SitePackageBeehiveElement> ()
+        default = new Gee.ArrayList<SitePackageBeehiveElement> ();
     }
 
     /**
@@ -172,7 +172,7 @@ public class AltRepo.SitePackageInfo : Object {
      */
     public Gee.ArrayList<SitePackageDependenciesElement> dependencies {
         get; set;
-        default = new Gee.ArrayList<SitePackageDependenciesElement> ()
+        default = new Gee.ArrayList<SitePackageDependenciesElement> ();
     }
 
     /**
@@ -180,6 +180,6 @@ public class AltRepo.SitePackageInfo : Object {
      */
     public Gee.ArrayList<SitePackageLicenseTokensElement> license_tokens {
         get; set;
-        default = new Gee.ArrayList<SitePackageLicenseTokensElement> ()
+        default = new Gee.ArrayList<SitePackageLicenseTokensElement> ();
     }
 }

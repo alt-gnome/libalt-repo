@@ -68,7 +68,7 @@ public class AltRepo.FindImagesByTask : Object {
      */
     public Gee.ArrayList<int64?> dependencies {
         get; set;
-        default = new Gee.ArrayList<int64?> ()
+        default = new Gee.ArrayList<int64?> ();
     }
 
     /**
@@ -76,11 +76,11 @@ public class AltRepo.FindImagesByTask : Object {
      */
     public Gee.ArrayList<FindImagesByTaskSubtaskElement> subtasks {
         get; set;
-        default = new Gee.ArrayList<FindImagesByTaskSubtaskElement> ()
+        default = new Gee.ArrayList<FindImagesByTaskSubtaskElement> ();
     }
 
     public Gee.ArrayList<FindImagesByTaskIterationElement> iterations {
         get; set;
-        default = new Gee.ArrayList<FindImagesByTaskIterationElement> ()
+        default = new Gee.ArrayList<FindImagesByTaskIterationElement> ();
     }
 }

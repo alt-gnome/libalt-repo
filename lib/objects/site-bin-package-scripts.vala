@@ -46,6 +46,6 @@ public class AltRepo.SiteBinPackageScripts : Object {
      */
     public Gee.ArrayList<SiteBinPackageScriptsElement> scripts {
         get; set;
-        default = new Gee.ArrayList<SiteBinPackageScriptsElement> ()
+        default = new Gee.ArrayList<SiteBinPackageScriptsElement> ();
     }
 }

@@ -31,6 +31,6 @@ public class AltRepo.ImagePackagesJSON : Object {
      */
     public Gee.ArrayList<ImagePackagesJSONElement> packages {
         get; set;
-        default = new Gee.ArrayList<ImagePackagesJSONElement> ()
+        default = new Gee.ArrayList<ImagePackagesJSONElement> ();
     }
 }

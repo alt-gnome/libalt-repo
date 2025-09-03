@@ -26,6 +26,6 @@ public class AltRepo.ImageTagStatusGet : Object {
      */
     public Gee.ArrayList<ImageTagStatusGetElement> tags {
         get; set;
-        default = new Gee.ArrayList<ImageTagStatusGetElement> ()
+        default = new Gee.ArrayList<ImageTagStatusGetElement> ();
     }
 }

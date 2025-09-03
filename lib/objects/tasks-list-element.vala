@@ -76,7 +76,7 @@ public class AltRepo.TasksListElement : Object {
      */
     public Gee.ArrayList<int64?> dependencies {
         get; set;
-        default = new Gee.ArrayList<int64?> ()
+        default = new Gee.ArrayList<int64?> ();
     }
 
     /**
@@ -84,7 +84,7 @@ public class AltRepo.TasksListElement : Object {
      */
     public Gee.ArrayList<SubTasksElement> subtasks {
         get; set;
-        default = new Gee.ArrayList<SubTasksElement> ()
+        default = new Gee.ArrayList<SubTasksElement> ();
     }
 
     /**
@@ -92,6 +92,6 @@ public class AltRepo.TasksListElement : Object {
      */
     public Gee.ArrayList<TaskApprovalElement> approval {
         get; set;
-        default = new Gee.ArrayList<TaskApprovalElement> ()
+        default = new Gee.ArrayList<TaskApprovalElement> ();
     }
 }

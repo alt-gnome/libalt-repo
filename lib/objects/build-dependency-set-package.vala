@@ -46,7 +46,7 @@ public class AltRepo.BuildDependencySetPackage : Object {
      */
     public Gee.ArrayList<string> archs {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -54,6 +54,6 @@ public class AltRepo.BuildDependencySetPackage : Object {
      */
     public Gee.ArrayList<string> requires {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

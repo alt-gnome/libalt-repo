@@ -66,7 +66,7 @@ public class AltRepo.PackagesetPackagesElement : Object {
      */
     public Gee.ArrayList<string> maintainers {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -74,7 +74,7 @@ public class AltRepo.PackagesetPackagesElement : Object {
      */
     public Gee.ArrayList<string> acl_list {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -82,6 +82,6 @@ public class AltRepo.PackagesetPackagesElement : Object {
      */
     public Gee.ArrayList<string> archs {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

@@ -31,6 +31,6 @@ public class AltRepo.PackageSetActivePackageSets : Object {
      */
     public Gee.ArrayList<string> packagesets {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

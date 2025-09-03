@@ -36,6 +36,6 @@ public class AltRepo.FastDependencySearch : Object {
      */
     public Gee.ArrayList<FastDependencySearchElement> dependencies {
         get; set;
-        default = new Gee.ArrayList<FastDependencySearchElement> ()
+        default = new Gee.ArrayList<FastDependencySearchElement> ();
     }
 }

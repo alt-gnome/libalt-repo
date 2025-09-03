@@ -33,6 +33,6 @@ public class AltRepo.LicenseTokens : Object {
      */
     public Gee.ArrayList<LicenseTokensElement> tokens {
         get; set;
-        default = new Gee.ArrayList<LicenseTokensElement> ()
+        default = new Gee.ArrayList<LicenseTokensElement> ();
     }
 }

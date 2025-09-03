@@ -25,11 +25,11 @@ public class AltRepo.TaskDiffDependencies : Object {
 
     public Gee.ArrayList<string> del {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     public Gee.ArrayList<string> add {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

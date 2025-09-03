@@ -31,6 +31,6 @@ public class AltRepo.SiteAllArchs : Object {
      */
     public Gee.ArrayList<SiteAllArchsElement> archs {
         get; set;
-        default = new Gee.ArrayList<SiteAllArchsElement> ()
+        default = new Gee.ArrayList<SiteAllArchsElement> ();
     }
 }

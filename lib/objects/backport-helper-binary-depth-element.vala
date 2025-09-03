@@ -31,6 +31,6 @@ public class AltRepo.BackportHelperBinaryDepthElement : Object {
      */
     public Gee.ArrayList<BackportHelperBinaryElement> packages {
         get; set;
-        default = new Gee.ArrayList<BackportHelperBinaryElement> ()
+        default = new Gee.ArrayList<BackportHelperBinaryElement> ();
     }
 }

@@ -36,6 +36,6 @@ public class AltRepo.PackagesetPackagesExport : Object {
      */
     public Gee.ArrayList<PackagesetPackagesExportElement> packages {
         get; set;
-        default = new Gee.ArrayList<PackagesetPackagesExportElement> ()
+        default = new Gee.ArrayList<PackagesetPackagesExportElement> ();
     }
 }

@@ -46,6 +46,6 @@ public class AltRepo.FindTasksElement : Object {
      */
     public Gee.ArrayList<string> components {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

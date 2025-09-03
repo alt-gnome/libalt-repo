@@ -36,7 +36,7 @@ public class AltRepo.TaskRepo : Object {
      */
     public Gee.ArrayList<int64?> task_diff_list {
         get; set;
-        default = new Gee.ArrayList<int64?> ()
+        default = new Gee.ArrayList<int64?> ();
     }
 
     /**
@@ -44,6 +44,6 @@ public class AltRepo.TaskRepo : Object {
      */
     public Gee.ArrayList<TaskRepoArchs> archs {
         get; set;
-        default = new Gee.ArrayList<TaskRepoArchs> ()
+        default = new Gee.ArrayList<TaskRepoArchs> ();
     }
 }

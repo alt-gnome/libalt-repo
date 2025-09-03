@@ -28,6 +28,6 @@ public class AltRepo.AclMaintainerGroupsElement : Object {
 
     public Gee.ArrayList<string> groups {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

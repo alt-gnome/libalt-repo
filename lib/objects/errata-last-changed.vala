@@ -36,6 +36,6 @@ public class AltRepo.ErrataLastChanged : Object {
      */
     public Gee.ArrayList<ErrataLastChangedElement> erratas {
         get; set;
-        default = new Gee.ArrayList<ErrataLastChangedElement> ()
+        default = new Gee.ArrayList<ErrataLastChangedElement> ();
     }
 }

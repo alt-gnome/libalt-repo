@@ -26,7 +26,7 @@ public class AltRepo.TaskInfoPlan : Object {
      */
     public Gee.ArrayList<TaskInfoPackage> src {
         get; set;
-        default = new Gee.ArrayList<TaskInfoPackage> ()
+        default = new Gee.ArrayList<TaskInfoPackage> ();
     }
 
     /**
@@ -34,6 +34,6 @@ public class AltRepo.TaskInfoPlan : Object {
      */
     public Gee.ArrayList<TaskInfoPackage> bin {
         get; set;
-        default = new Gee.ArrayList<TaskInfoPackage> ()
+        default = new Gee.ArrayList<TaskInfoPackage> ();
     }
 }

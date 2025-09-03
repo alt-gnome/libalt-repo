@@ -26,7 +26,7 @@ public class AltRepo.BranchTree : Object {
      */
     public Gee.ArrayList<string> branches {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -34,7 +34,7 @@ public class AltRepo.BranchTree : Object {
      */
     public Gee.ArrayList<BranchTreeTask> tasks {
         get; set;
-        default = new Gee.ArrayList<BranchTreeTask> ()
+        default = new Gee.ArrayList<BranchTreeTask> ();
     }
 
     /**
@@ -42,7 +42,7 @@ public class AltRepo.BranchTree : Object {
      */
     public Gee.ArrayList<BranchTreeBranchCommit> branch_commits {
         get; set;
-        default = new Gee.ArrayList<BranchTreeBranchCommit> ()
+        default = new Gee.ArrayList<BranchTreeBranchCommit> ();
     }
 
     /**
@@ -50,6 +50,6 @@ public class AltRepo.BranchTree : Object {
      */
     public Gee.ArrayList<BranchTreeBranchPoint> branch_points {
         get; set;
-        default = new Gee.ArrayList<BranchTreeBranchPoint> ()
+        default = new Gee.ArrayList<BranchTreeBranchPoint> ();
     }
 }

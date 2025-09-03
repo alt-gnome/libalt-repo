@@ -32,7 +32,7 @@ public class AltRepo.ErrataLastChangedElement : Object {
     public string errata_id { get; set; }
 
     /**
-     * 
+     *
      */
     public string eh_type { get; set; }
 
@@ -56,7 +56,7 @@ public class AltRepo.ErrataLastChangedElement : Object {
      */
     public Gee.ArrayList<PackagesElement> packages {
         get; set;
-        default = new Gee.ArrayList<PackagesElement> ()
+        default = new Gee.ArrayList<PackagesElement> ();
     }
 
     /**
@@ -64,6 +64,6 @@ public class AltRepo.ErrataLastChangedElement : Object {
      */
     public Gee.ArrayList<VulnerabilitiesElement> vulnerabilities {
         get; set;
-        default = new Gee.ArrayList<VulnerabilitiesElement> ()
+        default = new Gee.ArrayList<VulnerabilitiesElement> ();
     }
 }

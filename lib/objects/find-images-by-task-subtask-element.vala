@@ -56,6 +56,6 @@ public class AltRepo.FindImagesByTaskSubtaskElement : Object {
      */
     public Gee.ArrayList<FindImagesByTaskImageElement> images {
         get; set;
-        default = new Gee.ArrayList<FindImagesByTaskImageElement> ()
+        default = new Gee.ArrayList<FindImagesByTaskImageElement> ();
     }
 }

@@ -86,7 +86,7 @@ public class AltRepo.ErrataPackageUpdate : Object {
      */
     public Gee.ArrayList<ErrataBug> bugs {
         get; set;
-        default = new Gee.ArrayList<ErrataBug> ()
+        default = new Gee.ArrayList<ErrataBug> ();
     }
 
     /**
@@ -94,6 +94,6 @@ public class AltRepo.ErrataPackageUpdate : Object {
      */
     public Gee.ArrayList<ErrataVulnerability> vulns {
         get; set;
-        default = new Gee.ArrayList<ErrataVulnerability> ()
+        default = new Gee.ArrayList<ErrataVulnerability> ();
     }
 }

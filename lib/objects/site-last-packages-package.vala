@@ -46,6 +46,6 @@ public class AltRepo.SiteLastPackagesPackage : Object {
      */
     public Gee.ArrayList<SiteLastPackagesElement> packages {
         get; set;
-        default = new Gee.ArrayList<SiteLastPackagesElement> ()
+        default = new Gee.ArrayList<SiteLastPackagesElement> ();
     }
 }

@@ -51,7 +51,7 @@ public class AltRepo.SiteFingPackagesPackage : Object {
      */
     public Gee.ArrayList<SitePackageVersionsElement> versions {
         get; set;
-        default = new Gee.ArrayList<SitePackageVersionsElement> ()
+        default = new Gee.ArrayList<SitePackageVersionsElement> ();
     }
 
     /**

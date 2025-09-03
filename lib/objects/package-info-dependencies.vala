@@ -26,7 +26,7 @@ public class AltRepo.PackageInfoDependencies : Object {
      */
     public Gee.ArrayList<string> require {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -34,7 +34,7 @@ public class AltRepo.PackageInfoDependencies : Object {
      */
     public Gee.ArrayList<string> provide {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -42,7 +42,7 @@ public class AltRepo.PackageInfoDependencies : Object {
      */
     public Gee.ArrayList<string> conflict {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -50,6 +50,6 @@ public class AltRepo.PackageInfoDependencies : Object {
      */
     public Gee.ArrayList<string> obsolete {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

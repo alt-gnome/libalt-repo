@@ -37,11 +37,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * ACL groups for source packages list in specific branch
-     * 
+     *
      * @param branch name of packageset
      * @param packages_names source packages names
-     * 
-     * @return {@link Gee.ArrayList<AclByPackages>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public Gee.ArrayList<AclByPackages> get_acl_by_packages (
         string branch,
@@ -75,11 +75,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * List of ACL groups for specific branch
-     * 
+     *
      * @param branch name of packageset
      * @param name ACL group name
-     * 
-     * @return {@link Gee.ArrayList<AclGroups>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public Gee.ArrayList<AclGroups> get_acl_groups (
         string branch,
@@ -111,11 +111,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * List the ACL groups that the given user belongs to
-     * 
+     *
      * @param branch name of packageset
      * @param nickname ACL member nickname
-     * 
-     * @return {@link Gee.ArrayList<AclMaintainerGroups>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public Gee.ArrayList<AclMaintainerGroups> get_acl_maintainer_groups (
         string nickname,
@@ -151,11 +151,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information from bugzilla by image edition
-     * 
+     *
      * @param branch name of packageset
      * @param edition Image edition
-     * 
-     * @return {@link Gee.ArrayList<BugzillaInfo>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public Gee.ArrayList<BugzillaInfo> get_bug_bugzilla_by_image_edition (
         string branch,
@@ -185,11 +185,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information from bugzilla by the maintainer nickname
-     * 
+     *
      * @param maintainer_nickname maintainer nickname
      * @param by_acl search maintainer's packages by ACL
-     * 
-     * @return {@link Gee.ArrayList<BugzillaInfo>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public Gee.ArrayList<BugzillaInfo> get_bug_bugzilla_by_maintainer (
         string maintainer_nickname,
@@ -221,11 +221,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information from bugzilla by the source package name
-     * 
+     *
      * @param package_name source or binary package name
      * @param package_type packages type [source|binary]
-     * 
-     * @return {@link Gee.ArrayList<BugzillaInfo>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public Gee.ArrayList<BugzillaInfo> get_bug_bugzilla_by_package (
         string package_name,
@@ -257,14 +257,14 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Find packages required to backport too
-     * 
+     *
      * @param from_branch packageset name where are packages backported from
      * @param into_branch packageset name where are packages backported to
      * @param packages_names source packages names
      * @param dp_type type of dependency [source|binary|both]
      * @param archs architectures to show
-     * 
-     * @return {@link Gee.ArrayList<BackportHelper>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public Gee.ArrayList<BackportHelper> get_dependencies_backport_helper (
         string from_branch,
@@ -321,9 +321,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary package dependencies
-     * 
+     *
      * @param pkghash package hash
-     * 
+     *
      * @return {@link DependenciesPackageDependencies}
      */
     public DependenciesPackageDependencies get_dependencies_binary_package_dependencies_pkghash (
@@ -344,12 +344,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Fast search for dependencies by name (case sensitive)
-     *         including partial occurrence.
-     * 
+     * including partial occurrence.
+     *
      * @param branch packageset name
      * @param dp_name dependency name
      * @param limit number of dependencies to get
-     * 
+     *
      * @return {@link FastDependencySearch}
      */
     public FastDependencySearch get_dependencies_fast_lookup (
@@ -387,11 +387,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary packages by dependency name and type
-     * 
+     *
      * @param branch packageset name
      * @param dp_name dependency name
      * @param dp_type type of dependency [all|provide|require|conflict|obsolete]
-     * 
+     *
      * @return {@link DependenciesPackages}
      */
     public DependenciesPackages get_dependencies_packages_by_dependency (
@@ -429,11 +429,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get source package build dependencies
-     * 
+     *
      * @param pkghash package hash
      * @param branch packageset name
      * @param depth dependency level limit
-     * 
+     *
      * @return {@link DependenciesPackageBuildDependencies}
      */
     public DependenciesPackageBuildDependencies get_dependencies_source_package_dependencies_pkghash (
@@ -467,11 +467,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get packages build dependencies by set of parameters
-     * 
+     *
      * @param name source package name
      * @param branch packageset name
      * @param dp_type type of dependency [source|binary|both]
-     * 
+     *
      * @return {@link PackageBuildDependency}
      */
     public PackageBuildDependency get_dependencies_what_depends_src (
@@ -509,10 +509,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about branch update erratas
-     * 
+     *
      * @param exclude_json exclude vulnerability raw JSON from results
-     * @param payload 
-     * 
+     * @param payload no description
+     *
      * @return {@link ErrataBranchesUpdates}
      */
     public ErrataBranchesUpdates post_errata_branches_updates (
@@ -545,8 +545,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of branches form errata history.
-     * 
-     * 
+     *
+     *
      * @return {@link ErrataBranches}
      */
     public ErrataBranches get_errata_errata_branches (
@@ -566,8 +566,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get branches with OVAL definitions export available
-     * 
-     * 
+     *
+     *
      * @return {@link OvalBranches}
      */
     public OvalBranches get_errata_export_oval_branches (
@@ -587,11 +587,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get OVAL definitions of closed issues of branch packages
-     * 
-     * @param branch 
+     *
+     * @param branch no description
      * @param package_name source or binary package name
      * @param one_file return OVAL definitions as one XML file
-     * 
+     *
      * @return {@link string}
      */
     public string get_errata_export_oval_branch (
@@ -625,14 +625,14 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Find errata by ID, vulnerability ID or package name.
-     * 
+     *
      * @param input errata search arguments
      * @param branch branch name
      * @param type errata type [packages|repository|bug|vuln]
      * @param page number page
      * @param limit number of records
      * @param state errata state
-     * 
+     *
      * @return {@link ErrataLastChanged}
      */
     public ErrataLastChanged get_errata_find_erratas (
@@ -699,7 +699,7 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Find errata by image UUID.
-     * 
+     *
      * @param uuid Image UUID
      * @param branch branch name
      * @param component Image component
@@ -709,7 +709,7 @@ public sealed class AltRepo.Client : Object {
      * @param limit number of records
      * @param is_discarded is errata discarded
      * @param sort sort arguments
-     * 
+     *
      * @return {@link ImageErrata}
      */
     public ImageErrata get_errata_find_image_erratas (
@@ -797,8 +797,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of valid Errata identifiers
-     * 
-     * 
+     *
+     *
      * @return {@link ErrataIdsList}
      */
     public ErrataIdsList get_errata_ids (
@@ -818,10 +818,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about package update erratas
-     * 
+     *
      * @param exclude_json exclude vulnerability raw JSON from results
-     * @param payload 
-     * 
+     * @param payload no description
+     *
      * @return {@link ErrataPackagesUpdates}
      */
     public ErrataPackagesUpdates post_errata_packages_updates (
@@ -854,12 +854,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Find erratas by given arguments
-     * 
+     *
      * @param branch branch name
      * @param name source package name
      * @param vuln_id CVE, BDU or Bug ID
      * @param errata_id errata ID
-     * 
+     *
      * @return {@link Erratas}
      */
     public Erratas get_errata_search (
@@ -908,10 +908,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Beehive rebuild errors export
-     * 
+     *
      * @param branch branch name
      * @param arch package architecture
-     * 
+     *
      * @return {@link ExportBeehiveFTBFSList}
      */
     public ExportBeehiveFTBFSList get_export_beehive_ftbfs (
@@ -944,10 +944,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get branch binary packages info
-     * 
+     *
      * @param branch branch name
      * @param arch package architecture
-     * 
+     *
      * @return {@link PackagesetPackagesExport}
      */
     public PackagesetPackagesExport get_export_branch_binary_packages_branch (
@@ -976,8 +976,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Branch tree info export
-     * 
-     * 
+     *
+     *
      * @return {@link BranchTree}
      */
     public BranchTree get_export_branch_tree (
@@ -997,9 +997,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get branch info export for Repology
-     * 
+     *
      * @param branch branch name
-     * 
+     *
      * @return {@link RepologyExport}
      */
     public RepologyExport get_export_repology_branch (
@@ -1020,9 +1020,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get branch source packages for sitemap
-     * 
+     *
      * @param branch branch name
-     * 
+     *
      * @return {@link SitemapPackagesExport}
      */
     public SitemapPackagesExport get_export_sitemap_packages_branch (
@@ -1043,10 +1043,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get an archive of PO files with package's summary and description for translation purpose
-     * 
+     *
      * @param branches list of package sets to filter result
      * @param from_date take packages of branch states from date (YYYY-MM-DD)
-     * 
+     *
      * @return {@link string}
      */
     public string get_export_translation_packages_po_files (
@@ -1081,11 +1081,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Fast search files by name (case sensitive) including partial occurrence.
-     * 
+     *
      * @param branch name of packageset
      * @param file_name file name or directory
      * @param limit number of files to get
-     * 
+     *
      * @return {@link FastFileSearch}
      */
     public FastFileSearch get_file_fast_lookup (
@@ -1123,10 +1123,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get a list of packages to which the specified file belongs to.
-     * 
+     *
      * @param branch name of packageset
      * @param file_name file name or directory
-     * 
+     *
      * @return {@link FilePackagesByFile}
      */
     public FilePackagesByFile get_file_packages_by_file (
@@ -1157,11 +1157,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Find files by name (case sensitive) including partial occurrence.
-     * 
+     *
      * @param branch name of packageset
      * @param file_name file name or directory
      * @param limit number of files to get
-     * 
+     *
      * @return {@link Files}
      */
     public Files get_file_search (
@@ -1199,14 +1199,14 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get active images for a given repository
-     * 
+     *
      * @param branch name of packageset
      * @param edition Image edition
      * @param version Image version
      * @param release Image release type
      * @param variant Image variant
      * @param type Image type
-     * 
+     *
      * @return {@link ActiveImages}
      */
     public ActiveImages get_image_active_images (
@@ -1269,13 +1269,13 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get images by package name for a given repository and edition
-     * 
+     *
      * @param branch name of packageset
      * @param pkg_name package name
      * @param edition Image edition
      * @param pkg_type packages type [source|binary]
      * @param img_show show images[active|all]
-     * 
+     *
      * @return {@link FindImagesByPackage}
      */
     public FindImagesByPackage get_image_find_images_by_package_name (
@@ -1329,10 +1329,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of package categories with count for image
-     * 
+     *
      * @param uuid Image UUID
      * @param component Image component
-     * 
+     *
      * @return {@link SiteImageCategories}
      */
     public SiteImageCategories get_image_image_categories_count (
@@ -1365,7 +1365,7 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get branch images info
-     * 
+     *
      * @param branch name of packageset
      * @param edition Image edition
      * @param version Image version
@@ -1376,7 +1376,7 @@ public sealed class AltRepo.Client : Object {
      * @param component Image component
      * @param platform Image platform
      * @param type Image type
-     * 
+     *
      * @return {@link ImageInfo}
      */
     public ImageInfo get_image_image_info (
@@ -1467,11 +1467,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of image packages in accordance to given parameters
-     * 
+     *
      * @param uuid Image UUID
      * @param group package category
      * @param component Image component
-     * 
+     *
      * @return {@link ImagePackages}
      */
     public ImagePackages get_image_image_packages (
@@ -1511,8 +1511,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get a list of package sets which has an active images.
-     * 
-     * 
+     *
+     *
      * @return {@link ImagePackageSet}
      */
     public ImagePackageSet get_image_image_packageset (
@@ -1532,8 +1532,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get image status into database
-     * 
-     * 
+     *
+     *
      * @return {@link ImageStatusGet}
      */
     public ImageStatusGet get_image_image_status (
@@ -1553,10 +1553,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get iso image status into database
-     * 
+     *
      * @param branch name of packageset
      * @param edition Image edition
-     * 
+     *
      * @return {@link ImageTagStatusGet}
      */
     public ImageTagStatusGet get_image_image_tag_status (
@@ -1591,9 +1591,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get image UUID by image tag
-     * 
+     *
      * @param tag Image tag
-     * 
+     *
      * @return {@link ImageTagUUID}
      */
     public ImageTagUUID get_image_image_uuid_by_tag (
@@ -1619,9 +1619,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Inspect binary packages from regular distribution image
-     * 
-     * @param payload 
-     * 
+     *
+     * @param payload no description
+     *
      * @return {@link ImagePackagesInspectRegular}
      */
     public ImagePackagesInspectRegular post_image_inspect_regular (
@@ -1646,9 +1646,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Inspect binary packages from SP distribution image
-     * 
-     * @param payload 
-     * 
+     *
+     * @param payload no description
+     *
      * @return {@link ImagePackagesInspectSP}
      */
     public ImagePackagesInspectSP post_image_inspect_sp (
@@ -1673,8 +1673,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get all ISO images
-     * 
-     * 
+     *
+     *
      * @return {@link ImageAllISO}
      */
     public ImageAllISO get_image_iso_all_images (
@@ -1694,12 +1694,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of last packages from image for given parameters
-     * 
+     *
      * @param branch name of packageset
      * @param uuid Image UUID
      * @param packages_limit number of last packages to get
      * @param component Image component
-     * 
+     *
      * @return {@link LastImagePackages}
      */
     public LastImagePackages get_image_last_packages_by_image (
@@ -1744,12 +1744,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about last packages with CVE fixes mentioned in changelog for given image
-     * 
+     *
      * @param branch name of packageset
      * @param uuid Image UUID
      * @param packages_limit number of last packages to get
      * @param component Image component
-     * 
+     *
      * @return {@link LastImagePackages}
      */
     public LastImagePackages get_image_last_packages_image_with_cve_fixed (
@@ -1794,8 +1794,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * get license
-     * 
-     * 
+     *
+     *
      * @return {@link string}
      */
     public string get_license (
@@ -1813,9 +1813,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get license info by SPDX license ID
-     * 
+     *
      * @param license SPDX license id
-     * 
+     *
      * @return {@link LicenseInfo}
      */
     public LicenseInfo get_license_info (
@@ -1841,9 +1841,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get valid license tokens and SPDX license IDs
-     * 
+     *
      * @param license package license string
-     * 
+     *
      * @return {@link LicenseTokens}
      */
     public LicenseTokens get_license_tokens (
@@ -1869,11 +1869,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of packages required for build by given source packages list recursively
-     * 
+     *
      * @param branch name of packageset
      * @param packages package or list of packages
      * @param arch packages architecture
-     * 
+     *
      * @return {@link BuildDependencySet}
      */
     public BuildDependencySet get_package_build_dependency_set (
@@ -1915,10 +1915,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about packages from package sets by given source packages list
-     * 
+     *
      * @param packages package or list of packages
      * @param branches list of package sets to filter result
-     * 
+     *
      * @return {@link PackageFindPackageset}
      */
     public PackageFindPackageset get_package_find_packageset (
@@ -1959,11 +1959,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get packages with conflicting files in packages that don't have a conflict in dependencies
-     * 
+     *
      * @param packages package or list of packages
      * @param branch name of packageset
      * @param archs list of packages architectures
-     * 
+     *
      * @return {@link PackageMisconflictPackages}
      */
     public PackageMisconflictPackages get_package_misconflict (
@@ -2009,11 +2009,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about binary packages from  last package sets by given file MD5 checksum and package set name
-     * 
+     *
      * @param branch name of packageset
      * @param md5 file MD5 checksum
      * @param arch packages architecture
-     * 
+     *
      * @return {@link PackageByFileName}
      */
     public PackageByFileName get_package_package_by_file_md5 (
@@ -2052,11 +2052,11 @@ public sealed class AltRepo.Client : Object {
     /**
      * Get information about binary packages from  last package sets by given file name and package set name.
      * File name wildcars '*' is allowed.
-     * 
+     *
      * @param file file name
      * @param branch name of packageset
      * @param arch packages architecture
-     * 
+     *
      * @return {@link PackageByFileName}
      */
     public PackageByFileName get_package_package_by_file_name (
@@ -2094,9 +2094,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package files by hash
-     * 
-     * @param pkghash 
-     * 
+     *
+     * @param pkghash no description
+     *
      * @return {@link PackageFiles}
      */
     public PackageFiles get_package_package_files_pkghash (
@@ -2117,7 +2117,7 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information for package by parameters from last packages
-     * 
+     *
      * @param name package name
      * @param version package version
      * @param release package release
@@ -2129,7 +2129,7 @@ public sealed class AltRepo.Client : Object {
      * @param packager package packager name
      * @param packager_email package packager email
      * @param full show full package information
-     * 
+     *
      * @return {@link PackageInfo}
      */
     public PackageInfo get_package_package_info (
@@ -2228,9 +2228,9 @@ public sealed class AltRepo.Client : Object {
     /**
      * Get information about binary packages from  last package sets by given file names array and package set name.
      * File name wildcars '*' is not allowed.
-     * 
-     * @param payload 
-     * 
+     *
+     * @param payload no description
+     *
      * @return {@link PackageByFileName}
      */
     public PackageByFileName post_package_packages_by_file_names (
@@ -2255,14 +2255,14 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get repocop data by name, version and release
-     * 
+     *
      * @param branch name of packageset
      * @param package_name source or binary package name
      * @param package_version source or binary package version
      * @param package_release source or binary package release
      * @param bin_package_arch binary package arch
      * @param package_type packages type [source|binary]
-     * 
+     *
      * @return {@link RepocopJsonGetList}
      */
     public RepocopJsonGetList get_package_repocop (
@@ -2321,9 +2321,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get spec file by source package hash
-     * 
+     *
      * @param pkghash package hash
-     * 
+     *
      * @return {@link PackageSpecfile}
      */
     public PackageSpecfile get_package_specfile_by_hash_pkghash (
@@ -2344,10 +2344,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get spec file by source package name and branch
-     * 
+     *
      * @param branch name of packageset
      * @param name source package name
-     * 
+     *
      * @return {@link PackageSpecfile}
      */
     public PackageSpecfile get_package_specfile_by_name (
@@ -2378,11 +2378,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about unpackaged directories by maintainer nickname
-     * 
+     *
      * @param branch name of packageset
      * @param packager maintainer nickname
      * @param archs list of packages architectures
-     * 
+     *
      * @return {@link UnpackagedDirs}
      */
     public UnpackagedDirs get_package_unpackaged_dirs (
@@ -2424,7 +2424,7 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get packages build dependencies by set of parameters
-     * 
+     *
      * @param packages package or list of packages
      * @param branch name of packageset
      * @param depth dependency depth
@@ -2436,7 +2436,7 @@ public sealed class AltRepo.Client : Object {
      * @param filter_by_source filter result by dependency on source package
      * @param oneandhalf use dependency depth 1.5
      * @param use_last_tasks use repo state including last done tasks
-     * 
+     *
      * @return {@link PackageBuildDependency}
      */
     public PackageBuildDependency get_package_what_depends_src (
@@ -2542,8 +2542,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of active package sets
-     * 
-     * 
+     *
+     *
      * @return {@link PackageSetActivePackageSets}
      */
     public PackageSetActivePackageSets get_packageset_active_packagesets (
@@ -2563,10 +2563,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get difference list of packages from two package sets
-     * 
+     *
      * @param pkgset1 first packageset name
      * @param pkgset2 second packageset name
-     * 
+     *
      * @return {@link PackagesetCompare}
      */
     public PackagesetCompare get_packageset_compare_packagesets (
@@ -2597,11 +2597,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get packages by packageset component and architecture.
-     * 
+     *
      * @param branch name of packageset
      * @param arch architecture name
      * @param component component name
-     * 
+     *
      * @return {@link PackagesByUuid}
      */
     public PackagesByUuid get_packageset_packages_by_component (
@@ -2637,9 +2637,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get packages by packageset component UUID
-     * 
+     *
      * @param uuid packageset component UUID
-     * 
+     *
      * @return {@link PackagesByUuid}
      */
     public PackagesByUuid get_packageset_packages_by_uuid (
@@ -2665,8 +2665,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package set status into database
-     * 
-     * 
+     *
+     *
      * @return {@link PackageSetStatusGet}
      */
     public PackageSetStatusGet get_packageset_pkgset_status (
@@ -2686,11 +2686,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of packageset packages. Architecture argument is actual only if type is 'binary'.
-     * 
+     *
      * @param branch name of packageset
      * @param package_type packages type [source|binary|all]
      * @param archs list of packages architectures
-     * 
+     *
      * @return {@link PackagesetPackages}
      */
     public PackagesetPackages get_packageset_repository_packages (
@@ -2734,9 +2734,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get repository statistics
-     * 
+     *
      * @param branch name of packageset
-     * 
+     *
      * @return {@link RepositoryStatistics}
      */
     public RepositoryStatistics get_packageset_repository_statistics (
@@ -2764,10 +2764,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * alias for /all_maintainers_with_nicknames
-     * 
+     *
      * @param branch name of packageset
-     * 
-     * @return {@link Gee.ArrayList<AllMaintainers>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public Gee.ArrayList<AllMaintainers> get_site_all_maintainers (
         string branch,
@@ -2792,10 +2792,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * List of maintainers in branch with nicknames and source packages count
-     * 
+     *
      * @param branch name of packageset
-     * 
-     * @return {@link Gee.ArrayList<AllMaintainers>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public Gee.ArrayList<AllMaintainers> get_site_all_maintainers_with_nicknames (
         string branch,
@@ -2820,9 +2820,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary package archs list
-     * 
+     *
      * @param branch name of packageset
-     * 
+     *
      * @return {@link SiteAllArchs}
      */
     public SiteAllArchs get_site_all_pkgset_archs (
@@ -2848,9 +2848,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary package archs list with source packages count
-     * 
+     *
      * @param branch name of packageset
-     * 
+     *
      * @return {@link SiteAllArchs}
      */
     public SiteAllArchs get_site_all_pkgset_archs_with_src_count (
@@ -2876,8 +2876,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package sets list
-     * 
-     * 
+     *
+     *
      * @return {@link SiteAllPackagasets}
      */
     public SiteAllPackagasets get_site_all_pkgsets (
@@ -2897,8 +2897,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package sets list with source packages count
-     * 
-     * 
+     *
+     *
      * @return {@link SiteAllPackagesetsSummary}
      */
     public SiteAllPackagesetsSummary get_site_all_pkgsets_summary (
@@ -2918,8 +2918,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package sets list with source packages count
-     * 
-     * 
+     *
+     *
      * @return {@link SiteAllPackagasets}
      */
     public SiteAllPackagasets get_site_all_pkgsets_with_src_count (
@@ -2939,12 +2939,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get Beehive rebuild errors by the maintainer's nickname
-     * 
+     *
      * @param branch name of packageset
      * @param maintainer_nickname nickname of maintainer
      * @param by_acl search maintainer's packages by ACL
-     * 
-     * @return {@link Gee.ArrayList<SiteBeehiveByMaintainer>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public Gee.ArrayList<SiteBeehiveByMaintainer> get_site_beehive_errors_by_maintainer (
         string branch,
@@ -2981,10 +2981,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary package archs and versions
-     * 
+     *
      * @param branch name of packageset
      * @param name binary package name
-     * 
+     *
      * @return {@link SitePackagesBinaryList}
      */
     public SitePackagesBinaryList get_site_binary_package_archs_and_versions (
@@ -3015,9 +3015,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary package scripts
-     * 
-     * @param pkghash 
-     * 
+     *
+     * @param pkghash no description
+     *
      * @return {@link SiteBinPackageScripts}
      */
     public SiteBinPackageScripts get_site_binary_package_scripts_pkghash (
@@ -3038,12 +3038,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about package deleted from branch
-     * 
+     *
      * @param branch name of packageset
      * @param name package name
      * @param package_type packages type [source|binary]
      * @param arch arch of binary packages
-     * 
+     *
      * @return {@link SiteDeletedPackage}
      */
     public SiteDeletedPackage get_site_deleted_package_info (
@@ -3088,10 +3088,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Fast packages search by name
-     * 
+     *
      * @param name package or list of package names
      * @param branch name of packageset
-     * 
+     *
      * @return {@link SiteFastPackagesSearch}
      */
     public SiteFastPackagesSearch get_site_fast_packages_search_lookup (
@@ -3128,11 +3128,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Find packages by name
-     * 
+     *
      * @param name package or list of package names
      * @param branch name of packageset
      * @param arch binary package arch
-     * 
+     *
      * @return {@link SiteFingPackages}
      */
     public SiteFingPackages get_site_find_packages (
@@ -3176,10 +3176,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Find source package in branch by binary package name
-     * 
+     *
      * @param branch name of packageset
      * @param name package name
-     * 
+     *
      * @return {@link FindSourcePackageInBranch}
      */
     public FindSourcePackageInBranch get_site_find_source_package (
@@ -3210,11 +3210,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of last packages from tasks for given parameters
-     * 
+     *
      * @param branch name of packageset
      * @param tasks_limit number of last tasks to get
      * @param task_owner task owner's nickname
-     * 
+     *
      * @return {@link SiteLastPackages}
      */
     public SiteLastPackages get_site_last_packages (
@@ -3252,11 +3252,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of last packages from branch for given parameters
-     * 
+     *
      * @param branch name of packageset
      * @param packages_limit number of last packages to get
      * @param packager package packager's nickname
-     * 
+     *
      * @return {@link SiteLastBranchPackages}
      */
     public SiteLastBranchPackages get_site_last_packages_by_branch (
@@ -3294,11 +3294,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of last packages from tasks for given parameters
-     * 
+     *
      * @param branch name of packageset
      * @param tasks_limit number of last tasks to get
      * @param task_owner task owner's nickname
-     * 
+     *
      * @return {@link SiteLastPackages}
      */
     public SiteLastPackages get_site_last_packages_by_tasks (
@@ -3336,9 +3336,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about last packages with CVE fixes mentioned in changelog
-     * 
+     *
      * @param branch name of packageset
-     * 
+     *
      * @return {@link SiteLastPackagesWithCVEFixes}
      */
     public SiteLastPackagesWithCVEFixes get_site_last_packages_with_cve_fixed (
@@ -3364,10 +3364,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Packages collected by the specified maintainer
-     * 
+     *
      * @param maintainer_nickname nickname of maintainer
-     * 
-     * @return {@link Gee.ArrayList<MaintainerBranches>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public Gee.ArrayList<MaintainerBranches> get_site_maintainer_branches (
         string maintainer_nickname,
@@ -3392,11 +3392,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Maintainer information
-     * 
+     *
      * @param branch name of packageset
      * @param maintainer_nickname nickname of maintainer
-     * 
-     * @return {@link Gee.ArrayList<MaintainerInfo>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public Gee.ArrayList<MaintainerInfo> get_site_maintainer_info (
         string branch,
@@ -3426,12 +3426,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Packages collected by the specified maintainer
-     * 
+     *
      * @param branch name of packageset
      * @param maintainer_nickname nickname of maintainer
      * @param by_acl search maintainer's packages by ACL
-     * 
-     * @return {@link Gee.ArrayList<MaintainerPackages>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public Gee.ArrayList<MaintainerPackages> get_site_maintainer_packages (
         string branch,
@@ -3468,10 +3468,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package changelog history by hash
-     * 
+     *
      * @param pkghash package hash
      * @param changelog_last changelog history length
-     * 
+     *
      * @return {@link SiteChangelog}
      */
     public SiteChangelog get_site_package_changelog_pkghash (
@@ -3500,10 +3500,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package download links by source package hash
-     * 
+     *
      * @param pkghash package hash
      * @param branch name of packageset
-     * 
+     *
      * @return {@link SitePackagesDownloads}
      */
     public SitePackagesDownloads get_site_package_downloads_pkghash (
@@ -3530,11 +3530,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary package download link
-     * 
+     *
      * @param pkghash package hash
      * @param branch name of packageset
      * @param arch arch of binary packages
-     * 
+     *
      * @return {@link SitePackagesDownloads}
      */
     public SitePackagesDownloads get_site_package_downloads_bin_pkghash (
@@ -3566,10 +3566,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package download links by source package hash
-     * 
+     *
      * @param pkghash package hash
      * @param branch name of packageset
-     * 
+     *
      * @return {@link SitePackagesDownloads}
      */
     public SitePackagesDownloads get_site_package_downloads_src_pkghash (
@@ -3596,12 +3596,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package info by hash
-     * 
+     *
      * @param pkghash package hash
      * @param branch name of packageset
      * @param changelog_last changelog history length
      * @param package_type packages type [source|binary]
-     * 
+     *
      * @return {@link SitePackageInfo}
      */
     public SitePackageInfo get_site_package_info_pkghash (
@@ -3642,9 +3642,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get brief package info by hash
-     * 
+     *
      * @param pkghash package hash
-     * 
+     *
      * @return {@link SiteBriefPackageInfo}
      */
     public SiteBriefPackageInfo get_site_package_info_brief_pkghash (
@@ -3665,9 +3665,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary package build log link
-     * 
+     *
      * @param pkghash package hash
-     * 
+     *
      * @return {@link BinPackageLogElement}
      */
     public BinPackageLogElement get_site_package_log_bin_pkghash (
@@ -3688,10 +3688,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary packages file conflicts by source package.
-     * 
+     *
      * @param pkghash source package hash
      * @param branch name of packageset
-     * 
+     *
      * @return {@link PackageMisconflictBySrc}
      */
     public PackageMisconflictBySrc get_site_package_misconflict_pkghash (
@@ -3718,10 +3718,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get source package name from repology.
-     * 
+     *
      * @param branch name of packageset
      * @param name source package name
-     * 
+     *
      * @return {@link PackageNameFromRepology}
      */
     public PackageNameFromRepology get_site_package_name_from_repology (
@@ -3752,10 +3752,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package name, version, release and type by hash. Check package name matching if provided.
-     * 
+     *
      * @param pkghash package hash
      * @param name package name
-     * 
+     *
      * @return {@link PackageNVRByHash}
      */
     public PackageNVRByHash get_site_package_nvr_by_hash_pkghash (
@@ -3784,11 +3784,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get source or binary package versions from last branches
-     * 
+     *
      * @param name source package name
      * @param package_type packages type [source|binary]
      * @param arch arch of binary packages
-     * 
+     *
      * @return {@link SiteSourcePackagesVersions}
      */
     public SiteSourcePackagesVersions get_site_package_versions (
@@ -3828,12 +3828,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary packages versions from images
-     * 
+     *
      * @param name package name
      * @param branch image base branch
      * @param edition image edition
      * @param type image type
-     * 
+     *
      * @return {@link SiteImagePackageVersions}
      */
     public SiteImagePackageVersions get_site_package_versions_from_images (
@@ -3874,10 +3874,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get source package versions from tasks
-     * 
+     *
      * @param name package name
      * @param branch name of packageset
-     * 
+     *
      * @return {@link SItePackagesVersionsFromTasks}
      */
     public SItePackagesVersionsFromTasks get_site_package_versions_from_tasks (
@@ -3910,9 +3910,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package set list by package hash
-     * 
+     *
      * @param pkghash package hash
-     * 
+     *
      * @return {@link SitePackagesetsByHash}
      */
     public SitePackagesetsByHash get_site_packagesets_by_hash_pkghash (
@@ -3933,11 +3933,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary package hash by package name, arch and package set name
-     * 
+     *
      * @param branch name of packageset
      * @param name package name
      * @param arch package arch
-     * 
+     *
      * @return {@link SitePackagesetPackageHash}
      */
     public SitePackagesetPackageHash get_site_pkghash_by_binary_name (
@@ -3973,10 +3973,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get source package hash by package name and package set name
-     * 
+     *
      * @param branch name of packageset
      * @param name package name
-     * 
+     *
      * @return {@link SitePackagesetPackageHash}
      */
     public SitePackagesetPackageHash get_site_pkghash_by_name (
@@ -4007,12 +4007,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get source package hash by package name, version and release for specific branch
-     * 
+     *
      * @param name package name
      * @param branch name of packageset
      * @param version source package version
      * @param release source package release
-     * 
+     *
      * @return {@link SitePackagesetPackageHashByNameVersionRelease}
      */
     public SitePackagesetPackageHashByNameVersionRelease get_site_pkghash_by_nvr (
@@ -4053,10 +4053,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of package categories with count for given package set
-     * 
+     *
      * @param branch name of packageset
      * @param package_type packages type [source|binary|all]
-     * 
+     *
      * @return {@link SitePackagesetCategories}
      */
     public SitePackagesetCategories get_site_pkgset_categories_count (
@@ -4089,8 +4089,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package sets list with source packages count and status info
-     * 
-     * 
+     *
+     *
      * @return {@link SitePackagesetsSummaryStatus}
      */
     public SitePackagesetsSummaryStatus get_site_pkgsets_summary_status (
@@ -4110,12 +4110,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get repocop results by the maintainers nickname
-     * 
+     *
      * @param branch name of packageset
      * @param maintainer_nickname nickname of maintainer
      * @param by_acl search maintainer's packages by ACL
-     * 
-     * @return {@link Gee.ArrayList<RepocopByMaintainer>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public Gee.ArrayList<RepocopByMaintainer> get_site_repocop_by_maintainer (
         string branch,
@@ -4152,12 +4152,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of packageset packages in accordance to given parameters
-     * 
+     *
      * @param branch name of packageset
      * @param package_type packages type [source|binary|all]
      * @param group package category
      * @param buildtime package buildtime
-     * 
+     *
      * @return {@link SitePackages}
      */
     public SitePackages get_site_repository_packages (
@@ -4204,9 +4204,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get source package versions from last branches
-     * 
+     *
      * @param name source package name
-     * 
+     *
      * @return {@link SiteSourcePackagesVersions}
      */
     public SiteSourcePackagesVersions get_site_source_package_versions (
@@ -4232,11 +4232,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get tasks list by maintainer nickname
-     * 
+     *
      * @param branch name of packageset
      * @param maintainer_nickname nickname of maintainer
-     * 
-     * @return {@link Gee.ArrayList<SiteTaskByName>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     [Version (deprecated = true, deprecated_since = "")]
     public Gee.ArrayList<SiteTaskByName> get_site_tasks_by_maintainer (
@@ -4267,9 +4267,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get tasks list by source package name
-     * 
+     *
      * @param name package name
-     * 
+     *
      * @return {@link SiteTaskByName}
      */
     [Version (deprecated = true, deprecated_since = "")]
@@ -4296,9 +4296,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get history of done tasks for an active branches
-     * 
+     *
      * @param task_id Number of task id
-     * 
+     *
      * @return {@link SiteTasksHistory}
      */
     public SiteTasksHistory get_site_tasks_history (
@@ -4326,11 +4326,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get watch packages by the maintainer's nickname
-     * 
+     *
      * @param maintainer_nickname nickname of maintainer
      * @param by_acl search maintainer's packages by ACL
-     * 
-     * @return {@link Gee.ArrayList<SiteWatchByMaintainer>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public Gee.ArrayList<SiteWatchByMaintainer> get_site_watch_by_maintainer (
         string maintainer_nickname,
@@ -4362,10 +4362,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of packages required for build by source packages from task recursively
-     * 
+     *
      * @param id task ID
      * @param arch packages architecture
-     * 
+     *
      * @return {@link BuildDependencySet}
      */
     public BuildDependencySet get_task_build_dependency_set_id (
@@ -4397,55 +4397,55 @@ public sealed class AltRepo.Client : Object {
      * Get relation between images and binary packages:
      * - if some packages from a task are in images, they will be in **in_images** list.
      * - if some packages from a task aren't in any image, they will be in **not_in_images** list.
-     * 
+     *
      * ## Arguments
      * - Allowed task's states: **EPERM**, **TESTED** or **DONE**.
      * - If parameter **packages_names** (list of binary packages names) is set, it will show only specified binary packages.
      * - You can provide multiple filters for images. If an image matches at least one filter, it will be shown.
-     * 
+     *
      * ## Examples
      * Show information about all of the binary packages inside images:
-     * ```json
+     * json
      * {
-     *     "task_id": 327143
+     * "task_id": 327143
      * }
-     * ```
+     *
      * Show information about all of the binary packages inside images which edition is 'alt-kworkstation', type is 'iso' and version is '10.1.*':
-     * ```json
+     * json
      * {
-     *     "task_id": 327143,
-     *     "filters": [
-     *         {
-     *             "editions": ["alt-kworkstation"],
-     *             "types": ["iso"],
-     *             "versions": ["10.1"]
-     *         }
-     *     ]
+     * "task_id": 327143,
+     * "filters": [
+     * {
+     * "editions": ["alt-kworkstation"],
+     * "types": ["iso"],
+     * "versions": ["10.1"]
      * }
-     * ```
+     * ]
+     * }
+     *
      * Show information about **liblash** binary package inside images which edition is 'alt-kworkstation' with version '10.1.*' or edition 'slinux'
      * with version '10.2.*'.
-     * ```json
+     * json
      * {
-     *     "task_id": 312990,
-     *     "packages_names": [
-     *         "liblash"
-     *     ],
-     *     "filters": [
-     *         {
-     *             "editions": ["alt-kworkstation"],
-     *             "versions": ["10.1"]
-     *         },
-     *         {
-     *             "editions": ["slinux"],
-     *             "versions": ["10.2"]
-     *         }
-     *     ]
+     * "task_id": 312990,
+     * "packages_names": [
+     * "liblash"
+     * ],
+     * "filters": [
+     * {
+     * "editions": ["alt-kworkstation"],
+     * "versions": ["10.1"]
+     * },
+     * {
+     * "editions": ["slinux"],
+     * "versions": ["10.2"]
      * }
-     * ```
-     * 
-     * @param payload 
-     * 
+     * ]
+     * }
+     *
+     *
+     * @param payload no description
+     *
      * @return {@link CheckImagesOutput}
      */
     public CheckImagesOutput post_task_check_images (
@@ -4471,9 +4471,9 @@ public sealed class AltRepo.Client : Object {
     /**
      * Get the newest images which contain binary packages with the same names as binaries from a task with one of the following states: EPERM,
      * TESTED or DONE. Listed only active images for task's branch.
-     * 
+     *
      * @param id task ID
-     * 
+     *
      * @return {@link FindImagesByTask}
      */
     public FindImagesByTask get_task_find_images_id (
@@ -4494,10 +4494,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about packages from package sets by list of source packages from task
-     * 
+     *
      * @param id task ID
      * @param branches list of package sets to filter result
-     * 
+     *
      * @return {@link TaskFindPackageset}
      */
     public TaskFindPackageset get_task_find_packageset_id (
@@ -4530,11 +4530,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get packages with conflicting files in packages from task that do not have a conflict in dependencies
-     * 
+     *
      * @param id task ID
      * @param archs list of packages architectures
      * @param no_cache cache override value, not affect on request results
-     * 
+     *
      * @return {@link TaskMisconflictPackages}
      */
     public TaskMisconflictPackages get_task_misconflict_id (
@@ -4574,11 +4574,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get EPERM tasks which require approval
-     * 
+     *
      * @param acl_group ACL-group from which approval is required
      * @param branches list of package sets to filter result
      * @param before show tasks' info before specified datetime (YYYY-MM-DD[ HH:MM:SS])
-     * 
+     *
      * @return {@link NeedsApproval}
      */
     public NeedsApproval get_task_needs_approval (
@@ -4622,9 +4622,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about packages from task
-     * 
+     *
      * @param id task ID
-     * 
+     *
      * @return {@link TaskPackages}
      */
     public TaskPackages get_task_packages_id (
@@ -4645,8 +4645,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Alias for 'all_tasks_branches' for compatibility
-     * 
-     * 
+     *
+     *
      * @return {@link AllTasksBranches}
      */
     [Version (deprecated = true, deprecated_since = "")]
@@ -4667,8 +4667,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get branches list for last tasks
-     * 
-     * 
+     *
+     *
      * @return {@link AllTasksBranches}
      */
     public AllTasksBranches get_task_progress_all_tasks_branches (
@@ -4688,14 +4688,14 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Task search by ID, task owner or component.
-     * 
+     *
      * @param input task search arguments
      * @param owner task owner
      * @param branch name of packageset
      * @param state task state
      * @param tasks_limit number of last tasks to get
      * @param by_package find tasks by source package name
-     * 
+     *
      * @return {@link TasksList}
      */
     public TasksList get_task_progress_find_tasks (
@@ -4764,11 +4764,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Task search by ID, owner, repo, state and component.
-     * 
+     *
      * @param input task search arguments
      * @param branch name of packageset
      * @param tasks_limit number of last tasks to get
-     * 
+     *
      * @return {@link FindTasks}
      */
     public FindTasks get_task_progress_find_tasks_lookup (
@@ -4812,10 +4812,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get the latest tasks changes
-     * 
+     *
      * @param branch name of packageset
      * @param tasks_limit number of last tasks to get
-     * 
+     *
      * @return {@link TasksList}
      */
     public TasksList get_task_progress_last_tasks (
@@ -4850,9 +4850,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information for task by ID
-     * 
+     *
      * @param id task ID
-     * 
+     *
      * @return {@link TaskProgressTaskInfo}
      */
     public TaskProgressTaskInfo get_task_progress_task_info_id (
@@ -4873,9 +4873,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get task difference by ID
-     * 
+     *
      * @param id task ID
-     * 
+     *
      * @return {@link TaskDiff}
      */
     public TaskDiff get_task_task_diff_id (
@@ -4896,13 +4896,13 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get done tasks history for branch
-     * 
+     *
      * @param branch name of packageset
      * @param start_task start task ID
      * @param end_task end task ID
      * @param start_date task history start date (YYYY-MM-DD)
      * @param end_date task history end date (YYYY-MM-DD)
-     * 
+     *
      * @return {@link TaskHistory}
      */
     public TaskHistory get_task_task_history (
@@ -4956,13 +4956,13 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information for task by ID
-     * 
+     *
      * @param id task ID
      * @param try task try
      * @param iteration task iteration
      * @param no_cache cache override value, not affect on request results
      * @param states Filter task states by given list (valid values is `DONE`, `EPERM` and `TESTED`)
-     * 
+     *
      * @return {@link TaskInfo}
      */
     public TaskInfo get_task_task_info_id (
@@ -5016,10 +5016,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get repository state by ID
-     * 
+     *
      * @param id task ID
      * @param include_task_packages include task packages in repository state
-     * 
+     *
      * @return {@link TaskRepo}
      */
     public TaskRepo get_task_task_repo_id (
@@ -5048,7 +5048,7 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get packages build dependencies
-     * 
+     *
      * @param id task ID
      * @param depth dependency depth
      * @param dptype dependency type [source|binary|both]
@@ -5059,7 +5059,7 @@ public sealed class AltRepo.Client : Object {
      * @param filter_by_source filter result by dependency on source package
      * @param oneandhalf use dependency depth 1.5
      * @param no_cache cache override value, not affect on request results
-     * 
+     *
      * @return {@link TaskBuildDependency}
      */
     public TaskBuildDependency get_task_what_depends_src_id (
@@ -5152,8 +5152,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * get API version
-     * 
-     * 
+     *
+     *
      * @return {@link APIVersion}
      */
     public APIVersion get_version (
@@ -5173,10 +5173,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get BDU information
-     * 
+     *
      * @param vuln_id BDU id
      * @param exclude_json exclude vulnerability raw JSON from results
-     * 
+     *
      * @return {@link VulnerabilityInfo}
      */
     public VulnerabilityInfo get_vuln_bdu (
@@ -5209,10 +5209,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get a list of packages in which the specified BDU vulnerability is closed.
-     * 
+     *
      * @param vuln_id BDU id
      * @param exclude_json exclude vulnerability raw JSON from results
-     * 
+     *
      * @return {@link VulnFixesPackages}
      */
     public VulnFixesPackages get_vuln_bdu_fixes (
@@ -5245,10 +5245,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get CVE information
-     * 
+     *
      * @param vuln_id CVE id
      * @param exclude_json exclude vulnerability raw JSON from results
-     * 
+     *
      * @return {@link VulnerabilityInfo}
      */
     public VulnerabilityInfo get_vuln_cve (
@@ -5281,10 +5281,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get a list of packages in which the specified CVE vulnerability is closed.
-     * 
+     *
      * @param vuln_id CVE id
      * @param exclude_json exclude vulnerability raw JSON from results
-     * 
+     *
      * @return {@link VulnFixesPackages}
      */
     public VulnFixesPackages get_vuln_cve_fixes (
@@ -5317,10 +5317,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get GHSA information
-     * 
+     *
      * @param vuln_id GHSA id
      * @param exclude_json exclude vulnerability raw JSON from results
-     * 
+     *
      * @return {@link string}
      */
     public string get_vuln_ghsa (
@@ -5351,9 +5351,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get a list of fixed CVEs from an task with one of the following states: EPERM, TESTED, or DONE.
-     * 
+     *
      * @param id task ID
-     * 
+     *
      * @return {@link CveVulnerableTask}
      */
     public CveVulnerableTask get_vuln_task_id (
@@ -5376,11 +5376,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * ACL groups for source packages list in specific branch
-     * 
+     *
      * @param branch name of packageset
      * @param packages_names source packages names
-     * 
-     * @return {@link Gee.ArrayList<AclByPackages>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public async Gee.ArrayList<AclByPackages> get_acl_by_packages_async (
         string branch,
@@ -5416,11 +5416,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * List of ACL groups for specific branch
-     * 
+     *
      * @param branch name of packageset
      * @param name ACL group name
-     * 
-     * @return {@link Gee.ArrayList<AclGroups>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public async Gee.ArrayList<AclGroups> get_acl_groups_async (
         string branch,
@@ -5454,11 +5454,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * List the ACL groups that the given user belongs to
-     * 
+     *
      * @param branch name of packageset
      * @param nickname ACL member nickname
-     * 
-     * @return {@link Gee.ArrayList<AclMaintainerGroups>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public async Gee.ArrayList<AclMaintainerGroups> get_acl_maintainer_groups_async (
         string nickname,
@@ -5496,11 +5496,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information from bugzilla by image edition
-     * 
+     *
      * @param branch name of packageset
      * @param edition Image edition
-     * 
-     * @return {@link Gee.ArrayList<BugzillaInfo>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public async Gee.ArrayList<BugzillaInfo> get_bug_bugzilla_by_image_edition_async (
         string branch,
@@ -5532,11 +5532,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information from bugzilla by the maintainer nickname
-     * 
+     *
      * @param maintainer_nickname maintainer nickname
      * @param by_acl search maintainer's packages by ACL
-     * 
-     * @return {@link Gee.ArrayList<BugzillaInfo>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public async Gee.ArrayList<BugzillaInfo> get_bug_bugzilla_by_maintainer_async (
         string maintainer_nickname,
@@ -5570,11 +5570,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information from bugzilla by the source package name
-     * 
+     *
      * @param package_name source or binary package name
      * @param package_type packages type [source|binary]
-     * 
-     * @return {@link Gee.ArrayList<BugzillaInfo>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public async Gee.ArrayList<BugzillaInfo> get_bug_bugzilla_by_package_async (
         string package_name,
@@ -5608,14 +5608,14 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Find packages required to backport too
-     * 
+     *
      * @param from_branch packageset name where are packages backported from
      * @param into_branch packageset name where are packages backported to
      * @param packages_names source packages names
      * @param dp_type type of dependency [source|binary|both]
      * @param archs architectures to show
-     * 
-     * @return {@link Gee.ArrayList<BackportHelper>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public async Gee.ArrayList<BackportHelper> get_dependencies_backport_helper_async (
         string from_branch,
@@ -5674,9 +5674,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary package dependencies
-     * 
+     *
      * @param pkghash package hash
-     * 
+     *
      * @return {@link DependenciesPackageDependencies}
      */
     public async DependenciesPackageDependencies get_dependencies_binary_package_dependencies_pkghash_async (
@@ -5699,12 +5699,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Fast search for dependencies by name (case sensitive)
-     *         including partial occurrence.
-     * 
+     * including partial occurrence.
+     *
      * @param branch packageset name
      * @param dp_name dependency name
      * @param limit number of dependencies to get
-     * 
+     *
      * @return {@link FastDependencySearch}
      */
     public async FastDependencySearch get_dependencies_fast_lookup_async (
@@ -5744,11 +5744,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary packages by dependency name and type
-     * 
+     *
      * @param branch packageset name
      * @param dp_name dependency name
      * @param dp_type type of dependency [all|provide|require|conflict|obsolete]
-     * 
+     *
      * @return {@link DependenciesPackages}
      */
     public async DependenciesPackages get_dependencies_packages_by_dependency_async (
@@ -5788,11 +5788,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get source package build dependencies
-     * 
+     *
      * @param pkghash package hash
      * @param branch packageset name
      * @param depth dependency level limit
-     * 
+     *
      * @return {@link DependenciesPackageBuildDependencies}
      */
     public async DependenciesPackageBuildDependencies get_dependencies_source_package_dependencies_pkghash_async (
@@ -5828,11 +5828,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get packages build dependencies by set of parameters
-     * 
+     *
      * @param name source package name
      * @param branch packageset name
      * @param dp_type type of dependency [source|binary|both]
-     * 
+     *
      * @return {@link PackageBuildDependency}
      */
     public async PackageBuildDependency get_dependencies_what_depends_src_async (
@@ -5872,10 +5872,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about branch update erratas
-     * 
+     *
      * @param exclude_json exclude vulnerability raw JSON from results
-     * @param payload 
-     * 
+     * @param payload no description
+     *
      * @return {@link ErrataBranchesUpdates}
      */
     public async ErrataBranchesUpdates post_errata_branches_updates_async (
@@ -5910,8 +5910,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of branches form errata history.
-     * 
-     * 
+     *
+     *
      * @return {@link ErrataBranches}
      */
     public async ErrataBranches get_errata_errata_branches_async (
@@ -5933,8 +5933,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get branches with OVAL definitions export available
-     * 
-     * 
+     *
+     *
      * @return {@link OvalBranches}
      */
     public async OvalBranches get_errata_export_oval_branches_async (
@@ -5956,11 +5956,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get OVAL definitions of closed issues of branch packages
-     * 
-     * @param branch 
+     *
+     * @param branch no description
      * @param package_name source or binary package name
      * @param one_file return OVAL definitions as one XML file
-     * 
+     *
      * @return {@link string}
      */
     public async string get_errata_export_oval_branch_async (
@@ -5996,14 +5996,14 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Find errata by ID, vulnerability ID or package name.
-     * 
+     *
      * @param input errata search arguments
      * @param branch branch name
      * @param type errata type [packages|repository|bug|vuln]
      * @param page number page
      * @param limit number of records
      * @param state errata state
-     * 
+     *
      * @return {@link ErrataLastChanged}
      */
     public async ErrataLastChanged get_errata_find_erratas_async (
@@ -6072,7 +6072,7 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Find errata by image UUID.
-     * 
+     *
      * @param uuid Image UUID
      * @param branch branch name
      * @param component Image component
@@ -6082,7 +6082,7 @@ public sealed class AltRepo.Client : Object {
      * @param limit number of records
      * @param is_discarded is errata discarded
      * @param sort sort arguments
-     * 
+     *
      * @return {@link ImageErrata}
      */
     public async ImageErrata get_errata_find_image_erratas_async (
@@ -6172,8 +6172,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of valid Errata identifiers
-     * 
-     * 
+     *
+     *
      * @return {@link ErrataIdsList}
      */
     public async ErrataIdsList get_errata_ids_async (
@@ -6195,10 +6195,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about package update erratas
-     * 
+     *
      * @param exclude_json exclude vulnerability raw JSON from results
-     * @param payload 
-     * 
+     * @param payload no description
+     *
      * @return {@link ErrataPackagesUpdates}
      */
     public async ErrataPackagesUpdates post_errata_packages_updates_async (
@@ -6233,12 +6233,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Find erratas by given arguments
-     * 
+     *
      * @param branch branch name
      * @param name source package name
      * @param vuln_id CVE, BDU or Bug ID
      * @param errata_id errata ID
-     * 
+     *
      * @return {@link Erratas}
      */
     public async Erratas get_errata_search_async (
@@ -6289,10 +6289,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Beehive rebuild errors export
-     * 
+     *
      * @param branch branch name
      * @param arch package architecture
-     * 
+     *
      * @return {@link ExportBeehiveFTBFSList}
      */
     public async ExportBeehiveFTBFSList get_export_beehive_ftbfs_async (
@@ -6327,10 +6327,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get branch binary packages info
-     * 
+     *
      * @param branch branch name
      * @param arch package architecture
-     * 
+     *
      * @return {@link PackagesetPackagesExport}
      */
     public async PackagesetPackagesExport get_export_branch_binary_packages_branch_async (
@@ -6361,8 +6361,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Branch tree info export
-     * 
-     * 
+     *
+     *
      * @return {@link BranchTree}
      */
     public async BranchTree get_export_branch_tree_async (
@@ -6384,9 +6384,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get branch info export for Repology
-     * 
+     *
      * @param branch branch name
-     * 
+     *
      * @return {@link RepologyExport}
      */
     public async RepologyExport get_export_repology_branch_async (
@@ -6409,9 +6409,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get branch source packages for sitemap
-     * 
+     *
      * @param branch branch name
-     * 
+     *
      * @return {@link SitemapPackagesExport}
      */
     public async SitemapPackagesExport get_export_sitemap_packages_branch_async (
@@ -6434,10 +6434,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get an archive of PO files with package's summary and description for translation purpose
-     * 
+     *
      * @param branches list of package sets to filter result
      * @param from_date take packages of branch states from date (YYYY-MM-DD)
-     * 
+     *
      * @return {@link string}
      */
     public async string get_export_translation_packages_po_files_async (
@@ -6474,11 +6474,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Fast search files by name (case sensitive) including partial occurrence.
-     * 
+     *
      * @param branch name of packageset
      * @param file_name file name or directory
      * @param limit number of files to get
-     * 
+     *
      * @return {@link FastFileSearch}
      */
     public async FastFileSearch get_file_fast_lookup_async (
@@ -6518,10 +6518,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get a list of packages to which the specified file belongs to.
-     * 
+     *
      * @param branch name of packageset
      * @param file_name file name or directory
-     * 
+     *
      * @return {@link FilePackagesByFile}
      */
     public async FilePackagesByFile get_file_packages_by_file_async (
@@ -6554,11 +6554,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Find files by name (case sensitive) including partial occurrence.
-     * 
+     *
      * @param branch name of packageset
      * @param file_name file name or directory
      * @param limit number of files to get
-     * 
+     *
      * @return {@link Files}
      */
     public async Files get_file_search_async (
@@ -6598,14 +6598,14 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get active images for a given repository
-     * 
+     *
      * @param branch name of packageset
      * @param edition Image edition
      * @param version Image version
      * @param release Image release type
      * @param variant Image variant
      * @param type Image type
-     * 
+     *
      * @return {@link ActiveImages}
      */
     public async ActiveImages get_image_active_images_async (
@@ -6670,13 +6670,13 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get images by package name for a given repository and edition
-     * 
+     *
      * @param branch name of packageset
      * @param pkg_name package name
      * @param edition Image edition
      * @param pkg_type packages type [source|binary]
      * @param img_show show images[active|all]
-     * 
+     *
      * @return {@link FindImagesByPackage}
      */
     public async FindImagesByPackage get_image_find_images_by_package_name_async (
@@ -6732,10 +6732,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of package categories with count for image
-     * 
+     *
      * @param uuid Image UUID
      * @param component Image component
-     * 
+     *
      * @return {@link SiteImageCategories}
      */
     public async SiteImageCategories get_image_image_categories_count_async (
@@ -6770,7 +6770,7 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get branch images info
-     * 
+     *
      * @param branch name of packageset
      * @param edition Image edition
      * @param version Image version
@@ -6781,7 +6781,7 @@ public sealed class AltRepo.Client : Object {
      * @param component Image component
      * @param platform Image platform
      * @param type Image type
-     * 
+     *
      * @return {@link ImageInfo}
      */
     public async ImageInfo get_image_image_info_async (
@@ -6874,11 +6874,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of image packages in accordance to given parameters
-     * 
+     *
      * @param uuid Image UUID
      * @param group package category
      * @param component Image component
-     * 
+     *
      * @return {@link ImagePackages}
      */
     public async ImagePackages get_image_image_packages_async (
@@ -6920,8 +6920,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get a list of package sets which has an active images.
-     * 
-     * 
+     *
+     *
      * @return {@link ImagePackageSet}
      */
     public async ImagePackageSet get_image_image_packageset_async (
@@ -6943,8 +6943,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get image status into database
-     * 
-     * 
+     *
+     *
      * @return {@link ImageStatusGet}
      */
     public async ImageStatusGet get_image_image_status_async (
@@ -6966,10 +6966,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get iso image status into database
-     * 
+     *
      * @param branch name of packageset
      * @param edition Image edition
-     * 
+     *
      * @return {@link ImageTagStatusGet}
      */
     public async ImageTagStatusGet get_image_image_tag_status_async (
@@ -7006,9 +7006,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get image UUID by image tag
-     * 
+     *
      * @param tag Image tag
-     * 
+     *
      * @return {@link ImageTagUUID}
      */
     public async ImageTagUUID get_image_image_uuid_by_tag_async (
@@ -7036,9 +7036,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Inspect binary packages from regular distribution image
-     * 
-     * @param payload 
-     * 
+     *
+     * @param payload no description
+     *
      * @return {@link ImagePackagesInspectRegular}
      */
     public async ImagePackagesInspectRegular post_image_inspect_regular_async (
@@ -7065,9 +7065,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Inspect binary packages from SP distribution image
-     * 
-     * @param payload 
-     * 
+     *
+     * @param payload no description
+     *
      * @return {@link ImagePackagesInspectSP}
      */
     public async ImagePackagesInspectSP post_image_inspect_sp_async (
@@ -7094,8 +7094,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get all ISO images
-     * 
-     * 
+     *
+     *
      * @return {@link ImageAllISO}
      */
     public async ImageAllISO get_image_iso_all_images_async (
@@ -7117,12 +7117,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of last packages from image for given parameters
-     * 
+     *
      * @param branch name of packageset
      * @param uuid Image UUID
      * @param packages_limit number of last packages to get
      * @param component Image component
-     * 
+     *
      * @return {@link LastImagePackages}
      */
     public async LastImagePackages get_image_last_packages_by_image_async (
@@ -7169,12 +7169,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about last packages with CVE fixes mentioned in changelog for given image
-     * 
+     *
      * @param branch name of packageset
      * @param uuid Image UUID
      * @param packages_limit number of last packages to get
      * @param component Image component
-     * 
+     *
      * @return {@link LastImagePackages}
      */
     public async LastImagePackages get_image_last_packages_image_with_cve_fixed_async (
@@ -7221,8 +7221,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * get license
-     * 
-     * 
+     *
+     *
      * @return {@link string}
      */
     public async string get_license_async (
@@ -7242,9 +7242,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get license info by SPDX license ID
-     * 
+     *
      * @param license SPDX license id
-     * 
+     *
      * @return {@link LicenseInfo}
      */
     public async LicenseInfo get_license_info_async (
@@ -7272,9 +7272,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get valid license tokens and SPDX license IDs
-     * 
+     *
      * @param license package license string
-     * 
+     *
      * @return {@link LicenseTokens}
      */
     public async LicenseTokens get_license_tokens_async (
@@ -7302,11 +7302,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of packages required for build by given source packages list recursively
-     * 
+     *
      * @param branch name of packageset
      * @param packages package or list of packages
      * @param arch packages architecture
-     * 
+     *
      * @return {@link BuildDependencySet}
      */
     public async BuildDependencySet get_package_build_dependency_set_async (
@@ -7350,10 +7350,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about packages from package sets by given source packages list
-     * 
+     *
      * @param packages package or list of packages
      * @param branches list of package sets to filter result
-     * 
+     *
      * @return {@link PackageFindPackageset}
      */
     public async PackageFindPackageset get_package_find_packageset_async (
@@ -7396,11 +7396,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get packages with conflicting files in packages that don't have a conflict in dependencies
-     * 
+     *
      * @param packages package or list of packages
      * @param branch name of packageset
      * @param archs list of packages architectures
-     * 
+     *
      * @return {@link PackageMisconflictPackages}
      */
     public async PackageMisconflictPackages get_package_misconflict_async (
@@ -7448,11 +7448,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about binary packages from  last package sets by given file MD5 checksum and package set name
-     * 
+     *
      * @param branch name of packageset
      * @param md5 file MD5 checksum
      * @param arch packages architecture
-     * 
+     *
      * @return {@link PackageByFileName}
      */
     public async PackageByFileName get_package_package_by_file_md5_async (
@@ -7493,11 +7493,11 @@ public sealed class AltRepo.Client : Object {
     /**
      * Get information about binary packages from  last package sets by given file name and package set name.
      * File name wildcars '*' is allowed.
-     * 
+     *
      * @param file file name
      * @param branch name of packageset
      * @param arch packages architecture
-     * 
+     *
      * @return {@link PackageByFileName}
      */
     public async PackageByFileName get_package_package_by_file_name_async (
@@ -7537,9 +7537,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package files by hash
-     * 
-     * @param pkghash 
-     * 
+     *
+     * @param pkghash no description
+     *
      * @return {@link PackageFiles}
      */
     public async PackageFiles get_package_package_files_pkghash_async (
@@ -7562,7 +7562,7 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information for package by parameters from last packages
-     * 
+     *
      * @param name package name
      * @param version package version
      * @param release package release
@@ -7574,7 +7574,7 @@ public sealed class AltRepo.Client : Object {
      * @param packager package packager name
      * @param packager_email package packager email
      * @param full show full package information
-     * 
+     *
      * @return {@link PackageInfo}
      */
     public async PackageInfo get_package_package_info_async (
@@ -7675,9 +7675,9 @@ public sealed class AltRepo.Client : Object {
     /**
      * Get information about binary packages from  last package sets by given file names array and package set name.
      * File name wildcars '*' is not allowed.
-     * 
-     * @param payload 
-     * 
+     *
+     * @param payload no description
+     *
      * @return {@link PackageByFileName}
      */
     public async PackageByFileName post_package_packages_by_file_names_async (
@@ -7704,14 +7704,14 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get repocop data by name, version and release
-     * 
+     *
      * @param branch name of packageset
      * @param package_name source or binary package name
      * @param package_version source or binary package version
      * @param package_release source or binary package release
      * @param bin_package_arch binary package arch
      * @param package_type packages type [source|binary]
-     * 
+     *
      * @return {@link RepocopJsonGetList}
      */
     public async RepocopJsonGetList get_package_repocop_async (
@@ -7772,9 +7772,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get spec file by source package hash
-     * 
+     *
      * @param pkghash package hash
-     * 
+     *
      * @return {@link PackageSpecfile}
      */
     public async PackageSpecfile get_package_specfile_by_hash_pkghash_async (
@@ -7797,10 +7797,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get spec file by source package name and branch
-     * 
+     *
      * @param branch name of packageset
      * @param name source package name
-     * 
+     *
      * @return {@link PackageSpecfile}
      */
     public async PackageSpecfile get_package_specfile_by_name_async (
@@ -7833,11 +7833,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about unpackaged directories by maintainer nickname
-     * 
+     *
      * @param branch name of packageset
      * @param packager maintainer nickname
      * @param archs list of packages architectures
-     * 
+     *
      * @return {@link UnpackagedDirs}
      */
     public async UnpackagedDirs get_package_unpackaged_dirs_async (
@@ -7881,7 +7881,7 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get packages build dependencies by set of parameters
-     * 
+     *
      * @param packages package or list of packages
      * @param branch name of packageset
      * @param depth dependency depth
@@ -7893,7 +7893,7 @@ public sealed class AltRepo.Client : Object {
      * @param filter_by_source filter result by dependency on source package
      * @param oneandhalf use dependency depth 1.5
      * @param use_last_tasks use repo state including last done tasks
-     * 
+     *
      * @return {@link PackageBuildDependency}
      */
     public async PackageBuildDependency get_package_what_depends_src_async (
@@ -8001,8 +8001,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of active package sets
-     * 
-     * 
+     *
+     *
      * @return {@link PackageSetActivePackageSets}
      */
     public async PackageSetActivePackageSets get_packageset_active_packagesets_async (
@@ -8024,10 +8024,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get difference list of packages from two package sets
-     * 
+     *
      * @param pkgset1 first packageset name
      * @param pkgset2 second packageset name
-     * 
+     *
      * @return {@link PackagesetCompare}
      */
     public async PackagesetCompare get_packageset_compare_packagesets_async (
@@ -8060,11 +8060,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get packages by packageset component and architecture.
-     * 
+     *
      * @param branch name of packageset
      * @param arch architecture name
      * @param component component name
-     * 
+     *
      * @return {@link PackagesByUuid}
      */
     public async PackagesByUuid get_packageset_packages_by_component_async (
@@ -8102,9 +8102,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get packages by packageset component UUID
-     * 
+     *
      * @param uuid packageset component UUID
-     * 
+     *
      * @return {@link PackagesByUuid}
      */
     public async PackagesByUuid get_packageset_packages_by_uuid_async (
@@ -8132,8 +8132,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package set status into database
-     * 
-     * 
+     *
+     *
      * @return {@link PackageSetStatusGet}
      */
     public async PackageSetStatusGet get_packageset_pkgset_status_async (
@@ -8155,11 +8155,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of packageset packages. Architecture argument is actual only if type is 'binary'.
-     * 
+     *
      * @param branch name of packageset
      * @param package_type packages type [source|binary|all]
      * @param archs list of packages architectures
-     * 
+     *
      * @return {@link PackagesetPackages}
      */
     public async PackagesetPackages get_packageset_repository_packages_async (
@@ -8205,9 +8205,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get repository statistics
-     * 
+     *
      * @param branch name of packageset
-     * 
+     *
      * @return {@link RepositoryStatistics}
      */
     public async RepositoryStatistics get_packageset_repository_statistics_async (
@@ -8237,10 +8237,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * alias for /all_maintainers_with_nicknames
-     * 
+     *
      * @param branch name of packageset
-     * 
-     * @return {@link Gee.ArrayList<AllMaintainers>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public async Gee.ArrayList<AllMaintainers> get_site_all_maintainers_async (
         string branch,
@@ -8267,10 +8267,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * List of maintainers in branch with nicknames and source packages count
-     * 
+     *
      * @param branch name of packageset
-     * 
-     * @return {@link Gee.ArrayList<AllMaintainers>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public async Gee.ArrayList<AllMaintainers> get_site_all_maintainers_with_nicknames_async (
         string branch,
@@ -8297,9 +8297,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary package archs list
-     * 
+     *
      * @param branch name of packageset
-     * 
+     *
      * @return {@link SiteAllArchs}
      */
     public async SiteAllArchs get_site_all_pkgset_archs_async (
@@ -8327,9 +8327,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary package archs list with source packages count
-     * 
+     *
      * @param branch name of packageset
-     * 
+     *
      * @return {@link SiteAllArchs}
      */
     public async SiteAllArchs get_site_all_pkgset_archs_with_src_count_async (
@@ -8357,8 +8357,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package sets list
-     * 
-     * 
+     *
+     *
      * @return {@link SiteAllPackagasets}
      */
     public async SiteAllPackagasets get_site_all_pkgsets_async (
@@ -8380,8 +8380,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package sets list with source packages count
-     * 
-     * 
+     *
+     *
      * @return {@link SiteAllPackagesetsSummary}
      */
     public async SiteAllPackagesetsSummary get_site_all_pkgsets_summary_async (
@@ -8403,8 +8403,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package sets list with source packages count
-     * 
-     * 
+     *
+     *
      * @return {@link SiteAllPackagasets}
      */
     public async SiteAllPackagasets get_site_all_pkgsets_with_src_count_async (
@@ -8426,12 +8426,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get Beehive rebuild errors by the maintainer's nickname
-     * 
+     *
      * @param branch name of packageset
      * @param maintainer_nickname nickname of maintainer
      * @param by_acl search maintainer's packages by ACL
-     * 
-     * @return {@link Gee.ArrayList<SiteBeehiveByMaintainer>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public async Gee.ArrayList<SiteBeehiveByMaintainer> get_site_beehive_errors_by_maintainer_async (
         string branch,
@@ -8470,10 +8470,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary package archs and versions
-     * 
+     *
      * @param branch name of packageset
      * @param name binary package name
-     * 
+     *
      * @return {@link SitePackagesBinaryList}
      */
     public async SitePackagesBinaryList get_site_binary_package_archs_and_versions_async (
@@ -8506,9 +8506,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary package scripts
-     * 
-     * @param pkghash 
-     * 
+     *
+     * @param pkghash no description
+     *
      * @return {@link SiteBinPackageScripts}
      */
     public async SiteBinPackageScripts get_site_binary_package_scripts_pkghash_async (
@@ -8531,12 +8531,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about package deleted from branch
-     * 
+     *
      * @param branch name of packageset
      * @param name package name
      * @param package_type packages type [source|binary]
      * @param arch arch of binary packages
-     * 
+     *
      * @return {@link SiteDeletedPackage}
      */
     public async SiteDeletedPackage get_site_deleted_package_info_async (
@@ -8583,10 +8583,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Fast packages search by name
-     * 
+     *
      * @param name package or list of package names
      * @param branch name of packageset
-     * 
+     *
      * @return {@link SiteFastPackagesSearch}
      */
     public async SiteFastPackagesSearch get_site_fast_packages_search_lookup_async (
@@ -8625,11 +8625,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Find packages by name
-     * 
+     *
      * @param name package or list of package names
      * @param branch name of packageset
      * @param arch binary package arch
-     * 
+     *
      * @return {@link SiteFingPackages}
      */
     public async SiteFingPackages get_site_find_packages_async (
@@ -8675,10 +8675,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Find source package in branch by binary package name
-     * 
+     *
      * @param branch name of packageset
      * @param name package name
-     * 
+     *
      * @return {@link FindSourcePackageInBranch}
      */
     public async FindSourcePackageInBranch get_site_find_source_package_async (
@@ -8711,11 +8711,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of last packages from tasks for given parameters
-     * 
+     *
      * @param branch name of packageset
      * @param tasks_limit number of last tasks to get
      * @param task_owner task owner's nickname
-     * 
+     *
      * @return {@link SiteLastPackages}
      */
     public async SiteLastPackages get_site_last_packages_async (
@@ -8755,11 +8755,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of last packages from branch for given parameters
-     * 
+     *
      * @param branch name of packageset
      * @param packages_limit number of last packages to get
      * @param packager package packager's nickname
-     * 
+     *
      * @return {@link SiteLastBranchPackages}
      */
     public async SiteLastBranchPackages get_site_last_packages_by_branch_async (
@@ -8799,11 +8799,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of last packages from tasks for given parameters
-     * 
+     *
      * @param branch name of packageset
      * @param tasks_limit number of last tasks to get
      * @param task_owner task owner's nickname
-     * 
+     *
      * @return {@link SiteLastPackages}
      */
     public async SiteLastPackages get_site_last_packages_by_tasks_async (
@@ -8843,9 +8843,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about last packages with CVE fixes mentioned in changelog
-     * 
+     *
      * @param branch name of packageset
-     * 
+     *
      * @return {@link SiteLastPackagesWithCVEFixes}
      */
     public async SiteLastPackagesWithCVEFixes get_site_last_packages_with_cve_fixed_async (
@@ -8873,10 +8873,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Packages collected by the specified maintainer
-     * 
+     *
      * @param maintainer_nickname nickname of maintainer
-     * 
-     * @return {@link Gee.ArrayList<MaintainerBranches>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public async Gee.ArrayList<MaintainerBranches> get_site_maintainer_branches_async (
         string maintainer_nickname,
@@ -8903,11 +8903,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Maintainer information
-     * 
+     *
      * @param branch name of packageset
      * @param maintainer_nickname nickname of maintainer
-     * 
-     * @return {@link Gee.ArrayList<MaintainerInfo>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public async Gee.ArrayList<MaintainerInfo> get_site_maintainer_info_async (
         string branch,
@@ -8939,12 +8939,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Packages collected by the specified maintainer
-     * 
+     *
      * @param branch name of packageset
      * @param maintainer_nickname nickname of maintainer
      * @param by_acl search maintainer's packages by ACL
-     * 
-     * @return {@link Gee.ArrayList<MaintainerPackages>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public async Gee.ArrayList<MaintainerPackages> get_site_maintainer_packages_async (
         string branch,
@@ -8983,10 +8983,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package changelog history by hash
-     * 
+     *
      * @param pkghash package hash
      * @param changelog_last changelog history length
-     * 
+     *
      * @return {@link SiteChangelog}
      */
     public async SiteChangelog get_site_package_changelog_pkghash_async (
@@ -9017,10 +9017,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package download links by source package hash
-     * 
+     *
      * @param pkghash package hash
      * @param branch name of packageset
-     * 
+     *
      * @return {@link SitePackagesDownloads}
      */
     public async SitePackagesDownloads get_site_package_downloads_pkghash_async (
@@ -9049,11 +9049,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary package download link
-     * 
+     *
      * @param pkghash package hash
      * @param branch name of packageset
      * @param arch arch of binary packages
-     * 
+     *
      * @return {@link SitePackagesDownloads}
      */
     public async SitePackagesDownloads get_site_package_downloads_bin_pkghash_async (
@@ -9087,10 +9087,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package download links by source package hash
-     * 
+     *
      * @param pkghash package hash
      * @param branch name of packageset
-     * 
+     *
      * @return {@link SitePackagesDownloads}
      */
     public async SitePackagesDownloads get_site_package_downloads_src_pkghash_async (
@@ -9119,12 +9119,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package info by hash
-     * 
+     *
      * @param pkghash package hash
      * @param branch name of packageset
      * @param changelog_last changelog history length
      * @param package_type packages type [source|binary]
-     * 
+     *
      * @return {@link SitePackageInfo}
      */
     public async SitePackageInfo get_site_package_info_pkghash_async (
@@ -9167,9 +9167,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get brief package info by hash
-     * 
+     *
      * @param pkghash package hash
-     * 
+     *
      * @return {@link SiteBriefPackageInfo}
      */
     public async SiteBriefPackageInfo get_site_package_info_brief_pkghash_async (
@@ -9192,9 +9192,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary package build log link
-     * 
+     *
      * @param pkghash package hash
-     * 
+     *
      * @return {@link BinPackageLogElement}
      */
     public async BinPackageLogElement get_site_package_log_bin_pkghash_async (
@@ -9217,10 +9217,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary packages file conflicts by source package.
-     * 
+     *
      * @param pkghash source package hash
      * @param branch name of packageset
-     * 
+     *
      * @return {@link PackageMisconflictBySrc}
      */
     public async PackageMisconflictBySrc get_site_package_misconflict_pkghash_async (
@@ -9249,10 +9249,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get source package name from repology.
-     * 
+     *
      * @param branch name of packageset
      * @param name source package name
-     * 
+     *
      * @return {@link PackageNameFromRepology}
      */
     public async PackageNameFromRepology get_site_package_name_from_repology_async (
@@ -9285,10 +9285,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package name, version, release and type by hash. Check package name matching if provided.
-     * 
+     *
      * @param pkghash package hash
      * @param name package name
-     * 
+     *
      * @return {@link PackageNVRByHash}
      */
     public async PackageNVRByHash get_site_package_nvr_by_hash_pkghash_async (
@@ -9319,11 +9319,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get source or binary package versions from last branches
-     * 
+     *
      * @param name source package name
      * @param package_type packages type [source|binary]
      * @param arch arch of binary packages
-     * 
+     *
      * @return {@link SiteSourcePackagesVersions}
      */
     public async SiteSourcePackagesVersions get_site_package_versions_async (
@@ -9365,12 +9365,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary packages versions from images
-     * 
+     *
      * @param name package name
      * @param branch image base branch
      * @param edition image edition
      * @param type image type
-     * 
+     *
      * @return {@link SiteImagePackageVersions}
      */
     public async SiteImagePackageVersions get_site_package_versions_from_images_async (
@@ -9413,10 +9413,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get source package versions from tasks
-     * 
+     *
      * @param name package name
      * @param branch name of packageset
-     * 
+     *
      * @return {@link SItePackagesVersionsFromTasks}
      */
     public async SItePackagesVersionsFromTasks get_site_package_versions_from_tasks_async (
@@ -9451,9 +9451,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package set list by package hash
-     * 
+     *
      * @param pkghash package hash
-     * 
+     *
      * @return {@link SitePackagesetsByHash}
      */
     public async SitePackagesetsByHash get_site_packagesets_by_hash_pkghash_async (
@@ -9476,11 +9476,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get binary package hash by package name, arch and package set name
-     * 
+     *
      * @param branch name of packageset
      * @param name package name
      * @param arch package arch
-     * 
+     *
      * @return {@link SitePackagesetPackageHash}
      */
     public async SitePackagesetPackageHash get_site_pkghash_by_binary_name_async (
@@ -9518,10 +9518,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get source package hash by package name and package set name
-     * 
+     *
      * @param branch name of packageset
      * @param name package name
-     * 
+     *
      * @return {@link SitePackagesetPackageHash}
      */
     public async SitePackagesetPackageHash get_site_pkghash_by_name_async (
@@ -9554,12 +9554,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get source package hash by package name, version and release for specific branch
-     * 
+     *
      * @param name package name
      * @param branch name of packageset
      * @param version source package version
      * @param release source package release
-     * 
+     *
      * @return {@link SitePackagesetPackageHashByNameVersionRelease}
      */
     public async SitePackagesetPackageHashByNameVersionRelease get_site_pkghash_by_nvr_async (
@@ -9602,10 +9602,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of package categories with count for given package set
-     * 
+     *
      * @param branch name of packageset
      * @param package_type packages type [source|binary|all]
-     * 
+     *
      * @return {@link SitePackagesetCategories}
      */
     public async SitePackagesetCategories get_site_pkgset_categories_count_async (
@@ -9640,8 +9640,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get package sets list with source packages count and status info
-     * 
-     * 
+     *
+     *
      * @return {@link SitePackagesetsSummaryStatus}
      */
     public async SitePackagesetsSummaryStatus get_site_pkgsets_summary_status_async (
@@ -9663,12 +9663,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get repocop results by the maintainers nickname
-     * 
+     *
      * @param branch name of packageset
      * @param maintainer_nickname nickname of maintainer
      * @param by_acl search maintainer's packages by ACL
-     * 
-     * @return {@link Gee.ArrayList<RepocopByMaintainer>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public async Gee.ArrayList<RepocopByMaintainer> get_site_repocop_by_maintainer_async (
         string branch,
@@ -9707,12 +9707,12 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of packageset packages in accordance to given parameters
-     * 
+     *
      * @param branch name of packageset
      * @param package_type packages type [source|binary|all]
      * @param group package category
      * @param buildtime package buildtime
-     * 
+     *
      * @return {@link SitePackages}
      */
     public async SitePackages get_site_repository_packages_async (
@@ -9761,9 +9761,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get source package versions from last branches
-     * 
+     *
      * @param name source package name
-     * 
+     *
      * @return {@link SiteSourcePackagesVersions}
      */
     public async SiteSourcePackagesVersions get_site_source_package_versions_async (
@@ -9791,11 +9791,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get tasks list by maintainer nickname
-     * 
+     *
      * @param branch name of packageset
      * @param maintainer_nickname nickname of maintainer
-     * 
-     * @return {@link Gee.ArrayList<SiteTaskByName>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     [Version (deprecated = true, deprecated_since = "")]
     public async Gee.ArrayList<SiteTaskByName> get_site_tasks_by_maintainer_async (
@@ -9828,9 +9828,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get tasks list by source package name
-     * 
+     *
      * @param name package name
-     * 
+     *
      * @return {@link SiteTaskByName}
      */
     [Version (deprecated = true, deprecated_since = "")]
@@ -9859,9 +9859,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get history of done tasks for an active branches
-     * 
+     *
      * @param task_id Number of task id
-     * 
+     *
      * @return {@link SiteTasksHistory}
      */
     public async SiteTasksHistory get_site_tasks_history_async (
@@ -9891,11 +9891,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get watch packages by the maintainer's nickname
-     * 
+     *
      * @param maintainer_nickname nickname of maintainer
      * @param by_acl search maintainer's packages by ACL
-     * 
-     * @return {@link Gee.ArrayList<SiteWatchByMaintainer>}
+     *
+     * @return {@link Gee.ArrayList}
      */
     public async Gee.ArrayList<SiteWatchByMaintainer> get_site_watch_by_maintainer_async (
         string maintainer_nickname,
@@ -9929,10 +9929,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get list of packages required for build by source packages from task recursively
-     * 
+     *
      * @param id task ID
      * @param arch packages architecture
-     * 
+     *
      * @return {@link BuildDependencySet}
      */
     public async BuildDependencySet get_task_build_dependency_set_id_async (
@@ -9966,55 +9966,55 @@ public sealed class AltRepo.Client : Object {
      * Get relation between images and binary packages:
      * - if some packages from a task are in images, they will be in **in_images** list.
      * - if some packages from a task aren't in any image, they will be in **not_in_images** list.
-     * 
+     *
      * ## Arguments
      * - Allowed task's states: **EPERM**, **TESTED** or **DONE**.
      * - If parameter **packages_names** (list of binary packages names) is set, it will show only specified binary packages.
      * - You can provide multiple filters for images. If an image matches at least one filter, it will be shown.
-     * 
+     *
      * ## Examples
      * Show information about all of the binary packages inside images:
-     * ```json
+     * json
      * {
-     *     "task_id": 327143
+     * "task_id": 327143
      * }
-     * ```
+     *
      * Show information about all of the binary packages inside images which edition is 'alt-kworkstation', type is 'iso' and version is '10.1.*':
-     * ```json
+     * json
      * {
-     *     "task_id": 327143,
-     *     "filters": [
-     *         {
-     *             "editions": ["alt-kworkstation"],
-     *             "types": ["iso"],
-     *             "versions": ["10.1"]
-     *         }
-     *     ]
+     * "task_id": 327143,
+     * "filters": [
+     * {
+     * "editions": ["alt-kworkstation"],
+     * "types": ["iso"],
+     * "versions": ["10.1"]
      * }
-     * ```
+     * ]
+     * }
+     *
      * Show information about **liblash** binary package inside images which edition is 'alt-kworkstation' with version '10.1.*' or edition 'slinux'
      * with version '10.2.*'.
-     * ```json
+     * json
      * {
-     *     "task_id": 312990,
-     *     "packages_names": [
-     *         "liblash"
-     *     ],
-     *     "filters": [
-     *         {
-     *             "editions": ["alt-kworkstation"],
-     *             "versions": ["10.1"]
-     *         },
-     *         {
-     *             "editions": ["slinux"],
-     *             "versions": ["10.2"]
-     *         }
-     *     ]
+     * "task_id": 312990,
+     * "packages_names": [
+     * "liblash"
+     * ],
+     * "filters": [
+     * {
+     * "editions": ["alt-kworkstation"],
+     * "versions": ["10.1"]
+     * },
+     * {
+     * "editions": ["slinux"],
+     * "versions": ["10.2"]
      * }
-     * ```
-     * 
-     * @param payload 
-     * 
+     * ]
+     * }
+     *
+     *
+     * @param payload no description
+     *
      * @return {@link CheckImagesOutput}
      */
     public async CheckImagesOutput post_task_check_images_async (
@@ -10042,9 +10042,9 @@ public sealed class AltRepo.Client : Object {
     /**
      * Get the newest images which contain binary packages with the same names as binaries from a task with one of the following states: EPERM,
      * TESTED or DONE. Listed only active images for task's branch.
-     * 
+     *
      * @param id task ID
-     * 
+     *
      * @return {@link FindImagesByTask}
      */
     public async FindImagesByTask get_task_find_images_id_async (
@@ -10067,10 +10067,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about packages from package sets by list of source packages from task
-     * 
+     *
      * @param id task ID
      * @param branches list of package sets to filter result
-     * 
+     *
      * @return {@link TaskFindPackageset}
      */
     public async TaskFindPackageset get_task_find_packageset_id_async (
@@ -10105,11 +10105,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get packages with conflicting files in packages from task that do not have a conflict in dependencies
-     * 
+     *
      * @param id task ID
      * @param archs list of packages architectures
      * @param no_cache cache override value, not affect on request results
-     * 
+     *
      * @return {@link TaskMisconflictPackages}
      */
     public async TaskMisconflictPackages get_task_misconflict_id_async (
@@ -10151,11 +10151,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get EPERM tasks which require approval
-     * 
+     *
      * @param acl_group ACL-group from which approval is required
      * @param branches list of package sets to filter result
      * @param before show tasks' info before specified datetime (YYYY-MM-DD[ HH:MM:SS])
-     * 
+     *
      * @return {@link NeedsApproval}
      */
     public async NeedsApproval get_task_needs_approval_async (
@@ -10201,9 +10201,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information about packages from task
-     * 
+     *
      * @param id task ID
-     * 
+     *
      * @return {@link TaskPackages}
      */
     public async TaskPackages get_task_packages_id_async (
@@ -10226,8 +10226,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Alias for 'all_tasks_branches' for compatibility
-     * 
-     * 
+     *
+     *
      * @return {@link AllTasksBranches}
      */
     [Version (deprecated = true, deprecated_since = "")]
@@ -10250,8 +10250,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get branches list for last tasks
-     * 
-     * 
+     *
+     *
      * @return {@link AllTasksBranches}
      */
     public async AllTasksBranches get_task_progress_all_tasks_branches_async (
@@ -10273,14 +10273,14 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Task search by ID, task owner or component.
-     * 
+     *
      * @param input task search arguments
      * @param owner task owner
      * @param branch name of packageset
      * @param state task state
      * @param tasks_limit number of last tasks to get
      * @param by_package find tasks by source package name
-     * 
+     *
      * @return {@link TasksList}
      */
     public async TasksList get_task_progress_find_tasks_async (
@@ -10351,11 +10351,11 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Task search by ID, owner, repo, state and component.
-     * 
+     *
      * @param input task search arguments
      * @param branch name of packageset
      * @param tasks_limit number of last tasks to get
-     * 
+     *
      * @return {@link FindTasks}
      */
     public async FindTasks get_task_progress_find_tasks_lookup_async (
@@ -10401,10 +10401,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get the latest tasks changes
-     * 
+     *
      * @param branch name of packageset
      * @param tasks_limit number of last tasks to get
-     * 
+     *
      * @return {@link TasksList}
      */
     public async TasksList get_task_progress_last_tasks_async (
@@ -10441,9 +10441,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information for task by ID
-     * 
+     *
      * @param id task ID
-     * 
+     *
      * @return {@link TaskProgressTaskInfo}
      */
     public async TaskProgressTaskInfo get_task_progress_task_info_id_async (
@@ -10466,9 +10466,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get task difference by ID
-     * 
+     *
      * @param id task ID
-     * 
+     *
      * @return {@link TaskDiff}
      */
     public async TaskDiff get_task_task_diff_id_async (
@@ -10491,13 +10491,13 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get done tasks history for branch
-     * 
+     *
      * @param branch name of packageset
      * @param start_task start task ID
      * @param end_task end task ID
      * @param start_date task history start date (YYYY-MM-DD)
      * @param end_date task history end date (YYYY-MM-DD)
-     * 
+     *
      * @return {@link TaskHistory}
      */
     public async TaskHistory get_task_task_history_async (
@@ -10553,13 +10553,13 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get information for task by ID
-     * 
+     *
      * @param id task ID
      * @param try task try
      * @param iteration task iteration
      * @param no_cache cache override value, not affect on request results
      * @param states Filter task states by given list (valid values is `DONE`, `EPERM` and `TESTED`)
-     * 
+     *
      * @return {@link TaskInfo}
      */
     public async TaskInfo get_task_task_info_id_async (
@@ -10615,10 +10615,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get repository state by ID
-     * 
+     *
      * @param id task ID
      * @param include_task_packages include task packages in repository state
-     * 
+     *
      * @return {@link TaskRepo}
      */
     public async TaskRepo get_task_task_repo_id_async (
@@ -10649,7 +10649,7 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get packages build dependencies
-     * 
+     *
      * @param id task ID
      * @param depth dependency depth
      * @param dptype dependency type [source|binary|both]
@@ -10660,7 +10660,7 @@ public sealed class AltRepo.Client : Object {
      * @param filter_by_source filter result by dependency on source package
      * @param oneandhalf use dependency depth 1.5
      * @param no_cache cache override value, not affect on request results
-     * 
+     *
      * @return {@link TaskBuildDependency}
      */
     public async TaskBuildDependency get_task_what_depends_src_id_async (
@@ -10755,8 +10755,8 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * get API version
-     * 
-     * 
+     *
+     *
      * @return {@link APIVersion}
      */
     public async APIVersion get_version_async (
@@ -10778,10 +10778,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get BDU information
-     * 
+     *
      * @param vuln_id BDU id
      * @param exclude_json exclude vulnerability raw JSON from results
-     * 
+     *
      * @return {@link VulnerabilityInfo}
      */
     public async VulnerabilityInfo get_vuln_bdu_async (
@@ -10816,10 +10816,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get a list of packages in which the specified BDU vulnerability is closed.
-     * 
+     *
      * @param vuln_id BDU id
      * @param exclude_json exclude vulnerability raw JSON from results
-     * 
+     *
      * @return {@link VulnFixesPackages}
      */
     public async VulnFixesPackages get_vuln_bdu_fixes_async (
@@ -10854,10 +10854,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get CVE information
-     * 
+     *
      * @param vuln_id CVE id
      * @param exclude_json exclude vulnerability raw JSON from results
-     * 
+     *
      * @return {@link VulnerabilityInfo}
      */
     public async VulnerabilityInfo get_vuln_cve_async (
@@ -10892,10 +10892,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get a list of packages in which the specified CVE vulnerability is closed.
-     * 
+     *
      * @param vuln_id CVE id
      * @param exclude_json exclude vulnerability raw JSON from results
-     * 
+     *
      * @return {@link VulnFixesPackages}
      */
     public async VulnFixesPackages get_vuln_cve_fixes_async (
@@ -10930,10 +10930,10 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get GHSA information
-     * 
+     *
      * @param vuln_id GHSA id
      * @param exclude_json exclude vulnerability raw JSON from results
-     * 
+     *
      * @return {@link string}
      */
     public async string get_vuln_ghsa_async (
@@ -10966,9 +10966,9 @@ public sealed class AltRepo.Client : Object {
 
     /**
      * Get a list of fixed CVEs from an task with one of the following states: EPERM, TESTED, or DONE.
-     * 
+     *
      * @param id task ID
-     * 
+     *
      * @return {@link CveVulnerableTask}
      */
     public async CveVulnerableTask get_vuln_task_id_async (

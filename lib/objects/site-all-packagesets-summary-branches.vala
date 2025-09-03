@@ -31,6 +31,6 @@ public class AltRepo.SiteAllPackagesetsSummaryBranches : Object {
      */
     public Gee.ArrayList<SiteAllPackagesetsSummaryCounts> packages_count {
         get; set;
-        default = new Gee.ArrayList<SiteAllPackagesetsSummaryCounts> ()
+        default = new Gee.ArrayList<SiteAllPackagesetsSummaryCounts> ();
     }
 }

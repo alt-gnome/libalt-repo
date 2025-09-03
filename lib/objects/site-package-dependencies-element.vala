@@ -46,6 +46,6 @@ public class AltRepo.SitePackageDependenciesElement : Object {
      */
     public Gee.ArrayList<string> flag_decoded {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

@@ -63,7 +63,7 @@ public class AltRepo.TaskPackages : Object {
 
     public Gee.ArrayList<int64?> dependencies {
         get; set;
-        default = new Gee.ArrayList<int64?> ()
+        default = new Gee.ArrayList<int64?> ();
     }
 
     /**
@@ -76,7 +76,7 @@ public class AltRepo.TaskPackages : Object {
      */
     public Gee.ArrayList<TaskPackagesSubtaskElement> subtasks {
         get; set;
-        default = new Gee.ArrayList<TaskPackagesSubtaskElement> ()
+        default = new Gee.ArrayList<TaskPackagesSubtaskElement> ();
     }
 
     /**
@@ -84,6 +84,6 @@ public class AltRepo.TaskPackages : Object {
      */
     public Gee.ArrayList<TaskPackagesPackageElement> arepo {
         get; set;
-        default = new Gee.ArrayList<TaskPackagesPackageElement> ()
+        default = new Gee.ArrayList<TaskPackagesPackageElement> ();
     }
 }

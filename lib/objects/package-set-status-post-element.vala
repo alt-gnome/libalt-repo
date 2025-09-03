@@ -66,6 +66,6 @@ public class AltRepo.PackageSetStatusPostElement : Object {
      */
     public Gee.ArrayList<Object> rs_mirrors_json {
         get; set;
-        default = new Gee.ArrayList<Object> ()
+        default = new Gee.ArrayList<Object> ();
     }
 }

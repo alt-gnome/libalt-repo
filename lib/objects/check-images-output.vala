@@ -31,7 +31,7 @@ public class AltRepo.CheckImagesOutput : Object {
      */
     public Gee.ArrayList<CheckImagesOutputImage> in_images {
         get; set;
-        default = new Gee.ArrayList<CheckImagesOutputImage> ()
+        default = new Gee.ArrayList<CheckImagesOutputImage> ();
     }
 
     /**
@@ -39,6 +39,6 @@ public class AltRepo.CheckImagesOutput : Object {
      */
     public Gee.ArrayList<CheckImagesOutputPackage> not_in_images {
         get; set;
-        default = new Gee.ArrayList<CheckImagesOutputPackage> ()
+        default = new Gee.ArrayList<CheckImagesOutputPackage> ();
     }
 }

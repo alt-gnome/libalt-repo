@@ -36,6 +36,6 @@ public class AltRepo.MaintainerPackages : Object {
      */
     public Gee.ArrayList<MaintainerPackagesElement> packages {
         get; set;
-        default = new Gee.ArrayList<MaintainerPackagesElement> ()
+        default = new Gee.ArrayList<MaintainerPackagesElement> ();
     }
 }

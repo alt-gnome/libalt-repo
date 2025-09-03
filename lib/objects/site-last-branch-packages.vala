@@ -36,7 +36,7 @@ public class AltRepo.SiteLastBranchPackages : Object {
      */
     public Gee.ArrayList<SiteLastBranchPackagesPackage> packages {
         get; set;
-        default = new Gee.ArrayList<SiteLastBranchPackagesPackage> ()
+        default = new Gee.ArrayList<SiteLastBranchPackagesPackage> ();
     }
 
     /**

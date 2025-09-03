@@ -36,7 +36,7 @@ public class AltRepo.BuildDependencySet : Object {
      */
     public Gee.ArrayList<BuildDependencySetPackages> packages {
         get; set;
-        default = new Gee.ArrayList<BuildDependencySetPackages> ()
+        default = new Gee.ArrayList<BuildDependencySetPackages> ();
     }
 
     /**
@@ -44,6 +44,6 @@ public class AltRepo.BuildDependencySet : Object {
      */
     public Gee.ArrayList<BuildDependencySetAmbiguousProvides> ambiguous_dependencies {
         get; set;
-        default = new Gee.ArrayList<BuildDependencySetAmbiguousProvides> ()
+        default = new Gee.ArrayList<BuildDependencySetAmbiguousProvides> ();
     }
 }

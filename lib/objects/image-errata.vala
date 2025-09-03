@@ -36,6 +36,6 @@ public class AltRepo.ImageErrata : Object {
      */
     public Gee.ArrayList<ImageErrataElement> erratas {
         get; set;
-        default = new Gee.ArrayList<ImageErrataElement> ()
+        default = new Gee.ArrayList<ImageErrataElement> ();
     }
 }

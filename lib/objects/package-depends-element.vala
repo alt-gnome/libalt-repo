@@ -56,6 +56,6 @@ public class AltRepo.PackageDependsElement : Object {
      */
     public Gee.ArrayList<string> dp_flag_decoded {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

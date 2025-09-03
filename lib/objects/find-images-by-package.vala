@@ -36,6 +36,6 @@ public class AltRepo.FindImagesByPackage : Object {
      */
     public Gee.ArrayList<FindImagesByPackageElement> images {
         get; set;
-        default = new Gee.ArrayList<FindImagesByPackageElement> ()
+        default = new Gee.ArrayList<FindImagesByPackageElement> ();
     }
 }

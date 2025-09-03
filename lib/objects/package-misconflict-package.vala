@@ -51,7 +51,7 @@ public class AltRepo.PackageMisconflictPackage : Object {
      */
     public Gee.ArrayList<string> archs {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -59,6 +59,6 @@ public class AltRepo.PackageMisconflictPackage : Object {
      */
     public Gee.ArrayList<string> files_with_conflict {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

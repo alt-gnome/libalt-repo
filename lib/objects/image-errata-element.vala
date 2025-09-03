@@ -101,6 +101,6 @@ public class AltRepo.ImageErrataElement : Object {
      */
     public Gee.ArrayList<VulnerabilitiesElement> vulnerabilities {
         get; set;
-        default = new Gee.ArrayList<VulnerabilitiesElement> ()
+        default = new Gee.ArrayList<VulnerabilitiesElement> ();
     }
 }

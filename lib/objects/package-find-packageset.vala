@@ -36,6 +36,6 @@ public class AltRepo.PackageFindPackageset : Object {
      */
     public Gee.ArrayList<PackageFindPackagesetElement> packages {
         get; set;
-        default = new Gee.ArrayList<PackageFindPackagesetElement> ()
+        default = new Gee.ArrayList<PackageFindPackagesetElement> ();
     }
 }

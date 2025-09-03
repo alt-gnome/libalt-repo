@@ -36,6 +36,6 @@ public class AltRepo.LastImagePackages : Object {
      */
     public Gee.ArrayList<LastImagePackagesElement> packages {
         get; set;
-        default = new Gee.ArrayList<LastImagePackagesElement> ()
+        default = new Gee.ArrayList<LastImagePackagesElement> ();
     }
 }

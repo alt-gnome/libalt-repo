@@ -88,7 +88,7 @@ public class AltRepo.RepologyExportBranchSourcePackageElement : Object {
 
     public Gee.ArrayList<string> c_p_e {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -96,6 +96,6 @@ public class AltRepo.RepologyExportBranchSourcePackageElement : Object {
      */
     public Gee.ArrayList<RepologyExportBranchBinaryPackageElement> binaries {
         get; set;
-        default = new Gee.ArrayList<RepologyExportBranchBinaryPackageElement> ()
+        default = new Gee.ArrayList<RepologyExportBranchBinaryPackageElement> ();
     }
 }

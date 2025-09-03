@@ -86,6 +86,6 @@ public class AltRepo.Errata : Object {
      */
     public Gee.ArrayList<ErrataReference> references {
         get; set;
-        default = new Gee.ArrayList<ErrataReference> ()
+        default = new Gee.ArrayList<ErrataReference> ();
     }
 }

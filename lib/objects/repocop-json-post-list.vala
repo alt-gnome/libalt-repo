@@ -26,6 +26,6 @@ public class AltRepo.RepocopJsonPostList : Object {
      */
     public Gee.ArrayList<RepocopJsonPost> packages {
         get; set;
-        default = new Gee.ArrayList<RepocopJsonPost> ()
+        default = new Gee.ArrayList<RepocopJsonPost> ();
     }
 }

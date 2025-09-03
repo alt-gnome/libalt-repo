@@ -31,6 +31,6 @@ public class AltRepo.AclMaintainerGroups : Object {
      */
     public Gee.ArrayList<AclMaintainerGroupsElement> branches {
         get; set;
-        default = new Gee.ArrayList<AclMaintainerGroupsElement> ()
+        default = new Gee.ArrayList<AclMaintainerGroupsElement> ();
     }
 }

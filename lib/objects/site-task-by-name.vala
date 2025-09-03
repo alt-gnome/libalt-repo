@@ -36,6 +36,6 @@ public class AltRepo.SiteTaskByName : Object {
      */
     public Gee.ArrayList<SiteTaskByNameTask> tasks {
         get; set;
-        default = new Gee.ArrayList<SiteTaskByNameTask> ()
+        default = new Gee.ArrayList<SiteTaskByNameTask> ();
     }
 }

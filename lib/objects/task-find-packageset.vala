@@ -36,7 +36,7 @@ public class AltRepo.TaskFindPackageset : Object {
      */
     public Gee.ArrayList<string> task_packages {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -49,6 +49,6 @@ public class AltRepo.TaskFindPackageset : Object {
      */
     public Gee.ArrayList<TaskFindPackagesetElement> packages {
         get; set;
-        default = new Gee.ArrayList<TaskFindPackagesetElement> ()
+        default = new Gee.ArrayList<TaskFindPackagesetElement> ();
     }
 }

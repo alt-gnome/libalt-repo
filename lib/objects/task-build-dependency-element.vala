@@ -71,7 +71,7 @@ public class AltRepo.TaskBuildDependencyElement : Object {
      */
     public Gee.ArrayList<string> archs {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -79,7 +79,7 @@ public class AltRepo.TaskBuildDependencyElement : Object {
      */
     public Gee.ArrayList<string> cycle {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -87,7 +87,7 @@ public class AltRepo.TaskBuildDependencyElement : Object {
      */
     public Gee.ArrayList<string> requires {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -95,6 +95,6 @@ public class AltRepo.TaskBuildDependencyElement : Object {
      */
     public Gee.ArrayList<string> acl {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

@@ -55,6 +55,6 @@ public class AltRepo.LicenseInfo : Object {
 
     public Gee.ArrayList<string> urls {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

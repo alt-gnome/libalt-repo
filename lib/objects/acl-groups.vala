@@ -36,6 +36,6 @@ public class AltRepo.AclGroups : Object {
      */
     public Gee.ArrayList<AclGroupsElement> groups {
         get; set;
-        default = new Gee.ArrayList<AclGroupsElement> ()
+        default = new Gee.ArrayList<AclGroupsElement> ();
     }
 }

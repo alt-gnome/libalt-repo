@@ -98,7 +98,7 @@ public class AltRepo.ImageInfoElement : Object {
 
     public Gee.ArrayList<string> url {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -121,6 +121,6 @@ public class AltRepo.ImageInfoElement : Object {
      */
     public Gee.ArrayList<ImageInfoComponent> components {
         get; set;
-        default = new Gee.ArrayList<ImageInfoComponent> ()
+        default = new Gee.ArrayList<ImageInfoComponent> ();
     }
 }

@@ -31,6 +31,6 @@ public class AltRepo.ActiveImagesElement : Object {
      */
     public Gee.ArrayList<string> tags {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 }

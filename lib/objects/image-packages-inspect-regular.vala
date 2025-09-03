@@ -51,7 +51,7 @@ public class AltRepo.ImagePackagesInspectRegular : Object {
      */
     public Gee.ArrayList<ImagePackagesElement2> packages_in_tasks {
         get; set;
-        default = new Gee.ArrayList<ImagePackagesElement2> ()
+        default = new Gee.ArrayList<ImagePackagesElement2> ();
     }
 
     /**
@@ -59,6 +59,6 @@ public class AltRepo.ImagePackagesInspectRegular : Object {
      */
     public Gee.ArrayList<ImagePackagesElement1> packages_not_in_db {
         get; set;
-        default = new Gee.ArrayList<ImagePackagesElement1> ()
+        default = new Gee.ArrayList<ImagePackagesElement1> ();
     }
 }

@@ -36,6 +36,6 @@ public class AltRepo.RepositoryStatisticsBranches : Object {
      */
     public Gee.ArrayList<RepositoryStatisticsPackageCounts> packages_count {
         get; set;
-        default = new Gee.ArrayList<RepositoryStatisticsPackageCounts> ()
+        default = new Gee.ArrayList<RepositoryStatisticsPackageCounts> ();
     }
 }

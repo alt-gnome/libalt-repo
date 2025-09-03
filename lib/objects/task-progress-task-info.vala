@@ -76,7 +76,7 @@ public class AltRepo.TaskProgressTaskInfo : Object {
      */
     public Gee.ArrayList<int64?> dependencies {
         get; set;
-        default = new Gee.ArrayList<int64?> ()
+        default = new Gee.ArrayList<int64?> ();
     }
 
     /**
@@ -84,7 +84,7 @@ public class AltRepo.TaskProgressTaskInfo : Object {
      */
     public Gee.ArrayList<SubTaskInfoElement> subtasks {
         get; set;
-        default = new Gee.ArrayList<SubTaskInfoElement> ()
+        default = new Gee.ArrayList<SubTaskInfoElement> ();
     }
 
     /**
@@ -92,6 +92,6 @@ public class AltRepo.TaskProgressTaskInfo : Object {
      */
     public Gee.ArrayList<TaskIterationsElement> iterations {
         get; set;
-        default = new Gee.ArrayList<TaskIterationsElement> ()
+        default = new Gee.ArrayList<TaskIterationsElement> ();
     }
 }

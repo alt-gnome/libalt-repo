@@ -26,7 +26,7 @@ public class AltRepo.SiteTasksHistory : Object {
      */
     public Gee.ArrayList<string> branches {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -34,7 +34,7 @@ public class AltRepo.SiteTasksHistory : Object {
      */
     public Gee.ArrayList<TasksHistoryTask> tasks {
         get; set;
-        default = new Gee.ArrayList<TasksHistoryTask> ()
+        default = new Gee.ArrayList<TasksHistoryTask> ();
     }
 
     /**
@@ -42,6 +42,6 @@ public class AltRepo.SiteTasksHistory : Object {
      */
     public Gee.ArrayList<TasksHistoryBranchCommit> branch_commits {
         get; set;
-        default = new Gee.ArrayList<TasksHistoryBranchCommit> ()
+        default = new Gee.ArrayList<TasksHistoryBranchCommit> ();
     }
 }

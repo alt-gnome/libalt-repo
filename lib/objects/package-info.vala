@@ -36,6 +36,6 @@ public class AltRepo.PackageInfo : Object {
      */
     public Gee.ArrayList<PackageInfoPackage> packages {
         get; set;
-        default = new Gee.ArrayList<PackageInfoPackage> ()
+        default = new Gee.ArrayList<PackageInfoPackage> ();
     }
 }

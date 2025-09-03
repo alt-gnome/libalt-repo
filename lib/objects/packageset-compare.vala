@@ -36,6 +36,6 @@ public class AltRepo.PackagesetCompare : Object {
      */
     public Gee.ArrayList<PackagesetCompareElement> packages {
         get; set;
-        default = new Gee.ArrayList<PackagesetCompareElement> ()
+        default = new Gee.ArrayList<PackagesetCompareElement> ();
     }
 }

@@ -36,6 +36,6 @@ public class AltRepo.RepocopJsonGetList : Object {
      */
     public Gee.ArrayList<RepocopJsonGet> packages {
         get; set;
-        default = new Gee.ArrayList<RepocopJsonGet> ()
+        default = new Gee.ArrayList<RepocopJsonGet> ();
     }
 }

@@ -198,27 +198,27 @@ public class AltRepo.PackageInfoPackage : Object {
 
     public Gee.ArrayList<string> preinprog {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     public Gee.ArrayList<string> postinprog {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     public Gee.ArrayList<string> preunprog {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     public Gee.ArrayList<string> postunprog {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     public Gee.ArrayList<string> buildarchs {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -228,17 +228,17 @@ public class AltRepo.PackageInfoPackage : Object {
 
     public Gee.ArrayList<string> verifyscriptprog {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     public Gee.ArrayList<string> prefixes {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     public Gee.ArrayList<string> instprefixes {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -276,7 +276,7 @@ public class AltRepo.PackageInfoPackage : Object {
      */
     public Gee.ArrayList<PackageInfoChangelogElement> changelog {
         get; set;
-        default = new Gee.ArrayList<PackageInfoChangelogElement> ()
+        default = new Gee.ArrayList<PackageInfoChangelogElement> ();
     }
 
     /**
@@ -284,7 +284,7 @@ public class AltRepo.PackageInfoPackage : Object {
      */
     public Gee.ArrayList<string> files {
         get; set;
-        default = new Gee.ArrayList<string> ()
+        default = new Gee.ArrayList<string> ();
     }
 
     /**
@@ -292,6 +292,6 @@ public class AltRepo.PackageInfoPackage : Object {
      */
     public Gee.ArrayList<PackageInfoDependencies> depends {
         get; set;
-        default = new Gee.ArrayList<PackageInfoDependencies> ()
+        default = new Gee.ArrayList<PackageInfoDependencies> ();
     }
 }

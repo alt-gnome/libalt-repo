@@ -101,7 +101,7 @@ public class AltRepo.SubTaskInfoElement : Object {
      */
     public Gee.ArrayList<SubTaskArchitecture> archs {
         get; set;
-        default = new Gee.ArrayList<SubTaskArchitecture> ()
+        default = new Gee.ArrayList<SubTaskArchitecture> ();
     }
 
     /**
@@ -109,6 +109,6 @@ public class AltRepo.SubTaskInfoElement : Object {
      */
     public Gee.ArrayList<TaskApprovalElement> approval {
         get; set;
-        default = new Gee.ArrayList<TaskApprovalElement> ()
+        default = new Gee.ArrayList<TaskApprovalElement> ();
     }
 }

@@ -31,6 +31,6 @@ public class AltRepo.SiteSourcePackagesVersions : Object {
      */
     public Gee.ArrayList<SitePackageVersionsElement> versions {
         get; set;
-        default = new Gee.ArrayList<SitePackageVersionsElement> ()
+        default = new Gee.ArrayList<SitePackageVersionsElement> ();
     }
 }

@@ -56,6 +56,6 @@ public class AltRepo.ImagePackagesInspectSP : Object {
      */
     public Gee.ArrayList<ImagePackagesInspectSPPackage> packages {
         get; set;
-        default = new Gee.ArrayList<ImagePackagesInspectSPPackage> ()
+        default = new Gee.ArrayList<ImagePackagesInspectSPPackage> ();
     }
 }
