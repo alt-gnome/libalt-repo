@@ -33,12 +33,18 @@ BuildRequires: pkgconfig(libapi-base-1)
 Summary: ALT Repo API library on Vala
 Group: Development/C
 
+Obsoletes: libalt-repo-vala-1 <= 1.19.20
+Provides: libalt-repo-vala-1 = %EVR
+
 %description -n %name%api_version
 %summary.
 
 %package devel
 Summary: Development files for %name
 Group: Development/C
+
+Obsoletes: libalt-repo-vala-1-devel <= 1.19.20
+Provides: libalt-repo-vala-1-devel = %EVR
 
 Requires: %name%api_version = %EVR
 
@@ -49,6 +55,9 @@ Requires: %name%api_version = %EVR
 Summary: Typelib files for %name
 Group: System/Libraries
 
+Obsoletes: libalt-repo-vala-1-gir <= 1.19.20
+Provides: libalt-repo-vala-1-gir = %EVR
+
 Requires: %name%api_version = %EVR
 
 %description -n %name%api_version-gir
@@ -58,6 +67,9 @@ Requires: %name%api_version = %EVR
 Summary: Development gir files for %name for various bindings
 Group: Development/Other
 BuildArch: noarch
+
+Obsoletes: libalt-repo-vala-1-gir-devel <= 1.19.20
+Provides: libalt-repo-vala-1-gir-devel = %EVR
 
 Requires: %name%api_version-gir = %EVR
 
