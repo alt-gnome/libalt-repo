@@ -13,8 +13,8 @@ Group: Development/Other
 Url: https://altlinux.space/alt-gnome/libalt-repo
 Vcs: https://altlinux.space/alt-gnome/libalt-repo.git
 
-Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: rpm-build-vala
