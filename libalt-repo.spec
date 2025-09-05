@@ -9,7 +9,7 @@ Release: alt1
 
 Summary: ALT Repo API library on Vala
 License: GPL-3.0-or-later
-Group: Development/C
+Group: System/Libraries
 Url: https://altlinux.space/alt-gnome/libalt-repo
 Vcs: https://altlinux.space/alt-gnome/libalt-repo.git
 
