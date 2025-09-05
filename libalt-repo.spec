@@ -1,15 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 %define api_version 1
-%define namever %name-%api_version
 
-Name: libalt-repo-vala
+Name: libalt-repo
 Version: 1.19.20
 Release: alt1
 
 Summary: ALT Repo API library on Vala
 License: GPL-3.0-or-later
-Group: Development/Other
+Group: Development/C
 Url: https://altlinux.space/alt-gnome/libalt-repo
 Vcs: https://altlinux.space/alt-gnome/libalt-repo.git
 
@@ -31,44 +30,43 @@ BuildRequires: pkgconfig(libvazzy-1)
 %description
 %summary.
 
-%package -n %namever
-Summary: %{summary %name}
-Group: System/Libraries
+%package -n %name%api_version
+Summary: ALT Repo API library on Vala
+Group: Development/C
 
-%description -n %namever
-%{description %name}.
-
-%package -n %namever-devel
-Group: Development/Other
-Summary: Headers files and library symbolic links for %name
-Requires: %namever = %EVR
-
-%description -n %namever-devel
+%description -n %name%api_version
 %summary.
-This package contains headers and libs
-required for building programs with %name.
 
-%package -n %namever-gir
-Summary: GObject introspection data for %name
+%package devel
+Summary: Development files for %name
+Group: Development/C
+
+Requires: %name%api_version = %EVR
+
+%description devel
+%summary.
+
+%package -n %name%api_version-gir
+Summary: Typelib files for %name
 Group: System/Libraries
-Requires: %namever = %EVR
 
-%description -n %namever-gir
-%{summary %api_version-gir}.
+Requires: %name%api_version = %EVR
 
-%package -n %namever-gir-devel
-Summary: GObject introspection devel data for %name
-Group: System/Libraries
+%description -n %name%api_version-gir
+%summary.
+
+%package gir-devel
+Summary: Development gir files for %name for various bindings
+Group: Development/Other
 BuildArch: noarch
-Requires: %namever-gir = %EVR
-Requires: %namever-devel = %EVR
 
-%description -n %namever-gir-devel
-%{summary %api_version-gir-devel}.
+Requires: %name%api_version-gir = %EVR
+
+%description gir-devel
+%summary.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %meson
@@ -76,23 +74,26 @@ Requires: %namever-devel = %EVR
 
 %install
 %meson_install
-%find_lang %name
 
-%files -n %namever
-%_libdir/libalt-repo-%api_version.so.*
+%check
+%meson_test
 
-%files -n %namever-devel
-%_includedir/libalt-repo-%api_version.h
-%_libdir/libalt-repo-%api_version.so
-%_pkgconfigdir/libalt-repo-%api_version.pc
-%_datadir/vala/vapi/libalt-repo-%api_version.deps
-%_datadir/vala/vapi/libalt-repo-%api_version.vapi
+%files -n %name%api_version
+%_libdir/%name-%api_version.so.*
 
-%files -n %namever-gir
-%_typelibdir/AltRepo-%api_version.typelib
+%files devel
+%_libdir/%name-%api_version.so
+%_includedir/%name-%api_version.h
+%_pkgconfigdir/%name-%api_version.pc
+%_vapidir/%name-%api_version.vapi
+%_vapidir/%name-%api_version.deps
+%doc README.md
 
-%files -n %namever-gir-devel
-%_girdir/AltRepo-%api_version.gir
+%files -n %name%api_version-gir
+%_typelibdir/%gir_name-%api_version.typelib
+
+%files gir-devel
+%_girdir/%gir_name-%api_version.gir
 
 %changelog
 * Sat Dec 14 2024 Alexey Volkov <qualimock@altlinux.org> 1.19.20-alt1
