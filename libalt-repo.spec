@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
-%define apiver 1
-%define namever %name-%apiver
+%define api_version 1
+%define namever %name-%api_version
 
 Name: libalt-repo-vala
 Version: 1.19.20
@@ -52,7 +52,7 @@ Group: System/Libraries
 Requires: %namever = %EVR
 
 %description -n %namever-gir
-%{summary %apiver-gir}.
+%{summary %api_version-gir}.
 
 %package -n %namever-gir-devel
 Summary: GObject introspection devel data for %name
@@ -62,7 +62,7 @@ Requires: %namever-gir = %EVR
 Requires: %namever-devel = %EVR
 
 %description -n %namever-gir-devel
-%{summary %apiver-gir-devel}.
+%{summary %api_version-gir-devel}.
 
 %prep
 %setup
@@ -77,20 +77,20 @@ Requires: %namever-devel = %EVR
 %find_lang %name
 
 %files -n %namever
-%_libdir/libalt-repo-%apiver.so.*
+%_libdir/libalt-repo-%api_version.so.*
 
 %files -n %namever-devel
-%_includedir/libalt-repo-%apiver.h
-%_libdir/libalt-repo-%apiver.so
-%_pkgconfigdir/libalt-repo-%apiver.pc
-%_datadir/vala/vapi/libalt-repo-%apiver.deps
-%_datadir/vala/vapi/libalt-repo-%apiver.vapi
+%_includedir/libalt-repo-%api_version.h
+%_libdir/libalt-repo-%api_version.so
+%_pkgconfigdir/libalt-repo-%api_version.pc
+%_datadir/vala/vapi/libalt-repo-%api_version.deps
+%_datadir/vala/vapi/libalt-repo-%api_version.vapi
 
 %files -n %namever-gir
-%_typelibdir/AltRepo-%apiver.typelib
+%_typelibdir/AltRepo-%api_version.typelib
 
 %files -n %namever-gir-devel
-%_girdir/AltRepo-%apiver.gir
+%_girdir/AltRepo-%api_version.gir
 
 %changelog
 * Sat Dec 14 2024 Alexey Volkov <qualimock@altlinux.org> 1.19.20-alt1
