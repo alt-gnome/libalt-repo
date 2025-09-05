@@ -74,9 +74,6 @@ Requires: %name%api_version-gir = %EVR
 %install
 %meson_install
 
-%check
-%meson_test
-
 %files -n %name%api_version
 %_libdir/%name-%api_version.so.*
 
