@@ -1,3 +1,3 @@
 spec: libalt-repo.spec
 tar: v@version@:.
-diff: v@version@:. . name=@name@-@version@-alt.patch exclude=.gear/ exclude=libalt-repo.spec
+diff: v@version@:. . exclude=.gear exclude=libalt-repo.spec

@@ -14,7 +14,7 @@ Url: https://github.com/alt-gnome/libalt-repo-vala.git
 VCS: https://github.com/alt-gnome/libalt-repo-vala.git
 
 Source0: %name-%version.tar
-Patch0: %name-%version-alt.patch
+Patch0: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
