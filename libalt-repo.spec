@@ -26,7 +26,6 @@ BuildRequires: gir(Gee) = 0.8
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(libapi-base-1)
-BuildRequires: pkgconfig(libvazzy-1)
 
 %description
 %summary.
