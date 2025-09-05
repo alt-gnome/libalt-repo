@@ -32,7 +32,32 @@ BuildRequires: pkgconfig(libapi-base-1)
 
 %package -n %namever
 Summary: %{summary %name}
+Group: Development/C
+
+Obsoletes: libalt-repo-vala-1 <= 1.19.20
+Provides: libalt-repo-vala-1 = %EVR
+
+%description -n %name%api_version
+%summary.
+
+%package devel
+Summary: Development files for %name
+Group: Development/C
+
+Obsoletes: libalt-repo-vala-1-devel <= 1.19.20
+Provides: libalt-repo-vala-1-devel = %EVR
+
+Requires: %name%api_version = %EVR
+
+%description devel
+%summary.
+
+%package -n %name%api_version-gir
+Summary: Typelib files for %name
 Group: System/Libraries
+
+Obsoletes: libalt-repo-vala-1-gir <= 1.19.20
+Provides: libalt-repo-vala-1-gir = %EVR
 
 %description -n %namever
 %{description %name}.
@@ -59,6 +84,10 @@ Requires: %namever = %EVR
 Summary: GObject introspection devel data for %name
 Group: System/Libraries
 BuildArch: noarch
+
+Obsoletes: libalt-repo-vala-1-gir-devel <= 1.19.20
+Provides: libalt-repo-vala-1-gir-devel = %EVR
+
 Requires: %namever-gir = %EVR
 Requires: %namever-devel = %EVR
 
