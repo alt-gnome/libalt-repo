@@ -1,6 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define api_version 1
+%define gir_name AltRepo
 
 Name: libalt-repo
 Version: 1.19.20
