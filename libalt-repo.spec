@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define api_version 1
-%define namever %name-%api_version
+%define gir_name AltRepo
 
 Name: libalt-repo-vala
 Version: 1.19.20
@@ -30,7 +30,7 @@ BuildRequires: pkgconfig(libapi-base-1)
 %description
 %summary.
 
-%package -n %namever
+%package -n %name%api_version
 Summary: %{summary %name}
 Group: Development/C
 
@@ -55,32 +55,15 @@ Requires: %name%api_version = %EVR
 %package -n %name%api_version-gir
 Summary: Typelib files for %name
 Group: System/Libraries
+Requires: %name%api_version = %EVR
 
 Obsoletes: libalt-repo-vala-1-gir <= 1.19.20
 Provides: libalt-repo-vala-1-gir = %EVR
 
-%description -n %namever
+%description -n %name%api_version-gir
 %{description %name}.
 
-%package -n %namever-devel
-Group: Development/Other
-Summary: Headers files and library symbolic links for %name
-Requires: %namever = %EVR
-
-%description -n %namever-devel
-%summary.
-This package contains headers and libs
-required for building programs with %name.
-
-%package -n %namever-gir
-Summary: GObject introspection data for %name
-Group: System/Libraries
-Requires: %namever = %EVR
-
-%description -n %namever-gir
-%{summary %api_version-gir}.
-
-%package -n %namever-gir-devel
+%package gir-devel
 Summary: GObject introspection devel data for %name
 Group: System/Libraries
 BuildArch: noarch
@@ -88,10 +71,9 @@ BuildArch: noarch
 Obsoletes: libalt-repo-vala-1-gir-devel <= 1.19.20
 Provides: libalt-repo-vala-1-gir-devel = %EVR
 
-Requires: %namever-gir = %EVR
-Requires: %namever-devel = %EVR
+Requires: %name%api_version-gir = %EVR
 
-%description -n %namever-gir-devel
+%description gir-devel
 %{summary %api_version-gir-devel}.
 
 %prep
@@ -106,21 +88,22 @@ Requires: %namever-devel = %EVR
 %meson_install
 %find_lang %name
 
-%files -n %namever
-%_libdir/libalt-repo-%api_version.so.*
+%files -n %name%api_version
+%_libdir/%name-%api_version.so.*
 
-%files -n %namever-devel
-%_includedir/libalt-repo-%api_version.h
-%_libdir/libalt-repo-%api_version.so
-%_pkgconfigdir/libalt-repo-%api_version.pc
-%_datadir/vala/vapi/libalt-repo-%api_version.deps
-%_datadir/vala/vapi/libalt-repo-%api_version.vapi
+%files devel
+%_libdir/%name-%api_version.so
+%_includedir/%name-%api_version.h
+%_pkgconfigdir/%name-%api_version.pc
+%_vapidir/%name-%api_version.vapi
+%_vapidir/%name-%api_version.deps
+%doc README.md
 
-%files -n %namever-gir
-%_typelibdir/AltRepo-%api_version.typelib
+%files -n %name%api_version-gir
+%_typelibdir/%gir_name-%api_version.typelib
 
-%files -n %namever-gir-devel
-%_girdir/AltRepo-%api_version.gir
+%files gir-devel
+%_girdir/%gir_name-%api_version.gir
 
 %changelog
 * Sat Dec 14 2024 Alexey Volkov <qualimock@altlinux.org> 1.19.20-alt1
