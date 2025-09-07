@@ -9,7 +9,7 @@ Release: alt1
 
 Summary: ALT Repo API library on Vala
 License: GPL-3.0-or-later
-Group: Development/Other
+Group: System/Libraries
 Url: https://altlinux.space/alt-gnome/libalt-repo
 Vcs: https://altlinux.space/alt-gnome/libalt-repo.git
 
@@ -65,7 +65,7 @@ Provides: libalt-repo-vala-1-gir = %EVR
 
 %package gir-devel
 Summary: GObject introspection devel data for %name
-Group: System/Libraries
+Group: Development/Other
 BuildArch: noarch
 
 Obsoletes: libalt-repo-vala-1-gir-devel <= 1.19.20
