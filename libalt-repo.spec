@@ -3,7 +3,7 @@
 %define api_version 1
 %define gir_name AltRepo
 
-Name: libalt-repo-vala
+Name: libalt-repo
 Version: 1.19.20
 Release: alt1
 
