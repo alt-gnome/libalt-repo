@@ -2606,14 +2606,14 @@ public sealed class AltRepo.Client : Object {
      *
      * @param name package or list of package names
      * @param branch name of packageset
-     * @param arch binary package arch
+     * @param arch list of binary packages architectures
      *
      * @return {@link SiteFingPackages}
      */
     public SiteFingPackages get_site_find_packages (
         string[] name,
         string? branch = null,
-        string? arch = null,
+        string[]? arch = null,
         Cancellable? cancellable = null
     ) throws BadStatusCodeError, JsonError, SoupError {
         var request = new Request.GET (@"$API_BASE/site/find_packages");
@@ -2627,7 +2627,11 @@ public sealed class AltRepo.Client : Object {
             request.add_param ("branch", branch.to_string ());
         }
         if (arch != null) {
-            request.add_param ("arch", arch.to_string ());
+            var _arch = new string[arch.length];
+            for (int i = 0; i < arch.length; i++) {
+                _arch[i] = arch[i].to_string ();
+            }
+            request.add_param ("arch", string.joinv (",", _arch));
         }
 
         var bytes = session.exec (
@@ -7236,14 +7240,14 @@ public sealed class AltRepo.Client : Object {
      *
      * @param name package or list of package names
      * @param branch name of packageset
-     * @param arch binary package arch
+     * @param arch list of binary packages architectures
      *
      * @return {@link SiteFingPackages}
      */
     public async SiteFingPackages get_site_find_packages_async (
         string[] name,
         string? branch = null,
-        string? arch = null,
+        string[]? arch = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
     ) throws BadStatusCodeError, JsonError, SoupError {
@@ -7258,7 +7262,11 @@ public sealed class AltRepo.Client : Object {
             request.add_param ("branch", branch.to_string ());
         }
         if (arch != null) {
-            request.add_param ("arch", arch.to_string ());
+            var _arch = new string[arch.length];
+            for (int i = 0; i < arch.length; i++) {
+                _arch[i] = arch[i].to_string ();
+            }
+            request.add_param ("arch", string.joinv (",", _arch));
         }
 
         var bytes = yield session.exec_async (
