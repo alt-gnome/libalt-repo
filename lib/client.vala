@@ -4487,6 +4487,36 @@ public sealed class AltRepo.Client : Object {
     }
 
     /**
+     * Get a list of packages in which the specified GHSA vulnerability is closed.
+     *
+     * @param vuln_id GHSA id
+     * @param exclude_json exclude vulnerability raw JSON from results
+     *
+     * @return {@link VulnFixesPackages}
+     */
+    public VulnFixesPackages get_vuln_ghsa_fixes (
+        string vuln_id,
+        bool? exclude_json = false,
+        Cancellable? cancellable = null
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/ghsa/fixes");
+
+        request.add_param ("vuln_id", vuln_id.to_string ());
+        if (exclude_json != null) {
+            request.add_param ("exclude_json", exclude_json.to_string ());
+        }
+
+        var bytes = session.exec (
+            request,
+            cancellable
+        );
+
+        var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
+
+        return jsoner.deserialize_object<VulnFixesPackages> ();
+    }
+
+    /**
      * Get a list of fixed CVEs from an task with one of the following states: EPERM, TESTED, or DONE.
      *
      * @param id task ID
@@ -9236,6 +9266,38 @@ public sealed class AltRepo.Client : Object {
         );
 
         return (string) bytes.get_data ();
+    }
+
+    /**
+     * Get a list of packages in which the specified GHSA vulnerability is closed.
+     *
+     * @param vuln_id GHSA id
+     * @param exclude_json exclude vulnerability raw JSON from results
+     *
+     * @return {@link VulnFixesPackages}
+     */
+    public async VulnFixesPackages get_vuln_ghsa_fixes_async (
+        string vuln_id,
+        bool? exclude_json = false,
+        int priority = Priority.DEFAULT,
+        Cancellable? cancellable = null
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/ghsa/fixes");
+
+        request.add_param ("vuln_id", vuln_id.to_string ());
+        if (exclude_json != null) {
+            request.add_param ("exclude_json", exclude_json.to_string ());
+        }
+
+        var bytes = yield session.exec_async (
+            request,
+            priority,
+            cancellable
+        );
+
+        var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
+
+        return yield jsoner.deserialize_object_async<VulnFixesPackages> ();
     }
 
     /**
