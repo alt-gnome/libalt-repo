@@ -2606,14 +2606,14 @@ public sealed class AltRepo.Client : Object {
      *
      * @param name package or list of package names
      * @param branch name of packageset
-     * @param arch binary package arch
+     * @param arch list of binary packages architectures
      *
      * @return {@link SiteFingPackages}
      */
     public SiteFingPackages get_site_find_packages (
         string[] name,
         string? branch = null,
-        string? arch = null,
+        string[]? arch = null,
         Cancellable? cancellable = null
     ) throws BadStatusCodeError, JsonError, SoupError {
         var request = new Request.GET (@"$API_BASE/site/find_packages");
@@ -2627,7 +2627,11 @@ public sealed class AltRepo.Client : Object {
             request.add_param ("branch", branch.to_string ());
         }
         if (arch != null) {
-            request.add_param ("arch", arch.to_string ());
+            var _arch = new string[arch.length];
+            for (int i = 0; i < arch.length; i++) {
+                _arch[i] = arch[i].to_string ();
+            }
+            request.add_param ("arch", string.joinv (",", _arch));
         }
 
         var bytes = session.exec (
@@ -4480,6 +4484,36 @@ public sealed class AltRepo.Client : Object {
         );
 
         return (string) bytes.get_data ();
+    }
+
+    /**
+     * Get a list of packages in which the specified GHSA vulnerability is closed.
+     *
+     * @param vuln_id GHSA id
+     * @param exclude_json exclude vulnerability raw JSON from results
+     *
+     * @return {@link VulnFixesPackages}
+     */
+    public VulnFixesPackages get_vuln_ghsa_fixes (
+        string vuln_id,
+        bool? exclude_json = false,
+        Cancellable? cancellable = null
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/ghsa/fixes");
+
+        request.add_param ("vuln_id", vuln_id.to_string ());
+        if (exclude_json != null) {
+            request.add_param ("exclude_json", exclude_json.to_string ());
+        }
+
+        var bytes = session.exec (
+            request,
+            cancellable
+        );
+
+        var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
+
+        return jsoner.deserialize_object<VulnFixesPackages> ();
     }
 
     /**
@@ -7236,14 +7270,14 @@ public sealed class AltRepo.Client : Object {
      *
      * @param name package or list of package names
      * @param branch name of packageset
-     * @param arch binary package arch
+     * @param arch list of binary packages architectures
      *
      * @return {@link SiteFingPackages}
      */
     public async SiteFingPackages get_site_find_packages_async (
         string[] name,
         string? branch = null,
-        string? arch = null,
+        string[]? arch = null,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
     ) throws BadStatusCodeError, JsonError, SoupError {
@@ -7258,7 +7292,11 @@ public sealed class AltRepo.Client : Object {
             request.add_param ("branch", branch.to_string ());
         }
         if (arch != null) {
-            request.add_param ("arch", arch.to_string ());
+            var _arch = new string[arch.length];
+            for (int i = 0; i < arch.length; i++) {
+                _arch[i] = arch[i].to_string ();
+            }
+            request.add_param ("arch", string.joinv (",", _arch));
         }
 
         var bytes = yield session.exec_async (
@@ -9228,6 +9266,38 @@ public sealed class AltRepo.Client : Object {
         );
 
         return (string) bytes.get_data ();
+    }
+
+    /**
+     * Get a list of packages in which the specified GHSA vulnerability is closed.
+     *
+     * @param vuln_id GHSA id
+     * @param exclude_json exclude vulnerability raw JSON from results
+     *
+     * @return {@link VulnFixesPackages}
+     */
+    public async VulnFixesPackages get_vuln_ghsa_fixes_async (
+        string vuln_id,
+        bool? exclude_json = false,
+        int priority = Priority.DEFAULT,
+        Cancellable? cancellable = null
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/ghsa/fixes");
+
+        request.add_param ("vuln_id", vuln_id.to_string ());
+        if (exclude_json != null) {
+            request.add_param ("exclude_json", exclude_json.to_string ());
+        }
+
+        var bytes = yield session.exec_async (
+            request,
+            priority,
+            cancellable
+        );
+
+        var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
+
+        return yield jsoner.deserialize_object_async<VulnFixesPackages> ();
     }
 
     /**
