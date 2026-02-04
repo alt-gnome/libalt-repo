@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>AltRepo.Client.get_site_maintainer_packages_async &ndash; libalt-repo-1 &ndash; Vala Binding Reference</title>
+    <link href="../style.css" rel="stylesheet" type="text/css"/><script src="../scripts.js" type="text/javascript">
+    </script>
+  </head>
+  <body>
+    <div class="site_header">AltRepo.Client.get_site_maintainer_packages_async &ndash; libalt-repo-1 Reference Manual</div>
+    <div class="site_body">
+      <div class="site_navigation">
+        <ul class="navi_main">
+          <li class="package_index"><a href="../index.html">Packages</a></li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="package"><a href="index.htm">libalt-repo-1</a></li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="namespace"><a href="AltRepo.html">AltRepo</a></li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="class"><a href="AltRepo.Client.html">Client</a></li>
+        </ul>
+        <hr class="navi_hr"/>
+        <ul class="navi_main">
+          <li class="creation_method"><a href="AltRepo.Client.Client.html">Client</a></li>
+          <li class="method"><a href="AltRepo.Client.add_headers_preset.html">add_headers_preset</a></li>
+          <li class="method"><a href="AltRepo.Client.get_acl_by_packages.html">get_acl_by_packages</a></li>
+          <li class="method"><a href="AltRepo.Client.get_acl_by_packages_async.html">get_acl_by_packages_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_acl_groups.html">get_acl_groups</a></li>
+          <li class="method"><a href="AltRepo.Client.get_acl_groups_async.html">get_acl_groups_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_acl_maintainer_groups.html">get_acl_maintainer_groups</a></li>
+          <li class="method"><a href="AltRepo.Client.get_acl_maintainer_groups_async.html">get_acl_maintainer_groups_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_bug_bugzilla_by_image_edition.html">get_bug_bugzilla_by_image_edition</a></li>
+          <li class="method"><a href="AltRepo.Client.get_bug_bugzilla_by_image_edition_async.html">get_bug_bugzilla_by_image_edition_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_bug_bugzilla_by_maintainer.html">get_bug_bugzilla_by_maintainer</a></li>
+          <li class="method"><a href="AltRepo.Client.get_bug_bugzilla_by_maintainer_async.html">get_bug_bugzilla_by_maintainer_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_bug_bugzilla_by_package.html">get_bug_bugzilla_by_package</a></li>
+          <li class="method"><a href="AltRepo.Client.get_bug_bugzilla_by_package_async.html">get_bug_bugzilla_by_package_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_dependencies_backport_helper.html">get_dependencies_backport_helper</a></li>
+          <li class="method"><a href="AltRepo.Client.get_dependencies_backport_helper_async.html">get_dependencies_backport_helper_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_dependencies_binary_package_dependencies_pkghash.html">
+              get_dependencies_binary_package_dependencies_pkghash</a></li>
+          <li class="method"><a href="AltRepo.Client.get_dependencies_binary_package_dependencies_pkghash_async.html">
+              get_dependencies_binary_package_dependencies_pkghash_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_dependencies_fast_lookup.html">get_dependencies_fast_lookup</a></li>
+          <li class="method"><a href="AltRepo.Client.get_dependencies_fast_lookup_async.html">get_dependencies_fast_lookup_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_dependencies_packages_by_dependency.html">get_dependencies_packages_by_dependency</a></li>
+          <li class="method"><a href="AltRepo.Client.get_dependencies_packages_by_dependency_async.html">get_dependencies_packages_by_dependency_async
+            </a></li>
+          <li class="method"><a href="AltRepo.Client.get_dependencies_source_package_dependencies_pkghash.html">
+              get_dependencies_source_package_dependencies_pkghash</a></li>
+          <li class="method"><a href="AltRepo.Client.get_dependencies_source_package_dependencies_pkghash_async.html">
+              get_dependencies_source_package_dependencies_pkghash_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_dependencies_what_depends_src.html">get_dependencies_what_depends_src</a></li>
+          <li class="method"><a href="AltRepo.Client.get_dependencies_what_depends_src_async.html">get_dependencies_what_depends_src_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_errata_advisory.html">get_errata_advisory</a></li>
+          <li class="method"><a href="AltRepo.Client.get_errata_advisory_async.html">get_errata_advisory_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_errata_errata_branches.html">get_errata_errata_branches</a></li>
+          <li class="method"><a href="AltRepo.Client.get_errata_errata_branches_async.html">get_errata_errata_branches_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_errata_export_oval_branch.html">get_errata_export_oval_branch</a></li>
+          <li class="method"><a href="AltRepo.Client.get_errata_export_oval_branch_async.html">get_errata_export_oval_branch_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_errata_export_oval_branches.html">get_errata_export_oval_branches</a></li>
+          <li class="method"><a href="AltRepo.Client.get_errata_export_oval_branches_async.html">get_errata_export_oval_branches_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_errata_find_erratas.html">get_errata_find_erratas</a></li>
+          <li class="method"><a href="AltRepo.Client.get_errata_find_erratas_async.html">get_errata_find_erratas_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_errata_find_image_erratas.html">get_errata_find_image_erratas</a></li>
+          <li class="method"><a href="AltRepo.Client.get_errata_find_image_erratas_async.html">get_errata_find_image_erratas_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_errata_ids.html">get_errata_ids</a></li>
+          <li class="method"><a href="AltRepo.Client.get_errata_ids_async.html">get_errata_ids_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_errata_search.html">get_errata_search</a></li>
+          <li class="method"><a href="AltRepo.Client.get_errata_search_async.html">get_errata_search_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_export_beehive_ftbfs.html">get_export_beehive_ftbfs</a></li>
+          <li class="method"><a href="AltRepo.Client.get_export_beehive_ftbfs_async.html">get_export_beehive_ftbfs_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_export_branch_binary_packages_branch.html">get_export_branch_binary_packages_branch</a></li>
+          <li class="method"><a href="AltRepo.Client.get_export_branch_binary_packages_branch_async.html">
+              get_export_branch_binary_packages_branch_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_export_branch_tree.html">get_export_branch_tree</a></li>
+          <li class="method"><a href="AltRepo.Client.get_export_branch_tree_async.html">get_export_branch_tree_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_export_repology_branch.html">get_export_repology_branch</a></li>
+          <li class="method"><a href="AltRepo.Client.get_export_repology_branch_async.html">get_export_repology_branch_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_export_sitemap_packages_branch.html">get_export_sitemap_packages_branch</a></li>
+          <li class="method"><a href="AltRepo.Client.get_export_sitemap_packages_branch_async.html">get_export_sitemap_packages_branch_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_export_translation_packages_po_files.html">get_export_translation_packages_po_files</a></li>
+          <li class="method"><a href="AltRepo.Client.get_export_translation_packages_po_files_async.html">
+              get_export_translation_packages_po_files_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_file_fast_lookup.html">get_file_fast_lookup</a></li>
+          <li class="method"><a href="AltRepo.Client.get_file_fast_lookup_async.html">get_file_fast_lookup_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_file_packages_by_file.html">get_file_packages_by_file</a></li>
+          <li class="method"><a href="AltRepo.Client.get_file_packages_by_file_async.html">get_file_packages_by_file_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_file_search.html">get_file_search</a></li>
+          <li class="method"><a href="AltRepo.Client.get_file_search_async.html">get_file_search_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_active_images.html">get_image_active_images</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_active_images_async.html">get_image_active_images_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_find_images_by_package_name.html">get_image_find_images_by_package_name</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_find_images_by_package_name_async.html">get_image_find_images_by_package_name_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_image_image_categories_count.html">get_image_image_categories_count</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_image_categories_count_async.html">get_image_image_categories_count_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_image_info.html">get_image_image_info</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_image_info_async.html">get_image_image_info_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_image_packages.html">get_image_image_packages</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_image_packages_async.html">get_image_image_packages_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_image_packageset.html">get_image_image_packageset</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_image_packageset_async.html">get_image_image_packageset_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_image_status.html">get_image_image_status</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_image_status_async.html">get_image_image_status_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_image_tag_status.html">get_image_image_tag_status</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_image_tag_status_async.html">get_image_image_tag_status_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_image_uuid_by_tag.html">get_image_image_uuid_by_tag</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_image_uuid_by_tag_async.html">get_image_image_uuid_by_tag_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_iso_all_images.html">get_image_iso_all_images</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_iso_all_images_async.html">get_image_iso_all_images_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_last_packages_by_image.html">get_image_last_packages_by_image</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_last_packages_by_image_async.html">get_image_last_packages_by_image_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_last_packages_image_with_cve_fixed.html">get_image_last_packages_image_with_cve_fixed
+            </a></li>
+          <li class="method"><a href="AltRepo.Client.get_image_last_packages_image_with_cve_fixed_async.html">
+              get_image_last_packages_image_with_cve_fixed_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_license.html">get_license</a></li>
+          <li class="method"><a href="AltRepo.Client.get_license_async.html">get_license_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_license_info.html">get_license_info</a></li>
+          <li class="method"><a href="AltRepo.Client.get_license_info_async.html">get_license_info_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_license_tokens.html">get_license_tokens</a></li>
+          <li class="method"><a href="AltRepo.Client.get_license_tokens_async.html">get_license_tokens_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_build_dependency_set.html">get_package_build_dependency_set</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_build_dependency_set_async.html">get_package_build_dependency_set_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_find_packageset.html">get_package_find_packageset</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_find_packageset_async.html">get_package_find_packageset_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_maintainer_score.html">get_package_maintainer_score</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_maintainer_score_async.html">get_package_maintainer_score_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_misconflict.html">get_package_misconflict</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_misconflict_async.html">get_package_misconflict_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_package_by_file_md5.html">get_package_package_by_file_md5</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_package_by_file_md5_async.html">get_package_package_by_file_md5_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_package_by_file_name.html">get_package_package_by_file_name</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_package_by_file_name_async.html">get_package_package_by_file_name_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_package_files_pkghash.html">get_package_package_files_pkghash</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_package_files_pkghash_async.html">get_package_package_files_pkghash_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_package_info.html">get_package_package_info</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_package_info_async.html">get_package_package_info_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_repocop.html">get_package_repocop</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_repocop_async.html">get_package_repocop_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_specfile_by_hash_pkghash.html">get_package_specfile_by_hash_pkghash</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_specfile_by_hash_pkghash_async.html">get_package_specfile_by_hash_pkghash_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_package_specfile_by_name.html">get_package_specfile_by_name</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_specfile_by_name_async.html">get_package_specfile_by_name_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_unpackaged_dirs.html">get_package_unpackaged_dirs</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_unpackaged_dirs_async.html">get_package_unpackaged_dirs_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_what_depends_src.html">get_package_what_depends_src</a></li>
+          <li class="method"><a href="AltRepo.Client.get_package_what_depends_src_async.html">get_package_what_depends_src_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_packageset_active_packagesets.html">get_packageset_active_packagesets</a></li>
+          <li class="method"><a href="AltRepo.Client.get_packageset_active_packagesets_async.html">get_packageset_active_packagesets_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_packageset_compare_packagesets.html">get_packageset_compare_packagesets</a></li>
+          <li class="method"><a href="AltRepo.Client.get_packageset_compare_packagesets_async.html">get_packageset_compare_packagesets_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_packageset_maintainer_scores.html">get_packageset_maintainer_scores</a></li>
+          <li class="method"><a href="AltRepo.Client.get_packageset_maintainer_scores_async.html">get_packageset_maintainer_scores_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_packageset_packages_by_component.html">get_packageset_packages_by_component</a></li>
+          <li class="method"><a href="AltRepo.Client.get_packageset_packages_by_component_async.html">get_packageset_packages_by_component_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_packageset_packages_by_uuid.html">get_packageset_packages_by_uuid</a></li>
+          <li class="method"><a href="AltRepo.Client.get_packageset_packages_by_uuid_async.html">get_packageset_packages_by_uuid_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_packageset_pkgset_status.html">get_packageset_pkgset_status</a></li>
+          <li class="method"><a href="AltRepo.Client.get_packageset_pkgset_status_async.html">get_packageset_pkgset_status_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_packageset_repository_packages.html">get_packageset_repository_packages</a></li>
+          <li class="method"><a href="AltRepo.Client.get_packageset_repository_packages_async.html">get_packageset_repository_packages_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_packageset_repository_statistics.html">get_packageset_repository_statistics</a></li>
+          <li class="method"><a href="AltRepo.Client.get_packageset_repository_statistics_async.html">get_packageset_repository_statistics_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_site_all_maintainers.html">get_site_all_maintainers</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_all_maintainers_async.html">get_site_all_maintainers_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_all_maintainers_with_nicknames.html">get_site_all_maintainers_with_nicknames</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_all_maintainers_with_nicknames_async.html">get_site_all_maintainers_with_nicknames_async
+            </a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_all_pkgset_archs.html">get_site_all_pkgset_archs</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_all_pkgset_archs_async.html">get_site_all_pkgset_archs_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_all_pkgset_archs_with_src_count.html">get_site_all_pkgset_archs_with_src_count</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_all_pkgset_archs_with_src_count_async.html">
+              get_site_all_pkgset_archs_with_src_count_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_all_pkgsets.html">get_site_all_pkgsets</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_all_pkgsets_async.html">get_site_all_pkgsets_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_all_pkgsets_summary.html">get_site_all_pkgsets_summary</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_all_pkgsets_summary_async.html">get_site_all_pkgsets_summary_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_all_pkgsets_with_src_count.html">get_site_all_pkgsets_with_src_count</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_all_pkgsets_with_src_count_async.html">get_site_all_pkgsets_with_src_count_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_site_beehive_errors_by_maintainer.html">get_site_beehive_errors_by_maintainer</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_beehive_errors_by_maintainer_async.html">get_site_beehive_errors_by_maintainer_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_site_binary_package_archs_and_versions.html">get_site_binary_package_archs_and_versions</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_site_binary_package_archs_and_versions_async.html">
+              get_site_binary_package_archs_and_versions_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_binary_package_scripts_pkghash.html">get_site_binary_package_scripts_pkghash</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_binary_package_scripts_pkghash_async.html">get_site_binary_package_scripts_pkghash_async
+            </a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_deleted_package_info.html">get_site_deleted_package_info</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_deleted_package_info_async.html">get_site_deleted_package_info_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_fast_packages_search_lookup.html">get_site_fast_packages_search_lookup</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_fast_packages_search_lookup_async.html">get_site_fast_packages_search_lookup_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_site_find_packages.html">get_site_find_packages</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_find_packages_async.html">get_site_find_packages_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_find_source_package.html">get_site_find_source_package</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_find_source_package_async.html">get_site_find_source_package_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_last_packages.html">get_site_last_packages</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_last_packages_async.html">get_site_last_packages_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_last_packages_by_branch.html">get_site_last_packages_by_branch</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_last_packages_by_branch_async.html">get_site_last_packages_by_branch_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_last_packages_by_tasks.html">get_site_last_packages_by_tasks</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_last_packages_by_tasks_async.html">get_site_last_packages_by_tasks_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_last_packages_with_cve_fixed.html">get_site_last_packages_with_cve_fixed</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_last_packages_with_cve_fixed_async.html">get_site_last_packages_with_cve_fixed_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_site_maintainer_branches.html">get_site_maintainer_branches</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_maintainer_branches_async.html">get_site_maintainer_branches_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_maintainer_info.html">get_site_maintainer_info</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_maintainer_info_async.html">get_site_maintainer_info_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_maintainer_packages.html">get_site_maintainer_packages</a></li>
+          <li class="method">get_site_maintainer_packages_async</li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_changelog_pkghash.html">get_site_package_changelog_pkghash</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_changelog_pkghash_async.html">get_site_package_changelog_pkghash_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_downloads_bin_pkghash.html">get_site_package_downloads_bin_pkghash</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_downloads_bin_pkghash_async.html">get_site_package_downloads_bin_pkghash_async
+            </a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_downloads_pkghash.html">get_site_package_downloads_pkghash</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_downloads_pkghash_async.html">get_site_package_downloads_pkghash_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_downloads_src_pkghash.html">get_site_package_downloads_src_pkghash</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_downloads_src_pkghash_async.html">get_site_package_downloads_src_pkghash_async
+            </a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_info_brief_pkghash.html">get_site_package_info_brief_pkghash</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_info_brief_pkghash_async.html">get_site_package_info_brief_pkghash_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_info_pkghash.html">get_site_package_info_pkghash</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_info_pkghash_async.html">get_site_package_info_pkghash_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_log_bin_pkghash.html">get_site_package_log_bin_pkghash</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_log_bin_pkghash_async.html">get_site_package_log_bin_pkghash_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_misconflict_pkghash.html">get_site_package_misconflict_pkghash</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_misconflict_pkghash_async.html">get_site_package_misconflict_pkghash_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_name_from_repology.html">get_site_package_name_from_repology</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_name_from_repology_async.html">get_site_package_name_from_repology_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_nvr_by_hash_pkghash.html">get_site_package_nvr_by_hash_pkghash</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_nvr_by_hash_pkghash_async.html">get_site_package_nvr_by_hash_pkghash_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_versions.html">get_site_package_versions</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_versions_async.html">get_site_package_versions_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_versions_from_images.html">get_site_package_versions_from_images</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_versions_from_images_async.html">get_site_package_versions_from_images_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_versions_from_tasks.html">get_site_package_versions_from_tasks</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_package_versions_from_tasks_async.html">get_site_package_versions_from_tasks_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_site_packagesets_by_hash_pkghash.html">get_site_packagesets_by_hash_pkghash</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_packagesets_by_hash_pkghash_async.html">get_site_packagesets_by_hash_pkghash_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_site_pkghash_by_binary_name.html">get_site_pkghash_by_binary_name</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_pkghash_by_binary_name_async.html">get_site_pkghash_by_binary_name_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_pkghash_by_name.html">get_site_pkghash_by_name</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_pkghash_by_name_async.html">get_site_pkghash_by_name_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_pkghash_by_nvr.html">get_site_pkghash_by_nvr</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_pkghash_by_nvr_async.html">get_site_pkghash_by_nvr_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_pkgset_categories_count.html">get_site_pkgset_categories_count</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_pkgset_categories_count_async.html">get_site_pkgset_categories_count_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_pkgsets_summary_status.html">get_site_pkgsets_summary_status</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_pkgsets_summary_status_async.html">get_site_pkgsets_summary_status_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_repocop_by_maintainer.html">get_site_repocop_by_maintainer</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_repocop_by_maintainer_async.html">get_site_repocop_by_maintainer_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_repository_packages.html">get_site_repository_packages</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_repository_packages_async.html">get_site_repository_packages_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_source_package_versions.html">get_site_source_package_versions</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_source_package_versions_async.html">get_site_source_package_versions_async</a></li>
+          <li class="method"><span class="deprecated"><a href="AltRepo.Client.get_site_tasks_by_maintainer.html">get_site_tasks_by_maintainer</a>
+            </span></li>
+          <li class="method"><span class="deprecated"><a href="AltRepo.Client.get_site_tasks_by_maintainer_async.html">
+                get_site_tasks_by_maintainer_async</a></span></li>
+          <li class="method"><span class="deprecated"><a href="AltRepo.Client.get_site_tasks_by_package.html">get_site_tasks_by_package</a></span>
+          </li>
+          <li class="method"><span class="deprecated"><a href="AltRepo.Client.get_site_tasks_by_package_async.html">get_site_tasks_by_package_async
+              </a></span></li>
+          <li class="method"><a href="AltRepo.Client.get_site_tasks_history.html">get_site_tasks_history</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_tasks_history_async.html">get_site_tasks_history_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_watch_by_maintainer.html">get_site_watch_by_maintainer</a></li>
+          <li class="method"><a href="AltRepo.Client.get_site_watch_by_maintainer_async.html">get_site_watch_by_maintainer_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_build_dependency_set_id.html">get_task_build_dependency_set_id</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_build_dependency_set_id_async.html">get_task_build_dependency_set_id_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_find_images_id.html">get_task_find_images_id</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_find_images_id_async.html">get_task_find_images_id_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_find_packageset_id.html">get_task_find_packageset_id</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_find_packageset_id_async.html">get_task_find_packageset_id_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_misconflict_id.html">get_task_misconflict_id</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_misconflict_id_async.html">get_task_misconflict_id_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_needs_approval.html">get_task_needs_approval</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_needs_approval_async.html">get_task_needs_approval_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_packages_id.html">get_task_packages_id</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_packages_id_async.html">get_task_packages_id_async</a></li>
+          <li class="method"><span class="deprecated"><a href="AltRepo.Client.get_task_progress_all_packagesets.html">
+                get_task_progress_all_packagesets</a></span></li>
+          <li class="method"><span class="deprecated"><a href="AltRepo.Client.get_task_progress_all_packagesets_async.html">
+                get_task_progress_all_packagesets_async</a></span></li>
+          <li class="method"><a href="AltRepo.Client.get_task_progress_all_tasks_branches.html">get_task_progress_all_tasks_branches</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_progress_all_tasks_branches_async.html">get_task_progress_all_tasks_branches_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_task_progress_find_tasks.html">get_task_progress_find_tasks</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_progress_find_tasks_async.html">get_task_progress_find_tasks_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_progress_find_tasks_lookup.html">get_task_progress_find_tasks_lookup</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_progress_find_tasks_lookup_async.html">get_task_progress_find_tasks_lookup_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.get_task_progress_last_tasks.html">get_task_progress_last_tasks</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_progress_last_tasks_async.html">get_task_progress_last_tasks_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_progress_task_info_id.html">get_task_progress_task_info_id</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_progress_task_info_id_async.html">get_task_progress_task_info_id_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_task_diff_id.html">get_task_task_diff_id</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_task_diff_id_async.html">get_task_task_diff_id_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_task_history.html">get_task_task_history</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_task_history_async.html">get_task_task_history_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_task_info_id.html">get_task_task_info_id</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_task_info_id_async.html">get_task_task_info_id_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_task_repo_id.html">get_task_task_repo_id</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_task_repo_id_async.html">get_task_task_repo_id_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_what_depends_src_id.html">get_task_what_depends_src_id</a></li>
+          <li class="method"><a href="AltRepo.Client.get_task_what_depends_src_id_async.html">get_task_what_depends_src_id_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_version.html">get_version</a></li>
+          <li class="method"><a href="AltRepo.Client.get_version_async.html">get_version_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_vuln_bdu.html">get_vuln_bdu</a></li>
+          <li class="method"><a href="AltRepo.Client.get_vuln_bdu_async.html">get_vuln_bdu_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_vuln_bdu_fixes.html">get_vuln_bdu_fixes</a></li>
+          <li class="method"><a href="AltRepo.Client.get_vuln_bdu_fixes_async.html">get_vuln_bdu_fixes_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_vuln_cve.html">get_vuln_cve</a></li>
+          <li class="method"><a href="AltRepo.Client.get_vuln_cve_async.html">get_vuln_cve_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_vuln_cve_excluded.html">get_vuln_cve_excluded</a></li>
+          <li class="method"><a href="AltRepo.Client.get_vuln_cve_excluded_async.html">get_vuln_cve_excluded_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_vuln_cve_fixes.html">get_vuln_cve_fixes</a></li>
+          <li class="method"><a href="AltRepo.Client.get_vuln_cve_fixes_async.html">get_vuln_cve_fixes_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_vuln_ghsa.html">get_vuln_ghsa</a></li>
+          <li class="method"><a href="AltRepo.Client.get_vuln_ghsa_async.html">get_vuln_ghsa_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_vuln_ghsa_fixes.html">get_vuln_ghsa_fixes</a></li>
+          <li class="method"><a href="AltRepo.Client.get_vuln_ghsa_fixes_async.html">get_vuln_ghsa_fixes_async</a></li>
+          <li class="method"><a href="AltRepo.Client.get_vuln_task_id.html">get_vuln_task_id</a></li>
+          <li class="method"><a href="AltRepo.Client.get_vuln_task_id_async.html">get_vuln_task_id_async</a></li>
+          <li class="method"><a href="AltRepo.Client.post_errata_branches_updates.html">post_errata_branches_updates</a></li>
+          <li class="method"><a href="AltRepo.Client.post_errata_branches_updates_async.html">post_errata_branches_updates_async</a></li>
+          <li class="method"><a href="AltRepo.Client.post_errata_packages_updates.html">post_errata_packages_updates</a></li>
+          <li class="method"><a href="AltRepo.Client.post_errata_packages_updates_async.html">post_errata_packages_updates_async</a></li>
+          <li class="method"><a href="AltRepo.Client.post_image_inspect_regular.html">post_image_inspect_regular</a></li>
+          <li class="method"><a href="AltRepo.Client.post_image_inspect_regular_async.html">post_image_inspect_regular_async</a></li>
+          <li class="method"><a href="AltRepo.Client.post_image_inspect_sp.html">post_image_inspect_sp</a></li>
+          <li class="method"><a href="AltRepo.Client.post_image_inspect_sp_async.html">post_image_inspect_sp_async</a></li>
+          <li class="method"><a href="AltRepo.Client.post_package_packages_by_file_names.html">post_package_packages_by_file_names</a></li>
+          <li class="method"><a href="AltRepo.Client.post_package_packages_by_file_names_async.html">post_package_packages_by_file_names_async</a>
+          </li>
+          <li class="method"><a href="AltRepo.Client.post_task_check_images.html">post_task_check_images</a></li>
+          <li class="method"><a href="AltRepo.Client.post_task_check_images_async.html">post_task_check_images_async</a></li>
+        </ul>
+      </div>
+      <div class="site_content">
+        <h1 class="main_title">get_site_maintainer_packages_async</h1>
+        <hr class="main_hr"/>
+        <h2 class="main_title">Description:</h2>
+        <div class="main_code_definition"><span class="main_keyword">public</span> <span class="main_keyword">async</span> <span class="main_type"><span class="class">ArrayList</span></span>&lt;<span class="main_type"><a href="AltRepo.MaintainerPackages.html" class="class">MaintainerPackages</a></span>&gt; <b><span class="method">get_site_maintainer_packages_async</span></b> (<span class="main_basic_type"><span class="class">string</span></span> branch, <span class="main_basic_type"><span class="class">string</span></span> maintainer_nickname, <span class="main_basic_type"><span class="class">string</span></span>? by_acl = <span class="main_literal">null</span>, <span class="main_basic_type"><span class="struct">int</span></span> priority = <b><span class="constant">DEFAULT</span></b>, <span class="main_type"><span class="class">Cancellable</span></span>? cancellable = <span class="main_literal">null</span>) <span class="main_keyword">throws</span> <span class="main_type"><span class="errordomain">BadStatusCodeError</span></span>, <span class="main_type"><span class="errordomain">JsonError</span></span>, <span class="main_type"><span class="errordomain">SoupError</span></span>
+        </div>
+        <div class="description">
+          <p>Packages collected by the specified maintainer</p>
+          <h2 class="main_title">Parameters:</h2>
+          <table class="main_parameter_table">
+            <tr>
+              <td class="main_parameter_table_name">branch</td>
+              <td>
+                <p>name of packageset </p>
+              </td>
+            </tr>
+            <tr>
+              <td class="main_parameter_table_name">maintainer_nickname</td>
+              <td>
+                <p>nickname of maintainer </p>
+              </td>
+            </tr>
+            <tr>
+              <td class="main_parameter_table_name">by_acl</td>
+              <td>
+                <p>search maintainer's packages by ACL </p>
+              </td>
+            </tr>
+          </table>
+          <h2 class="main_title">Returns:</h2>
+          <table class="main_parameter_table">
+            <tr>
+              <td>
+                <p><span class="class">Gee.ArrayList</span> </p>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div><br/>
+    <div class="site_footer">Generated by <a href="https://docs.vala.dev"><kbd>valadoc</kbd></a>
+    </div>
+  </body>
+</html>
