@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Vladimir Vaskov
+ * Copyright (C) 2026 Vladimir Vaskov
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ public class AltRepo.ErrataLastChangedElement : Object {
     public string errata_id { get; set; }
 
     /**
-     *
+     * Errata History record type
      */
     public string eh_type { get; set; }
 
@@ -50,6 +50,11 @@ public class AltRepo.ErrataLastChangedElement : Object {
      * package set name
      */
     public string branch { get; set; }
+
+    /**
+     * errata JSON payload (SA records only)
+     */
+    public Object json { get; set; }
 
     /**
      * affected packages

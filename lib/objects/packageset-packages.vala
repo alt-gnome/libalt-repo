@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Vladimir Vaskov
+ * Copyright (C) 2026 Vladimir Vaskov
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,5 +37,13 @@ public class AltRepo.PackagesetPackages : Object {
     public Gee.ArrayList<PackagesetPackagesElement> packages {
         get; set;
         default = new Gee.ArrayList<PackagesetPackagesElement> ();
+    }
+
+    /**
+     * list of DONE task IDs applied to repository state
+     */
+    public Gee.ArrayList<int64?> done_tasks {
+        get; set;
+        default = new Gee.ArrayList<int64?> ();
     }
 }

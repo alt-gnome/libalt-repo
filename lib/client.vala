@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Vladimir Vaskov
+ * Copyright (C) 2026 Vladimir Vaskov
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -331,6 +331,7 @@ public sealed class AltRepo.Client : Object {
      * @param branch packageset name
      * @param dp_name dependency name
      * @param dp_type type of dependency [all|provide|require|conflict|obsolete]
+     * @param last_state use last packages (after last branch commmit)
      *
      * @return {@link DependenciesPackages}
      */
@@ -338,6 +339,7 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string dp_name,
         string? dp_type = "all",
+        bool? last_state = false,
         Cancellable? cancellable = null
     ) throws BadStatusCodeError, JsonError, SoupError {
         var request = new Request.GET (@"$API_BASE/dependencies/packages_by_dependency");
@@ -346,6 +348,9 @@ public sealed class AltRepo.Client : Object {
         request.add_param ("dp_name", dp_name.to_string ());
         if (dp_type != null) {
             request.add_param ("dp_type", dp_type.to_string ());
+        }
+        if (last_state != null) {
+            request.add_param ("last_state", last_state.to_string ());
         }
 
         var bytes = session.exec (
@@ -421,6 +426,57 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         return jsoner.deserialize_object<PackageBuildDependency> ();
+    }
+
+    /**
+     * List of Security Advisory Errata records.
+     *
+     * @param branch branch name
+     * @param input CVE, BDU or Errata ID
+     * @param page number page
+     * @param limit number of records
+     * @param sort sort arguments
+     *
+     * @return {@link AdvisoryErrata}
+     */
+    public AdvisoryErrata get_errata_advisory (
+        string? branch = null,
+        string? input = null,
+        int64? page = null,
+        int64? limit = null,
+        string[]? sort = null,
+        Cancellable? cancellable = null
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/errata/advisory");
+
+        if (branch != null) {
+            request.add_param ("branch", branch.to_string ());
+        }
+        if (input != null) {
+            request.add_param ("input", input.to_string ());
+        }
+        if (page != null) {
+            request.add_param ("page", page.to_string ());
+        }
+        if (limit != null) {
+            request.add_param ("limit", limit.to_string ());
+        }
+        if (sort != null) {
+            var _sort = new string[sort.length];
+            for (int i = 0; i < sort.length; i++) {
+                _sort[i] = sort[i].to_string ();
+            }
+            request.add_param ("sort", string.joinv (",", _sort));
+        }
+
+        var bytes = session.exec (
+            request,
+            cancellable
+        );
+
+        var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
+
+        return jsoner.deserialize_object<AdvisoryErrata> ();
     }
 
     /**
@@ -535,7 +591,7 @@ public sealed class AltRepo.Client : Object {
      *
      * @param input errata search arguments
      * @param branch branch name
-     * @param type errata type [packages|repository|bug|vuln]
+     * @param type errata type [packages|repository|bug|vuln|exclusion]
      * @param page number page
      * @param limit number of records
      * @param state errata state
@@ -593,7 +649,7 @@ public sealed class AltRepo.Client : Object {
      * @param branch branch name
      * @param component Image component
      * @param input errata search arguments
-     * @param type errata type [packages|repository|bug|vuln]
+     * @param type errata type [packages|repository|bug|vuln|exclusion]
      * @param page number page
      * @param limit number of records
      * @param is_discarded is errata discarded
@@ -1634,6 +1690,34 @@ public sealed class AltRepo.Client : Object {
     }
 
     /**
+     * Get maintainer scores for a source package based on changelog activity.
+     *
+     * @param branch name of packageset
+     * @param name source package name
+     *
+     * @return {@link MaintainerScore}
+     */
+    public MaintainerScore get_package_maintainer_score (
+        string branch,
+        string name,
+        Cancellable? cancellable = null
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/maintainer_score");
+
+        request.add_param ("branch", branch.to_string ());
+        request.add_param ("name", name.to_string ());
+
+        var bytes = session.exec (
+            request,
+            cancellable
+        );
+
+        var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
+
+        return jsoner.deserialize_object<MaintainerScore> ();
+    }
+
+    /**
      * Get packages with conflicting files in packages that don't have a conflict in dependencies
      *
      * @param packages package or list of packages
@@ -2140,6 +2224,31 @@ public sealed class AltRepo.Client : Object {
     }
 
     /**
+     * Get maintainer scores for all source packages in a branch.
+     *
+     * @param branch name of packageset
+     *
+     * @return {@link MaintainerScoresBatch}
+     */
+    public MaintainerScoresBatch get_packageset_maintainer_scores (
+        string branch,
+        Cancellable? cancellable = null
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/packageset/maintainer_scores");
+
+        request.add_param ("branch", branch.to_string ());
+
+        var bytes = session.exec (
+            request,
+            cancellable
+        );
+
+        var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
+
+        return jsoner.deserialize_object<MaintainerScoresBatch> ();
+    }
+
+    /**
      * Get packages by packageset component and architecture.
      *
      * @param branch name of packageset
@@ -2222,6 +2331,7 @@ public sealed class AltRepo.Client : Object {
      * @param branch name of packageset
      * @param package_type packages type [source|binary|all]
      * @param archs list of packages architectures
+     * @param include_done_tasks include packages from tasks in DONE state
      *
      * @return {@link PackagesetPackages}
      */
@@ -2229,6 +2339,7 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string? package_type = "all",
         string[]? archs = null,
+        bool? include_done_tasks = false,
         Cancellable? cancellable = null
     ) throws BadStatusCodeError, JsonError, SoupError {
         var request = new Request.GET (@"$API_BASE/packageset/repository_packages");
@@ -2243,6 +2354,9 @@ public sealed class AltRepo.Client : Object {
                 _archs[i] = archs[i].to_string ();
             }
             request.add_param ("archs", string.joinv (",", _archs));
+        }
+        if (include_done_tasks != null) {
+            request.add_param ("include_done_tasks", include_done_tasks.to_string ());
         }
 
         var bytes = session.exec (
@@ -4429,6 +4543,36 @@ public sealed class AltRepo.Client : Object {
     }
 
     /**
+     * Get a list of packages where the specified CVE vulnerability is excluded.
+     *
+     * @param vuln_id CVE id
+     * @param exclude_json exclude vulnerability raw JSON from results
+     *
+     * @return {@link VulnFixesPackages}
+     */
+    public VulnFixesPackages get_vuln_cve_excluded (
+        string vuln_id,
+        bool? exclude_json = false,
+        Cancellable? cancellable = null
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/cve/excluded");
+
+        request.add_param ("vuln_id", vuln_id.to_string ());
+        if (exclude_json != null) {
+            request.add_param ("exclude_json", exclude_json.to_string ());
+        }
+
+        var bytes = session.exec (
+            request,
+            cancellable
+        );
+
+        var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
+
+        return jsoner.deserialize_object<VulnFixesPackages> ();
+    }
+
+    /**
      * Get a list of packages in which the specified CVE vulnerability is closed.
      *
      * @param vuln_id CVE id
@@ -4464,9 +4608,9 @@ public sealed class AltRepo.Client : Object {
      * @param vuln_id GHSA id
      * @param exclude_json exclude vulnerability raw JSON from results
      *
-     * @return {@link string}
+     * @return {@link VulnerabilityInfo}
      */
-    public string get_vuln_ghsa (
+    public VulnerabilityInfo get_vuln_ghsa (
         string vuln_id,
         bool? exclude_json = false,
         Cancellable? cancellable = null
@@ -4483,7 +4627,9 @@ public sealed class AltRepo.Client : Object {
             cancellable
         );
 
-        return (string) bytes.get_data ();
+        var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
+
+        return jsoner.deserialize_object<VulnerabilityInfo> ();
     }
 
     /**
@@ -4855,6 +5001,7 @@ public sealed class AltRepo.Client : Object {
      * @param branch packageset name
      * @param dp_name dependency name
      * @param dp_type type of dependency [all|provide|require|conflict|obsolete]
+     * @param last_state use last packages (after last branch commmit)
      *
      * @return {@link DependenciesPackages}
      */
@@ -4862,6 +5009,7 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string dp_name,
         string? dp_type = "all",
+        bool? last_state = false,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
     ) throws BadStatusCodeError, JsonError, SoupError {
@@ -4871,6 +5019,9 @@ public sealed class AltRepo.Client : Object {
         request.add_param ("dp_name", dp_name.to_string ());
         if (dp_type != null) {
             request.add_param ("dp_type", dp_type.to_string ());
+        }
+        if (last_state != null) {
+            request.add_param ("last_state", last_state.to_string ());
         }
 
         var bytes = yield session.exec_async (
@@ -4951,6 +5102,59 @@ public sealed class AltRepo.Client : Object {
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
         return yield jsoner.deserialize_object_async<PackageBuildDependency> ();
+    }
+
+    /**
+     * List of Security Advisory Errata records.
+     *
+     * @param branch branch name
+     * @param input CVE, BDU or Errata ID
+     * @param page number page
+     * @param limit number of records
+     * @param sort sort arguments
+     *
+     * @return {@link AdvisoryErrata}
+     */
+    public async AdvisoryErrata get_errata_advisory_async (
+        string? branch = null,
+        string? input = null,
+        int64? page = null,
+        int64? limit = null,
+        string[]? sort = null,
+        int priority = Priority.DEFAULT,
+        Cancellable? cancellable = null
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/errata/advisory");
+
+        if (branch != null) {
+            request.add_param ("branch", branch.to_string ());
+        }
+        if (input != null) {
+            request.add_param ("input", input.to_string ());
+        }
+        if (page != null) {
+            request.add_param ("page", page.to_string ());
+        }
+        if (limit != null) {
+            request.add_param ("limit", limit.to_string ());
+        }
+        if (sort != null) {
+            var _sort = new string[sort.length];
+            for (int i = 0; i < sort.length; i++) {
+                _sort[i] = sort[i].to_string ();
+            }
+            request.add_param ("sort", string.joinv (",", _sort));
+        }
+
+        var bytes = yield session.exec_async (
+            request,
+            priority,
+            cancellable
+        );
+
+        var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
+
+        return yield jsoner.deserialize_object_async<AdvisoryErrata> ();
     }
 
     /**
@@ -5073,7 +5277,7 @@ public sealed class AltRepo.Client : Object {
      *
      * @param input errata search arguments
      * @param branch branch name
-     * @param type errata type [packages|repository|bug|vuln]
+     * @param type errata type [packages|repository|bug|vuln|exclusion]
      * @param page number page
      * @param limit number of records
      * @param state errata state
@@ -5133,7 +5337,7 @@ public sealed class AltRepo.Client : Object {
      * @param branch branch name
      * @param component Image component
      * @param input errata search arguments
-     * @param type errata type [packages|repository|bug|vuln]
+     * @param type errata type [packages|repository|bug|vuln|exclusion]
      * @param page number page
      * @param limit number of records
      * @param is_discarded is errata discarded
@@ -6238,6 +6442,36 @@ public sealed class AltRepo.Client : Object {
     }
 
     /**
+     * Get maintainer scores for a source package based on changelog activity.
+     *
+     * @param branch name of packageset
+     * @param name source package name
+     *
+     * @return {@link MaintainerScore}
+     */
+    public async MaintainerScore get_package_maintainer_score_async (
+        string branch,
+        string name,
+        int priority = Priority.DEFAULT,
+        Cancellable? cancellable = null
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/package/maintainer_score");
+
+        request.add_param ("branch", branch.to_string ());
+        request.add_param ("name", name.to_string ());
+
+        var bytes = yield session.exec_async (
+            request,
+            priority,
+            cancellable
+        );
+
+        var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
+
+        return yield jsoner.deserialize_object_async<MaintainerScore> ();
+    }
+
+    /**
      * Get packages with conflicting files in packages that don't have a conflict in dependencies
      *
      * @param packages package or list of packages
@@ -6770,6 +7004,33 @@ public sealed class AltRepo.Client : Object {
     }
 
     /**
+     * Get maintainer scores for all source packages in a branch.
+     *
+     * @param branch name of packageset
+     *
+     * @return {@link MaintainerScoresBatch}
+     */
+    public async MaintainerScoresBatch get_packageset_maintainer_scores_async (
+        string branch,
+        int priority = Priority.DEFAULT,
+        Cancellable? cancellable = null
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/packageset/maintainer_scores");
+
+        request.add_param ("branch", branch.to_string ());
+
+        var bytes = yield session.exec_async (
+            request,
+            priority,
+            cancellable
+        );
+
+        var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
+
+        return yield jsoner.deserialize_object_async<MaintainerScoresBatch> ();
+    }
+
+    /**
      * Get packages by packageset component and architecture.
      *
      * @param branch name of packageset
@@ -6858,6 +7119,7 @@ public sealed class AltRepo.Client : Object {
      * @param branch name of packageset
      * @param package_type packages type [source|binary|all]
      * @param archs list of packages architectures
+     * @param include_done_tasks include packages from tasks in DONE state
      *
      * @return {@link PackagesetPackages}
      */
@@ -6865,6 +7127,7 @@ public sealed class AltRepo.Client : Object {
         string branch,
         string? package_type = "all",
         string[]? archs = null,
+        bool? include_done_tasks = false,
         int priority = Priority.DEFAULT,
         Cancellable? cancellable = null
     ) throws BadStatusCodeError, JsonError, SoupError {
@@ -6880,6 +7143,9 @@ public sealed class AltRepo.Client : Object {
                 _archs[i] = archs[i].to_string ();
             }
             request.add_param ("archs", string.joinv (",", _archs));
+        }
+        if (include_done_tasks != null) {
+            request.add_param ("include_done_tasks", include_done_tasks.to_string ());
         }
 
         var bytes = yield session.exec_async (
@@ -9207,6 +9473,38 @@ public sealed class AltRepo.Client : Object {
     }
 
     /**
+     * Get a list of packages where the specified CVE vulnerability is excluded.
+     *
+     * @param vuln_id CVE id
+     * @param exclude_json exclude vulnerability raw JSON from results
+     *
+     * @return {@link VulnFixesPackages}
+     */
+    public async VulnFixesPackages get_vuln_cve_excluded_async (
+        string vuln_id,
+        bool? exclude_json = false,
+        int priority = Priority.DEFAULT,
+        Cancellable? cancellable = null
+    ) throws BadStatusCodeError, JsonError, SoupError {
+        var request = new Request.GET (@"$API_BASE/vuln/cve/excluded");
+
+        request.add_param ("vuln_id", vuln_id.to_string ());
+        if (exclude_json != null) {
+            request.add_param ("exclude_json", exclude_json.to_string ());
+        }
+
+        var bytes = yield session.exec_async (
+            request,
+            priority,
+            cancellable
+        );
+
+        var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
+
+        return yield jsoner.deserialize_object_async<VulnFixesPackages> ();
+    }
+
+    /**
      * Get a list of packages in which the specified CVE vulnerability is closed.
      *
      * @param vuln_id CVE id
@@ -9244,9 +9542,9 @@ public sealed class AltRepo.Client : Object {
      * @param vuln_id GHSA id
      * @param exclude_json exclude vulnerability raw JSON from results
      *
-     * @return {@link string}
+     * @return {@link VulnerabilityInfo}
      */
-    public async string get_vuln_ghsa_async (
+    public async VulnerabilityInfo get_vuln_ghsa_async (
         string vuln_id,
         bool? exclude_json = false,
         int priority = Priority.DEFAULT,
@@ -9265,7 +9563,9 @@ public sealed class AltRepo.Client : Object {
             cancellable
         );
 
-        return (string) bytes.get_data ();
+        var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
+
+        return yield jsoner.deserialize_object_async<VulnerabilityInfo> ();
     }
 
     /**
