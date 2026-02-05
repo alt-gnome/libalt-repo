@@ -494,9 +494,9 @@ public sealed class AltRepo.Client : Object {
     ) throws BadStatusCodeError, JsonError, SoupError {
         var request = new Request.POST (@"$API_BASE/errata/branches_updates");
 
-        PostContent post_content = { JSON };
-        post_content.content = Jsoner.serialize (payload, Case.SNAKE);
-        request.add_post_content (post_content);
+        Content content = { JSON };
+    content.content = Jsoner.serialize (payload, Case.SNAKE);
+    request.add_content (content);
 
         if (exclude_json != null) {
             request.add_param ("exclude_json", exclude_json.to_string ());
@@ -749,9 +749,9 @@ public sealed class AltRepo.Client : Object {
     ) throws BadStatusCodeError, JsonError, SoupError {
         var request = new Request.POST (@"$API_BASE/errata/packages_updates");
 
-        PostContent post_content = { JSON };
-        post_content.content = Jsoner.serialize (payload, Case.SNAKE);
-        request.add_post_content (post_content);
+        Content content = { JSON };
+    content.content = Jsoner.serialize (payload, Case.SNAKE);
+    request.add_content (content);
 
         if (exclude_json != null) {
             request.add_param ("exclude_json", exclude_json.to_string ());
@@ -1407,9 +1407,9 @@ public sealed class AltRepo.Client : Object {
     ) throws BadStatusCodeError, JsonError, SoupError {
         var request = new Request.POST (@"$API_BASE/image/inspect/regular");
 
-        PostContent post_content = { JSON };
-        post_content.content = Jsoner.serialize (payload, Case.SNAKE);
-        request.add_post_content (post_content);
+        Content content = { JSON };
+    content.content = Jsoner.serialize (payload, Case.SNAKE);
+    request.add_content (content);
 
         var bytes = session.exec (
             request,
@@ -1434,9 +1434,9 @@ public sealed class AltRepo.Client : Object {
     ) throws BadStatusCodeError, JsonError, SoupError {
         var request = new Request.POST (@"$API_BASE/image/inspect/sp");
 
-        PostContent post_content = { JSON };
-        post_content.content = Jsoner.serialize (payload, Case.SNAKE);
-        request.add_post_content (post_content);
+        Content content = { JSON };
+    content.content = Jsoner.serialize (payload, Case.SNAKE);
+    request.add_content (content);
 
         var bytes = session.exec (
             request,
@@ -1939,9 +1939,9 @@ public sealed class AltRepo.Client : Object {
     ) throws BadStatusCodeError, JsonError, SoupError {
         var request = new Request.POST (@"$API_BASE/package/packages_by_file_names");
 
-        PostContent post_content = { JSON };
-        post_content.content = Jsoner.serialize (payload, Case.SNAKE);
-        request.add_post_content (post_content);
+        Content content = { JSON };
+    content.content = Jsoner.serialize (payload, Case.SNAKE);
+    request.add_content (content);
 
         var bytes = session.exec (
             request,
@@ -3843,9 +3843,9 @@ public sealed class AltRepo.Client : Object {
     ) throws BadStatusCodeError, JsonError, SoupError {
         var request = new Request.POST (@"$API_BASE/task/check_images");
 
-        PostContent post_content = { JSON };
-        post_content.content = Jsoner.serialize (payload, Case.SNAKE);
-        request.add_post_content (post_content);
+        Content content = { JSON };
+    content.content = Jsoner.serialize (payload, Case.SNAKE);
+    request.add_content (content);
 
         var bytes = session.exec (
             request,
@@ -5173,9 +5173,9 @@ public sealed class AltRepo.Client : Object {
     ) throws BadStatusCodeError, JsonError, SoupError {
         var request = new Request.POST (@"$API_BASE/errata/branches_updates");
 
-        PostContent post_content = { JSON };
-        post_content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
-        request.add_post_content (post_content);
+        Content content = { JSON };
+    content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
+    request.add_content (content);
 
         if (exclude_json != null) {
             request.add_param ("exclude_json", exclude_json.to_string ());
@@ -5442,9 +5442,9 @@ public sealed class AltRepo.Client : Object {
     ) throws BadStatusCodeError, JsonError, SoupError {
         var request = new Request.POST (@"$API_BASE/errata/packages_updates");
 
-        PostContent post_content = { JSON };
-        post_content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
-        request.add_post_content (post_content);
+        Content content = { JSON };
+    content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
+    request.add_content (content);
 
         if (exclude_json != null) {
             request.add_param ("exclude_json", exclude_json.to_string ());
@@ -6140,9 +6140,9 @@ public sealed class AltRepo.Client : Object {
     ) throws BadStatusCodeError, JsonError, SoupError {
         var request = new Request.POST (@"$API_BASE/image/inspect/regular");
 
-        PostContent post_content = { JSON };
-        post_content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
-        request.add_post_content (post_content);
+        Content content = { JSON };
+    content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
+    request.add_content (content);
 
         var bytes = yield session.exec_async (
             request,
@@ -6169,9 +6169,9 @@ public sealed class AltRepo.Client : Object {
     ) throws BadStatusCodeError, JsonError, SoupError {
         var request = new Request.POST (@"$API_BASE/image/inspect/sp");
 
-        PostContent post_content = { JSON };
-        post_content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
-        request.add_post_content (post_content);
+        Content content = { JSON };
+    content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
+    request.add_content (content);
 
         var bytes = yield session.exec_async (
             request,
@@ -6704,9 +6704,9 @@ public sealed class AltRepo.Client : Object {
     ) throws BadStatusCodeError, JsonError, SoupError {
         var request = new Request.POST (@"$API_BASE/package/packages_by_file_names");
 
-        PostContent post_content = { JSON };
-        post_content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
-        request.add_post_content (post_content);
+        Content content = { JSON };
+    content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
+    request.add_content (content);
 
         var bytes = yield session.exec_async (
             request,
@@ -8732,9 +8732,9 @@ public sealed class AltRepo.Client : Object {
     ) throws BadStatusCodeError, JsonError, SoupError {
         var request = new Request.POST (@"$API_BASE/task/check_images");
 
-        PostContent post_content = { JSON };
-        post_content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
-        request.add_post_content (post_content);
+        Content content = { JSON };
+    content.content = yield Jsoner.serialize_async (payload, Case.SNAKE);
+    request.add_content (content);
 
         var bytes = yield session.exec_async (
             request,
