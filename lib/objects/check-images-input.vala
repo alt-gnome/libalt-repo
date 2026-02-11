@@ -26,7 +26,7 @@ public class AltRepo.CheckImagesInput : Object {
      */
     public int64 task_id { get; set; }
 
-    public Gee.ArrayList<string> binpkgs_names {
+    public Gee.ArrayList<string> packages_names {
         get; set;
         default = new Gee.ArrayList<string> ();
     }
