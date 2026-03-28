@@ -19,25 +19,23 @@
 
 // THIS CODE WAS GENERATED, DON'T MODIFY IT
 
-public class AltRepo.SitePackageVersionsElement : Object {
+public class AltRepo.TaskBuildDependencySetPackages : Object {
 
     /**
-     * package set name
+     * source package name
      */
-    public string branch { get; set; }
+    public string package { get; set; }
 
     /**
-     * package version
+     * number of dependency packages found
      */
-    public string version { get; set; }
+    public int64 length { get; set; }
 
     /**
-     * package release
+     * build requirements packages information
      */
-    public string release { get; set; }
-
-    /**
-     * package hash UInt64 as string
-     */
-    public string pkghash { get; set; }
+    public Gee.ArrayList<TaskBuildDependencySetPackage> depends {
+        get; set;
+        default = new Gee.ArrayList<TaskBuildDependencySetPackage> ();
+    }
 }

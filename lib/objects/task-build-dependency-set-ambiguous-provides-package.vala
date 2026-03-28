@@ -19,25 +19,15 @@
 
 // THIS CODE WAS GENERATED, DON'T MODIFY IT
 
-public class AltRepo.SitePackageVersionsElement : Object {
+public class AltRepo.TaskBuildDependencySetAmbiguousProvidesPackage : Object {
 
     /**
-     * package set name
+     * package name
      */
-    public string branch { get; set; }
+    public string name { get; set; }
 
     /**
-     * package version
+     * package used as provide dependency
      */
-    public string version { get; set; }
-
-    /**
-     * package release
-     */
-    public string release { get; set; }
-
-    /**
-     * package hash UInt64 as string
-     */
-    public string pkghash { get; set; }
+    public bool used { get; set; }
 }

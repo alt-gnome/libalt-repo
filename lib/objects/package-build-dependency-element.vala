@@ -22,14 +22,39 @@
 public class AltRepo.PackageBuildDependencyElement : Object {
 
     /**
-     * source package hash UInt64 as string
+     * package dependenyc depth
      */
-    public string pkghash { get; set; }
+    public int64 depth { get; set; }
 
     /**
-     * source package name
+     * package name
      */
     public string name { get; set; }
+
+    /**
+     * package version
+     */
+    public string version { get; set; }
+
+    /**
+     * package release
+     */
+    public string release { get; set; }
+
+    /**
+     * package epoch
+     */
+    public int64 epoch { get; set; }
+
+    /**
+     * package serial
+     */
+    public int64 serial { get; set; }
+
+    /**
+     * source package file
+     */
+    public string sourcerpm { get; set; }
 
     /**
      * package set name
@@ -37,9 +62,33 @@ public class AltRepo.PackageBuildDependencyElement : Object {
     public string branch { get; set; }
 
     /**
-     * source package buildtime
+     * package build time
      */
     public string buildtime { get; set; }
+
+    /**
+     * package archs
+     */
+    public Gee.ArrayList<string> archs {
+        get; set;
+        default = new Gee.ArrayList<string> ();
+    }
+
+    /**
+     * package cycle dependencies
+     */
+    public Gee.ArrayList<string> cycle {
+        get; set;
+        default = new Gee.ArrayList<string> ();
+    }
+
+    /**
+     * package requirements
+     */
+    public Gee.ArrayList<string> requires {
+        get; set;
+        default = new Gee.ArrayList<string> ();
+    }
 
     /**
      * package ACL list
@@ -47,13 +96,5 @@ public class AltRepo.PackageBuildDependencyElement : Object {
     public Gee.ArrayList<string> acl {
         get; set;
         default = new Gee.ArrayList<string> ();
-    }
-
-    /**
-     * package dependencies list
-     */
-    public Gee.ArrayList<PackageDepends> depends {
-        get; set;
-        default = new Gee.ArrayList<PackageDepends> ();
     }
 }

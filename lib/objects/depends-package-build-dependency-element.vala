@@ -19,7 +19,17 @@
 
 // THIS CODE WAS GENERATED, DON'T MODIFY IT
 
-public class AltRepo.SitePackageVersionsElement : Object {
+public class AltRepo.DependsPackageBuildDependencyElement : Object {
+
+    /**
+     * source package hash UInt64 as string
+     */
+    public string pkghash { get; set; }
+
+    /**
+     * source package name
+     */
+    public string name { get; set; }
 
     /**
      * package set name
@@ -27,17 +37,23 @@ public class AltRepo.SitePackageVersionsElement : Object {
     public string branch { get; set; }
 
     /**
-     * package version
+     * source package buildtime
      */
-    public string version { get; set; }
+    public string buildtime { get; set; }
 
     /**
-     * package release
+     * package ACL list
      */
-    public string release { get; set; }
+    public Gee.ArrayList<string> acl {
+        get; set;
+        default = new Gee.ArrayList<string> ();
+    }
 
     /**
-     * package hash UInt64 as string
+     * package dependencies list
      */
-    public string pkghash { get; set; }
+    public Gee.ArrayList<PackageDepends> depends {
+        get; set;
+        default = new Gee.ArrayList<PackageDepends> ();
+    }
 }

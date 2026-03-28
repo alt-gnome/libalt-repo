@@ -402,9 +402,9 @@ public sealed class AltRepo.Client : Object {
      * @param branch packageset name
      * @param dp_type type of dependency [source|binary|both]
      *
-     * @return {@link PackageBuildDependency}
+     * @return {@link DependsPackageBuildDependency}
      */
-    public PackageBuildDependency get_dependencies_what_depends_src (
+    public DependsPackageBuildDependency get_dependencies_what_depends_src (
         string name,
         string branch,
         string? dp_type = "both",
@@ -425,7 +425,7 @@ public sealed class AltRepo.Client : Object {
 
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return jsoner.deserialize_object<PackageBuildDependency> ();
+        return jsoner.deserialize_object<DependsPackageBuildDependency> ();
     }
 
     /**
@@ -3758,9 +3758,9 @@ public sealed class AltRepo.Client : Object {
      * @param id task ID
      * @param arch packages architecture
      *
-     * @return {@link BuildDependencySet}
+     * @return {@link TaskBuildDependencySet}
      */
-    public BuildDependencySet get_task_build_dependency_set_id (
+    public TaskBuildDependencySet get_task_build_dependency_set_id (
         int64 id,
         string? arch = "x86_64",
         Cancellable? cancellable = null
@@ -3778,7 +3778,7 @@ public sealed class AltRepo.Client : Object {
 
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return jsoner.deserialize_object<BuildDependencySet> ();
+        return jsoner.deserialize_object<TaskBuildDependencySet> ();
     }
 
     /**
@@ -5076,9 +5076,9 @@ public sealed class AltRepo.Client : Object {
      * @param branch packageset name
      * @param dp_type type of dependency [source|binary|both]
      *
-     * @return {@link PackageBuildDependency}
+     * @return {@link DependsPackageBuildDependency}
      */
-    public async PackageBuildDependency get_dependencies_what_depends_src_async (
+    public async DependsPackageBuildDependency get_dependencies_what_depends_src_async (
         string name,
         string branch,
         string? dp_type = "both",
@@ -5101,7 +5101,7 @@ public sealed class AltRepo.Client : Object {
 
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return yield jsoner.deserialize_object_async<PackageBuildDependency> ();
+        return yield jsoner.deserialize_object_async<DependsPackageBuildDependency> ();
     }
 
     /**
@@ -8644,9 +8644,9 @@ public sealed class AltRepo.Client : Object {
      * @param id task ID
      * @param arch packages architecture
      *
-     * @return {@link BuildDependencySet}
+     * @return {@link TaskBuildDependencySet}
      */
-    public async BuildDependencySet get_task_build_dependency_set_id_async (
+    public async TaskBuildDependencySet get_task_build_dependency_set_id_async (
         int64 id,
         string? arch = "x86_64",
         int priority = Priority.DEFAULT,
@@ -8666,7 +8666,7 @@ public sealed class AltRepo.Client : Object {
 
         var jsoner = new Jsoner.from_bytes (bytes, null, Case.SNAKE);
 
-        return yield jsoner.deserialize_object_async<BuildDependencySet> ();
+        return yield jsoner.deserialize_object_async<TaskBuildDependencySet> ();
     }
 
     /**

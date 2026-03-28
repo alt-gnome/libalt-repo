@@ -19,25 +19,18 @@
 
 // THIS CODE WAS GENERATED, DON'T MODIFY IT
 
-public class AltRepo.SitePackageVersionsElement : Object {
+public class AltRepo.TaskBuildDependencySetAmbiguousProvides : Object {
 
     /**
-     * package set name
+     * package name
      */
-    public string branch { get; set; }
+    public string package { get; set; }
 
     /**
-     * package version
+     * list of found and resolved ambiguous provides
      */
-    public string version { get; set; }
-
-    /**
-     * package release
-     */
-    public string release { get; set; }
-
-    /**
-     * package hash UInt64 as string
-     */
-    public string pkghash { get; set; }
+    public Gee.ArrayList<TaskBuildDependencySetAmbiguousProvidesElement> ambiguous_provides {
+        get; set;
+        default = new Gee.ArrayList<TaskBuildDependencySetAmbiguousProvidesElement> ();
+    }
 }

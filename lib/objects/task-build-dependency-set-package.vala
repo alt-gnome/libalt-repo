@@ -19,12 +19,12 @@
 
 // THIS CODE WAS GENERATED, DON'T MODIFY IT
 
-public class AltRepo.SitePackageVersionsElement : Object {
+public class AltRepo.TaskBuildDependencySetPackage : Object {
 
     /**
-     * package set name
+     * package name
      */
-    public string branch { get; set; }
+    public string name { get; set; }
 
     /**
      * package version
@@ -37,7 +37,15 @@ public class AltRepo.SitePackageVersionsElement : Object {
     public string release { get; set; }
 
     /**
-     * package hash UInt64 as string
+     * package epoch
      */
-    public string pkghash { get; set; }
+    public int64 epoch { get; set; }
+
+    /**
+     * binary packages archs
+     */
+    public Gee.ArrayList<string> archs {
+        get; set;
+        default = new Gee.ArrayList<string> ();
+    }
 }
